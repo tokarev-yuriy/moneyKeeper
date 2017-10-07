@@ -11,6 +11,8 @@
 |
 */
 
+Route::get('/', 'DashboardController@getIndex');
+
 Route::controller('/account/wallets', 'WalletController');
 Route::controller('/account/categories', 'CategoryController');
 Route::controller('/account/operations/transfer', 'TransferController');
