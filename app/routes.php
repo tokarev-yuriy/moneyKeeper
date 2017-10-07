@@ -11,4 +11,9 @@
 |
 */
 
+Route::controller('/account/wallets', 'WalletController');
+Route::controller('/account/categories', 'CategoryController');
+Route::controller('/account/operations/transfer', 'TransferController');
+Route::controller('/account/operations/income', 'IncomeController');
+Route::controller('/account/operations/spend', 'SpendController');
 Route::controller('/account', 'AccountController');
