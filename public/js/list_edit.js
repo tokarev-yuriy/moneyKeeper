@@ -70,7 +70,9 @@ ListAjaxEditor.prototype = {
        
        $('#editModalBlock .modal-title').html(title);
        $('#editModalBlock .modal-body').html(result);
-       $('#editModalBlock').modal('show');
+       if (!$('#editModalBlock:visible').length) {
+         $('#editModalBlock').modal('show');
+       }
        
        $('#editModalBlock form').submit(function(){
             var form = this;
