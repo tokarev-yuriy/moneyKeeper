@@ -2,6 +2,7 @@
         $arActions = array();
     }?>
     <div class="clearfix"></div>
+    
     <table class="table mt-3 table-striped table-sm">
       <thead class="thead-inverse">
         <tr>                          
@@ -48,6 +49,10 @@
       <?endforeach;?>
      </tbody>
     </table>
+    
+    <?if(method_exists($arItems, 'links')):?>
+        <nav><?=$arItems->links('widgets.paginate')?></nav>
+    <?endif;?>
     
     
     <div class="modal fade" id="editModalBlock" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">

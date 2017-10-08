@@ -27,5 +27,9 @@ return array(
 	*/
 
 	'pagination' => 'pagination::slider-3',
+    
+    
+    
+	'itemsPerPage' => '100',
 
 );

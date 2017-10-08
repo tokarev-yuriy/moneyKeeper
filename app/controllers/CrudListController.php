@@ -37,7 +37,7 @@ class CrudListController extends BaseController {
         $model = $this->modelName;
         $arItems = $model::user()->
                 orderBy($this->sort['by'],$this->sort['order'])->
-                get();
+                paginate(Config::get('view.itemsPerPage'));
         
         $arItems = $this->__prepareItems($arItems);
         

@@ -30,7 +30,8 @@ class DashboardController extends BaseController {
         
         $arOperations = Operation::user()->
                 orderBy('date','desc')->
-                get();
+                orderBy('id','desc')->
+                paginate(Config::get('view.itemsPerPage'));
                 
         $arDicts = array(
             'wallets' => array(),

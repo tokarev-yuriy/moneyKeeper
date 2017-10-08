@@ -12,6 +12,10 @@ class OperationController extends CrudListController {
     public $type='';
     public $arDictionaries;
     public $modelName = 'Operation';
+    public $sort = array(
+        'by' => 'date',
+        'order' => 'desc'
+    );
 
     /**
      * Constructor
@@ -107,8 +111,9 @@ class OperationController extends CrudListController {
     {
         $arItems = Operation::user()->
                 where('type', '=', $this->type)->
-                orderBy('date','desc')->
-                get();
+                orderBy($this->sort['by'],$this->sort['order'])->
+                orderBy('id','desc')->
+                paginate(Config::get('view.itemsPerPage'));
         
         $arItems = $this->__prepareItems($arItems);
         
