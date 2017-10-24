@@ -18,5 +18,6 @@ return array(
     "close" => "Close",
     "no" => "No",
     "delete_item" => "Delete Item",
+    "filter" => "Filter",
 
 );

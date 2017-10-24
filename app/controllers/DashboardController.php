@@ -25,10 +25,14 @@ class DashboardController extends BaseController {
      * 
      * @return <type>
      */	
-	public function getIndex()
+	public function anyIndex()
 	{
         
-        $arOperations = Operation::user()->
+        $dbOperations = Operation::user();
+        
+        $dbOperations = $this->__processFilter($dbOperations);
+        
+        $arOperations = $dbOperations->
                 orderBy('date','desc')->
                 orderBy('id','desc')->
                 paginate(Config::get('view.itemsPerPage'));
@@ -88,10 +92,44 @@ class DashboardController extends BaseController {
                 'comment' => array('title'=>trans('mkeep.comment')),
             ),
             'arActions' => array('edit', 'delete'),
+            'arFilters' => array('date'=>array('title'=>trans('mkeep.date'), 'type'=>'period'), 'category_id'=>array('title'=>trans('mkeep.category'), 'type'=>'list', 'values'=>array_merge(array(''=>trans('mkeep.all_categories')), $arDicts['category_id']))),
             'arDictionaries' => $arDicts
         );
         
         return View::make('dashboard', array('items'=>$arOperations))->nest('tablegrid', 'widgets.tablegrid', $arTable);
 	}
+    
+    /**
+     * Apply table filter
+     * 
+     * @param Eloquent $dbRes query resource
+     * 
+     * @return Eloquent
+     */    
+    protected function __processFilter ($dbRes) {
+        if (strlen(Input::get('date_from'))>0) {
+            $dateFrom = date("Y-m-d", strtotime(Input::get('date_from')));
+            
+            $dbRes->where('date', '>=', $dateFrom);
+        } else {
+            $dbRes->where('date', '>=', date('Y-m-01'));
+        }
+        
+        if (strlen(Input::get('date_to'))>0) {
+            $dateTo = date("Y-m-d", strtotime(Input::get('date_to')));
+            
+            $dbRes->where('date', '<=', $dateTo);
+        } else {
+            $dbRes->where('date', '<=', date('Y-m-d'));
+        }
+        
+        if (strlen(Input::get('category_id'))>0 && intval(Input::get('category_id'))>0) {
+            $categoryId = intval(Input::get('category_id'));
+            
+            $dbRes->where('category_id', '=', $categoryId);
+        }
+        
+        return $dbRes;
+    }
 
 }

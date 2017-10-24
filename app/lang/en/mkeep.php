@@ -47,6 +47,7 @@ return array(
     "add_category" => "Add category",
     "edit_category" => "Edit category",
     "delete_category" => "Delete category",
+    "all_categories" => "All categories",
     
     "wallets" => "Wallets",
     "add_wallet" => "Add wallet",

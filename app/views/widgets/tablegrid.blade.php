@@ -1,7 +1,44 @@
     <?if(!isset($arActions) || !is_array($arActions)) {
         $arActions = array();
     }?>
+    
     <div class="clearfix"></div>
+    
+    <?if(!isset($arFilters) || !is_array($arFilters)) {
+        $arFilters = array();
+    }?>
+
+    <?if(count($arFilters)>0):?>
+    <div class="filter bg-light p-2 border border-2 border-bottom-0 border-dark rounded-top mt-2">
+        <?=Form::open(array('class'=>'form-inline'));?>
+        <?foreach($arFilters as $code=>$arFilterItem):?>
+            <div class="form-group">
+            <?
+            switch($arFilterItem['type']) {
+                case 'period':?>
+                        <?=Form::input( 'date', $code.'_from', Input::get($code.'_from', date('Y-m-01')), array('class'=>'form-control'))?>
+                        &nbsp;&mdash;&nbsp;
+                        <?=Form::input( 'date', $code.'_to', Input::get($code.'_to', date('Y-m-d')), array('class'=>'form-control mr-2'))?>
+                    <?break;
+                case 'list':?>
+                        <?=Form::select($code, $arFilterItem['values'], Input::get($code), array('class'=>'form-control mr-2'))?>
+                    <?break;
+                default:?>
+                        <?=Form::text($code, Input::get($code, ''), array('class'=>'form-control mr-2'))?>
+                    <?break;
+            }
+            ?>
+            </div>
+        <?endforeach;?>
+        
+        <button type="submit" class="btn btn-info">
+            <i class="fa fa-btn fa-filter"></i> <?=trans('mkeep_tablegrid.filter')?>
+        </button>
+        
+        <?=Form::close();?>
+    </div>
+    <?endif;?>
+    
     
     <table class="table mt-3 table-striped table-sm">
       <thead class="thead-inverse">

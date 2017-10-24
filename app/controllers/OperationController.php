@@ -102,6 +102,16 @@ class OperationController extends CrudListController {
         return $this->arDictionaries;
     }
 
+     /**
+     * List of items
+     * 
+     * @return <type>
+     */    
+    public function postIndex()
+    {
+        return $this->getIndex();
+    }
+    
     /**
      * List of items
      * 
@@ -109,8 +119,10 @@ class OperationController extends CrudListController {
      */    
     public function getIndex()
     {
-        $arItems = Operation::user()->
-                where('type', '=', $this->type)->
+        $dbItems = Operation::user()->
+                where('type', '=', $this->type);
+        $dbItems = $this->__processFilter($dbItems);
+        $arItems = $dbItems->
                 orderBy($this->sort['by'],$this->sort['order'])->
                 orderBy('id','desc')->
                 paginate(Config::get('view.itemsPerPage'));
@@ -121,6 +133,7 @@ class OperationController extends CrudListController {
             'arItems' => $arItems,
             'arHeads' => $this->__getHeads(),
             'arActions' => $this->__getActions(),
+            'arFilters' => $this->__getFilters(),
             'arDictionaries' => $this->__getDictionary()
         );
         
@@ -140,6 +153,27 @@ class OperationController extends CrudListController {
               'comment'=>'required|max:255',
               'date'=>'required|date',
             );
+    }     
+    
+    
+    /**
+     * Returns Filters for operations table
+     * 
+     * 
+     * @return array
+     */    
+    protected function __getFilters () {
+        return array(
+            'date'=>array(
+                'title'=>trans('mkeep.date'), 
+                'type'=>'period'
+            ), 
+            'category_id'=>array(
+                'title'=>trans('mkeep.category'), 
+                'type'=>'list', 
+                'values'=>array_merge(array(''=>trans('mkeep.all_categories')), $this->arDictionaries['category_id'])
+            )
+        );
     } 
     
     /**
@@ -180,6 +214,39 @@ class OperationController extends CrudListController {
         }
         
         return $arItems;
+    }
+    
+    /**
+     * Apply table filter
+     * 
+     * @param Eloquent $dbRes query resource
+     * 
+     * @return Eloquent
+     */    
+    protected function __processFilter ($dbRes) {
+        if (strlen(Input::get('date_from'))>0) {
+            $dateFrom = date("Y-m-d", strtotime(Input::get('date_from')));
+            
+            $dbRes->where('date', '>=', $dateFrom);
+        } else {
+            $dbRes->where('date', '>=', date('Y-m-01'));
+        }
+        
+        if (strlen(Input::get('date_to'))>0) {
+            $dateTo = date("Y-m-d", strtotime(Input::get('date_to')));
+            
+            $dbRes->where('date', '<=', $dateTo);
+        } else {
+            $dbRes->where('date', '<=', date('Y-m-d'));
+        }
+        
+        if (strlen(Input::get('category_id'))>0 && intval(Input::get('category_id'))>0) {
+            $categoryId = intval(Input::get('category_id'));
+            
+            $dbRes->where('category_id', '=', $categoryId);
+        }
+        
+        return $dbRes;
     }
 
 }

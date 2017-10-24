@@ -11,7 +11,8 @@
 |
 */
 
-Route::get('/', 'DashboardController@getIndex');
+Route::get('/', 'DashboardController@anyIndex');
+Route::post('/', 'DashboardController@anyIndex');
 
 Route::controller('/account/wallets', 'WalletController');
 Route::controller('/account/categories', 'CategoryController');

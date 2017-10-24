@@ -26,3 +26,9 @@ body {
 .fa-btn {
     margin-right: 6px;
 }
+
+.filter {
+    display: inline-block!important;
+    margin-bottom: -18px;
+    border-width: 2px!important;
+}
