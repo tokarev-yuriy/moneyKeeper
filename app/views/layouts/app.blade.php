@@ -13,6 +13,8 @@
 
     <!-- Styles -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/js/slider/assets/owl.carousel.min.css" />
+    <link rel="stylesheet" href="/js/slider/assets/owl.theme.default.min.css" />
     <link rel="stylesheet" href="/css/app.css">
 
 </head>
@@ -73,15 +75,21 @@
             </div>
         </div>
     </nav>
+    <div class="container widget" id="wallets-sum" data-url="/account/stat/wallets">
+    </div>
     
-    <div class="container mt-5">
+    <div class="container">
+    
     @yield('content')
     </div>
 
     <!-- JavaScripts -->
     <script src="https://code.jquery.com/jquery-3.2.1.min.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+    <script src="/js/slider/owl.carousel.min.js"></script>   
     <script src="/js/bootstrap.min.js"></script>   
+    <script src="/js/widget.js"></script>   
+    <script src="/js/widget_manager.js"></script>   
     @yield('appjsfile')
 </body>
 </html>
