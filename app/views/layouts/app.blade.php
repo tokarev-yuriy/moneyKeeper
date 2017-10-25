@@ -84,12 +84,17 @@
     </div>
 
     <!-- JavaScripts -->
-    <script src="https://code.jquery.com/jquery-3.2.1.min.js" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+    <script src="//code.jquery.com/jquery-3.2.1.min.js" crossorigin="anonymous"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
     <script src="/js/slider/owl.carousel.min.js"></script>   
     <script src="/js/bootstrap.min.js"></script>   
     <script src="/js/widget.js"></script>   
-    <script src="/js/widget_manager.js"></script>   
+    <script src="/js/widget_chart.js"></script>   
+    <script src="/js/widget_manager.js?v=2"></script>   
+    <script src="//www.amcharts.com/lib/3/amcharts.js"></script>
+    <script src="//www.amcharts.com/lib/3/pie.js"></script>
+    <script src="//www.amcharts.com/lib/3/plugins/dataloader/dataloader.min.js"></script>
+    <script src="//www.amcharts.com/lib/3/themes/light.js"></script>
     @yield('appjsfile')
 </body>
 </html>

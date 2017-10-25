@@ -28,8 +28,11 @@ WidgetManager.prototype = {
                 return;
             }
             
-            
-            self.widgets[id] = new Widget(id, url);
+            if ($(this).attr('data-type')=='chart') {
+                self.widgets[id] = new ChartWidget(id, url);
+            } else {
+                self.widgets[id] = new Widget(id, url);
+            }            
             self.widgets[id].load();
             
         });

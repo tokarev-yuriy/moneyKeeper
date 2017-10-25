@@ -29,6 +29,20 @@ body {
 
 .filter {
     display: inline-block!important;
-    margin-bottom: -18px;
+    margin-bottom: -17px;
     border-width: 2px!important;
+}
+@media (max-width: 576px) {
+    .filter .form-group {
+      display: flex;
+      flex: 0 0 auto;
+      flex-flow: row wrap;
+      align-items: center;
+      margin-bottom: 0;
+    }
+    .filter .form-group .form-control {
+      display: inline-block;
+      width: auto; // Prevent labels from stacking above inputs in `.form-group`
+      vertical-align: middle;
+    }
 }
