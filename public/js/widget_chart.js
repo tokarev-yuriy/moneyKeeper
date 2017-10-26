@@ -9,6 +9,11 @@ ChartWidget = function (id, url) {
     this.url = url;
     this.chart = false;
     this.container = $('#'+this.id);
+    
+    if ($('.filter form').length>0) {
+        this.url += '?'+$('.filter form').serialize();
+    }
+    
     this.init();
 }
 

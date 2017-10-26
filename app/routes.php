@@ -13,6 +13,8 @@
 
 Route::get('/', 'DashboardController@anyIndex');
 Route::post('/', 'DashboardController@anyIndex');
+Route::get('/wallet/{walletId}', 'DashboardController@anyIndex');
+Route::post('/wallet/{walletId}', 'DashboardController@anyIndex');
 
 Route::controller('/account/wallets', 'WalletController');
 Route::controller('/account/categories', 'CategoryController');

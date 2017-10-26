@@ -25,12 +25,20 @@ class DashboardController extends BaseController {
      * 
      * @return <type>
      */	
-	public function anyIndex()
+	public function anyIndex($walletId = null)
 	{
         
         $dbOperations = Operation::user();
         
         $dbOperations = $this->__processFilter($dbOperations);
+        
+        if ($walletId>0) {
+            $dbOperations->where(function($query) use ($walletId)
+            {
+                $query->where('wallet_from_id', '=', $walletId)
+                      ->orWhere('wallet_to_id', '=', $walletId);
+            });
+        }
         
         $arOperations = $dbOperations->
                 orderBy('date','desc')->
