@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<?$version = 3;?>
+<?$version = time();?>
 <html lang="ru">
 <head>
     <meta charset="utf-8">
@@ -39,6 +39,22 @@
                         <li class="nav-item"><a href="{{ url('/account/operations/spend') }}" class="nav-link"><i class="fa fa-btn fa-long-arrow-left text-danger"></i><?=trans('mkeep.spends')?></a></li>
                         <li class="nav-item"><a href="{{ url('/account/operations/income') }}" class="nav-link"><i class="fa fa-btn fa-long-arrow-right text-success"></i><?=trans('mkeep.incomes')?></a></li>
                         <li class="nav-item"><a href="{{ url('/account/operations/transfer') }}" class="nav-link"><i class="fa fa-btn fa-exchange"></i><?=trans('mkeep.transfers')?></a></li>
+                        
+                        <li class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-toggle text-nowrap" data-toggle="dropdown" role="button" aria-expanded="true">
+                                <i class="fa fa-btn fa-line-chart"></i><?=trans('mkeep.statistics')?>
+                            </a>
+
+                            
+                            <div class="dropdown-menu">
+                                <a href="{{ url('/account/stat/month') }}" class="dropdown-item"><i class="fa fa-btn fa-area-chart"></i><?=trans('mkeep.stat_monthly')?></a>
+                                <a href="{{ url('/account/stat/monthavg') }}" class="dropdown-item"><i class="fa fa-btn fa-pie-chart"></i><?=trans('mkeep.stat_monthly_avg')?></a>
+                                <div class="dropdown-divider"></div>
+                                <a href="{{ url('/account/stat/year') }}" class="dropdown-item"><i class="fa fa-btn fa-area-chart"></i><?=trans('mkeep.stat_year')?></a>
+                                <a href="{{ url('/account/stat/yearavg') }}" class="dropdown-item"><i class="fa fa-btn fa-pie-chart"></i><?=trans('mkeep.stat_year_avg')?></a>
+                            </div>
+                        </li>
+                        
                         
                         <li class="nav-item d-lg-none"><li class="dropdown-divider"></li>
                         <li class="nav-item d-lg-none"><a href="{{ url('/account/wallets') }}" class="nav-link"><i class="fa fa-btn fa-credit-card"></i><?=trans('mkeep.wallets')?></a></li>
@@ -83,6 +99,7 @@
     
     @yield('content')
     </div>
+    
 
     <!-- JavaScripts -->
     <script src="//code.jquery.com/jquery-3.2.1.min.js" crossorigin="anonymous"></script>
@@ -94,6 +111,7 @@
     <script src="/js/widget_manager.js?v=<?=$version?>"></script>   
     <script src="//www.amcharts.com/lib/3/amcharts.js"></script>
     <script src="//www.amcharts.com/lib/3/pie.js"></script>
+    <script src="//www.amcharts.com/lib/3/serial.js"></script>
     <script src="//www.amcharts.com/lib/3/plugins/dataloader/dataloader.min.js"></script>
     <script src="//www.amcharts.com/lib/3/themes/light.js"></script>
     @yield('appjsfile')

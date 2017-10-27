@@ -12,6 +12,7 @@ return array(
 	*/
 
     "title" => "Money",
+    "total" => "Total",
     "spends" => "Spends",
     "incomes" => "Incomes",
     "transfers" => "Transfers",
@@ -78,6 +79,16 @@ return array(
     "income" => "Income",
     "transfer" => "Transfer",
     "any" => "Any",
+    
+    "statistics" => "Statistics",
+    "stat_monthly" => "Statistics monthly",
+    "stat_monthly_avg" => "Statistics monthly average",
+    "stat_year" => "Statistics year",
+    "stat_year_avg" => "Statistics year average",
+    "per_month" => "per month",
+    "per_year" => "per year",
+    "in_month" => "in month",
+    "in_year" => "in year",
 
 
 );
