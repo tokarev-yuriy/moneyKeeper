@@ -20,6 +20,7 @@
 
 </head>
 <body id="app-layout">
+<div id="wrap">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container">
             <div class="navbar-header">
@@ -99,7 +100,20 @@
     
     @yield('content')
     </div>
+    <div class="clearfix"></div>
+    <div id="push"></div>
+</div>
     
+    <footer class="footer">
+      <nav class="navbar navbar-dark bg-dark">
+        <div class="container text-white  justify-content-end text-right">
+            <div>
+                Money Keeper 2017. Source code available on <a href="https://github.com/tokarev-yuriy/moneyKeeper">GitHub</a>.<br/>
+                Code licensed <a href="https://github.com/tokarev-yuriy/moneyKeeper/blob/master/LICENSE.md" target="_blank" rel="license noopener">MIT</a>.
+            </div>
+        </div>
+      </nav>
+    </footer>
 
     <!-- JavaScripts -->
     <script src="//code.jquery.com/jquery-3.2.1.min.js" crossorigin="anonymous"></script>
