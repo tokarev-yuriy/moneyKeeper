@@ -25,10 +25,11 @@ ChartWidget.prototype = {
         
         if (self.chartType=='area') {
             self.initAreaChart();
+            self.container.before('<a href="javascript: void(0);" onclick="$(\'#'+self.id+'\').toggle();" class="pull-right btn btn-dark mb-2"><i class="fa fa-area-chart fa-2x"></i></a><div class="clearfix"></div>');
         } else {
             self.initPieChart();
+            self.container.before('<a href="javascript: void(0);" onclick="$(\'#'+self.id+'\').toggle();" class="pull-right btn btn-dark mb-2"><i class="fa fa-pie-chart fa-2x"></i></a><div class="clearfix"></div>');
         }
-        
     },
     
     

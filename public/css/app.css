@@ -82,4 +82,8 @@ footer {
       padding-left: 20px;
       padding-right: 20px;
     }
+    
+    .container.widget[data-type="chart"] {
+        display: none;
+    }
 }
