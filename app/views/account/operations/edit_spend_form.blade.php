@@ -56,7 +56,7 @@
         <div class="row form-group">
             <label for="wallet_from_id" class="col-md-4 control-label"><?=trans('mkeep.wallet')?></label>
             <div class="col-md-6">
-                <?=Form::select('wallet_from_id', Operation::getWallets(), Input::get('wallet_from_id', isset($obItem)?$obItem->wallet_from_id:''), array('class'=>(isset($errors) && $errors->has('wallet_from_id') ? 'form-control is-invalid' : 'form-control')))?>
+                <?=Form::select('wallet_from_id', Operation::getWallets(), Input::get('wallet_from_id', isset($obItem)?$obItem->wallet_from_id:Session::get('wallet_from_id')), array('class'=>(isset($errors) && $errors->has('wallet_from_id') ? 'form-control is-invalid' : 'form-control')))?>
 
                 <span class="invalid-feedback">
                 @if (isset($errors) && $errors->has('wallet_from_id'))

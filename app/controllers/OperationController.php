@@ -194,6 +194,13 @@ class OperationController extends CrudListController {
         $obItem->wallet_from_id = intval(Input::get('wallet_from_id'));
         $obItem->wallet_to_id = intval(Input::get('wallet_to_id'));
         
+        if (Input::get('wallet_from_id')) {
+           Session::put('wallet_from_id', Input::get('wallet_from_id')); 
+        }
+        if (Input::get('wallet_to_id')) {
+           Session::put('wallet_to_id', Input::get('wallet_to_id')); 
+        }
+        
         return $obItem;
     }
     
