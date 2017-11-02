@@ -16,15 +16,15 @@
             <?
             switch($arFilterItem['type']) {
                 case 'period':?>
-                        <?=Form::input( 'date', $code.'_from', Input::get($code.'_from', date('Y-m-01')), array('class'=>'form-control'))?>
+                        <?=Form::input( 'date', $code.'_from', Input::get($code.'_from', Session::get($code.'_from',date('Y-m-01'))), array('class'=>'form-control'))?>
                         &nbsp;&mdash;&nbsp;
-                        <?=Form::input( 'date', $code.'_to', Input::get($code.'_to', date('Y-m-d')), array('class'=>'form-control mr-2'))?>
+                        <?=Form::input( 'date', $code.'_to', Input::get($code.'_to', Session::get($code.'_to', date('Y-m-d'))), array('class'=>'form-control mr-2'))?>
                     <?break;
                 case 'list':?>
-                        <?=Form::select($code, $arFilterItem['values'], Input::get($code), array('class'=>'form-control mr-2'))?>
+                        <?=Form::select($code, $arFilterItem['values'], Input::get($code, Session::get($code)), array('class'=>'form-control mr-2'))?>
                     <?break;
                 default:?>
-                        <?=Form::text($code, Input::get($code, ''), array('class'=>'form-control mr-2'))?>
+                        <?=Form::text($code, Input::get($code, Session::get($code,'')), array('class'=>'form-control mr-2'))?>
                     <?break;
             }
             ?>

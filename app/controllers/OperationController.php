@@ -232,23 +232,35 @@ class OperationController extends CrudListController {
      */    
     protected function __processFilter ($dbRes) {
         if (strlen(Input::get('date_from'))>0) {
-            $dateFrom = date("Y-m-d", strtotime(Input::get('date_from')));
+            Session::put('date_from', Input::get('date_from'));
+        } 
+        
+        if (strlen(Input::get('date_to'))>0) {
+            Session::put('date_to', Input::get('date_to'));
+        }
+        if (strlen(Input::get('category_id'))>0 && intval(Input::get('category_id'))>0) {
+            Session::put('category_id', Input::get('category_id'));
+        }
+        
+        
+        if(strlen(Session::get('date_from'))>0) {
+            $dateFrom = date("Y-m-d", strtotime(Session::get('date_from')));
             
             $dbRes->where('date', '>=', $dateFrom);
         } else {
             $dbRes->where('date', '>=', date('Y-m-01'));
         }
         
-        if (strlen(Input::get('date_to'))>0) {
-            $dateTo = date("Y-m-d", strtotime(Input::get('date_to')));
+        if (strlen(Session::get('date_to'))>0) {
+            $dateTo = date("Y-m-d", strtotime(Session::get('date_to')));
             
             $dbRes->where('date', '<=', $dateTo);
         } else {
             $dbRes->where('date', '<=', date('Y-m-d'));
         }
         
-        if (strlen(Input::get('category_id'))>0 && intval(Input::get('category_id'))>0) {
-            $categoryId = intval(Input::get('category_id'));
+        if (strlen(Session::get('category_id'))>0 && intval(Session::get('category_id'))>0) {
+            $categoryId = intval(Session::get('category_id'));
             
             $dbRes->where('category_id', '=', $categoryId);
         }
