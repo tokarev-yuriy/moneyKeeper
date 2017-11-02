@@ -69,15 +69,15 @@ class TransferController extends OperationController {
         $arItems = parent::__prepareItems($arItems);
         
         foreach($arItems as $k=>$obItem) {
-            $wallet = '<div class="text-center float-left">';
+            $wallet = '';
             if ($this->arDictionaries['wallet_from_id'][$obItem->wallet_from_id]) {
                 $wallet .= '<span class="text-secondary">'.$this->arDictionaries['wallet_from_id'][$obItem->wallet_from_id].'</span>';
             }
-            $wallet .= '<br/><i class="fa fa-arrow-down" aria-hidden="true"></i>';
+            $wallet .= '&nbsp;<i class="fa fa-arrow-right" aria-hidden="true"></i>&nbsp;';
             if ($this->arDictionaries['wallet_to_id'][$obItem->wallet_to_id]) {
-                $wallet .= '<br/><span class="text-success">'.$this->arDictionaries['wallet_to_id'][$obItem->wallet_to_id].'</span>';
+                $wallet .= '<span class="text-success">'.$this->arDictionaries['wallet_to_id'][$obItem->wallet_to_id].'</span>';
             }
-            $wallet .= '</div>';
+            $wallet .= '';
             
             $arItems[$k]->wallet = $wallet;
         }

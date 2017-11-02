@@ -48,7 +48,7 @@ class DashboardController extends BaseController {
         $arDicts = array(
             'wallets' => array(),
             'category_id' => array(),
-            'type' => Category::getTypeList(),
+            'type' => Category::getTypeVisualList(),
         );
         
         
@@ -65,15 +65,15 @@ class DashboardController extends BaseController {
         foreach($arOperations as $k=>$obItem) {
             $wallet = '';
             if ($obItem->type=='transfer') {
-                $wallet = '<div class="text-center float-left">';
+                $wallet = '';
                 if (isset($arDicts['wallets'][$obItem->wallet_from_id])) {
                     $wallet .= '<span class="text-secondary">'.$arDicts['wallets'][$obItem->wallet_from_id].'</span>';
                 }
-                $wallet .= '<br/><i class="fa fa-arrow-down" aria-hidden="true"></i>';
+                $wallet .= '&nbsp;<i class="fa fa-arrow-right" aria-hidden="true"></i>&nbsp;';
                 if (isset($arDicts['wallets'][$obItem->wallet_to_id])) {
-                    $wallet .= '<br/><span class="text-success">'.$arDicts['wallets'][$obItem->wallet_to_id].'</span>';
+                    $wallet .= '<span class="text-success">'.$arDicts['wallets'][$obItem->wallet_to_id].'</span>';
                 }
-                $wallet .= '</div>';
+                $wallet .= '';
             } else {
                 if (isset($arDicts['wallets'][$obItem->wallet_from_id])) {
                     $wallet .= $arDicts['wallets'][$obItem->wallet_from_id];
@@ -104,7 +104,7 @@ class DashboardController extends BaseController {
             'arDictionaries' => $arDicts
         );
         
-        return View::make('dashboard', array('items'=>$arOperations))->nest('tablegrid', 'widgets.tablegrid', $arTable);
+        return View::make('dashboard', array('items'=>$arOperations))->nest('tablegrid', 'widgets.cardgroup', $arTable);
 	}
     
     /**

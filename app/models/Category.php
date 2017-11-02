@@ -40,5 +40,19 @@ class Category extends UserRelative {
             'transfer' => trans('mkeep.transfer'),
         );
     }
+    
+    /**
+     * Returns available types of operations
+     * 
+     * 
+     * @return array available types of operations
+     */    
+    public static function getTypeVisualList () {
+        return array(
+            'income' => '<i class="fa fa-long-arrow-right fa-lg text-success"></i>',
+            'spend' => '<i class="fa fa-long-arrow-left fa-lg text-danger"></i>',
+            'transfer' => '<i class="fa fa-exchange fa-lg text-secondary"></i>',
+        );
+    }
 
 }

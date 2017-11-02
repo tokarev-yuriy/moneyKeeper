@@ -29,8 +29,6 @@ body {
 
 .filter {
     display: inline-block!important;
-    margin-bottom: -17px;
-    border-width: 2px!important;
 }
 @media (max-width: 576px) {
     .filter .form-group {
@@ -86,4 +84,30 @@ footer {
     .container.widget[data-type="chart"] {
         display: none;
     }
+}
+
+.card {
+    border-radius: 0px!important;
+}
+
+.bg-transfer {
+    #background-color: #efefef;
+}
+
+.bg-spend {
+    #background-color: #ffc9d5;
+}
+
+.bg-income {
+    #background-color: #cfe5ce;
+}
+
+.card-btns {
+    position: absolute;
+    z-index: 10;
+    left: 0;
+    display: none;
+}
+.card:hover .card-btns {
+    display: block;
 }

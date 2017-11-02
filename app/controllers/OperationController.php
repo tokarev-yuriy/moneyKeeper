@@ -74,7 +74,7 @@ class OperationController extends CrudListController {
             'wallet_from_id' => array(),
             'wallet_to_id' => array(),
             'category_id' => array(),
-            'type' => Category::getTypeList(),
+            'type' => Category::getTypeVisualList(),
         );
         
         
@@ -137,7 +137,7 @@ class OperationController extends CrudListController {
             'arDictionaries' => $this->__getDictionary()
         );
         
-        return View::make($this->__getView('index'), array('items'=>$arItems))->nest('tablegrid', 'widgets.tablegrid', $arTable);
+        return View::make($this->__getView('index'), array('items'=>$arItems))->nest('tablegrid', 'widgets.cardgroup', $arTable);
     }
     
    
