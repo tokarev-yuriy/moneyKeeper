@@ -150,7 +150,7 @@ class OperationController extends CrudListController {
     protected function __getValidators () {
         return array(
               'value'=>'required|numeric',
-              'comment'=>'required|max:255',
+              //'comment'=>'required|max:255',
               'date'=>'required|date',
             );
     }     
@@ -171,7 +171,7 @@ class OperationController extends CrudListController {
             'category_id'=>array(
                 'title'=>trans('mkeep.category'), 
                 'type'=>'list', 
-                'values'=>array_merge(array(''=>trans('mkeep.all_categories')), $this->arDictionaries['category_id'])
+                'values'=>array_replace(array('-1'=>trans('mkeep.all_categories')), $this->arDictionaries['category_id'])
             )
         );
     } 
@@ -238,7 +238,7 @@ class OperationController extends CrudListController {
         if (strlen(Input::get('date_to'))>0) {
             Session::put('date_to', Input::get('date_to'));
         }
-        if (strlen(Input::get('category_id'))>0 && intval(Input::get('category_id'))>0) {
+        if (strlen(Input::get('category_id'))>0) {
             Session::put('category_id', Input::get('category_id'));
         }
         

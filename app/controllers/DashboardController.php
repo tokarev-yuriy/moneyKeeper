@@ -100,7 +100,7 @@ class DashboardController extends BaseController {
                 'comment' => array('title'=>trans('mkeep.comment')),
             ),
             'arActions' => array('edit', 'delete'),
-            'arFilters' => array('date'=>array('title'=>trans('mkeep.date'), 'type'=>'period'), 'category_id'=>array('title'=>trans('mkeep.category'), 'type'=>'list', 'values'=>array_merge(array(''=>trans('mkeep.all_categories')), $arDicts['category_id']))),
+            'arFilters' => array('date'=>array('title'=>trans('mkeep.date'), 'type'=>'period'), 'category_id'=>array('title'=>trans('mkeep.category'), 'type'=>'list', 'values'=>array_replace(array('-1'=>trans('mkeep.all_categories')), $arDicts['category_id']))),
             'arDictionaries' => $arDicts
         );
         
@@ -123,7 +123,7 @@ class DashboardController extends BaseController {
         if (strlen(Input::get('date_to'))>0) {
             Session::put('date_to', Input::get('date_to'));
         }
-        if (strlen(Input::get('category_id'))>0 && intval(Input::get('category_id'))>0) {
+        if (strlen(Input::get('category_id'))>0) {
             Session::put('category_id', Input::get('category_id'));
         }
         
