@@ -186,7 +186,7 @@ class OperationController extends CrudListController {
         $obItem->comment = Input::get('comment');
         $obItem->date = date('Y-m-d', strtotime(Input::get('date')));
         $obItem->year = date('Y', strtotime(Input::get('date')));
-        $obItem->month = date('M', strtotime(Input::get('date')));
+        $obItem->month = date('n', strtotime(Input::get('date')));
         $obItem->user_id = Auth::id();
         $obItem->type = $this->type;
         $obItem->value = floatval(Input::get('value'));
