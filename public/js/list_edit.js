@@ -76,6 +76,13 @@ ListAjaxEditor.prototype = {
        
        $('#editModalBlock form').submit(function(){
             var form = this;
+            if ($(form).attr('data-state')=='onload') {
+                return false;
+            }
+            
+            $(form).attr('data-state', 'onload');
+            
+            
             $.ajax({
                 'url': $(form).attr('action'),
                 'method': $(form).attr('method'),
