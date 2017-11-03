@@ -89,6 +89,9 @@ return array(
     "per_year" => "per year",
     "in_month" => "in month",
     "in_year" => "in year",
+    "no_data" => "There is no information",
+    "hide_pie_chart" => "Hide Pie Chart",
+    "show_pie_chart" => "Show Pie Chart",
 
 
 );

@@ -1,14 +1,14 @@
 <div class="owl-carousel owl-theme">
         <?foreach($arItems as $obItem):?>
             <?
-                $txtClass =  'black';
+                $bgClass =  'info';
                 if ($obItem->value > 0) {
-                    $txtClass =  'success';
+                    $bgClass =  'info';
                 } elseif($obItem->value < 0) {
-                    $txtClass =  'danger';
+                    $bgClass =  'danger';
                 }
             ?>
-            <div class="bg-info rounded-0 rounded-bottom">
+            <div class="bg-<?=$bgClass?> rounded-0 rounded-bottom">
                 <p class="text-nowrap text-white pb-2 pt-1 mb-0 pl-2">
                     <a href="{{ url('/wallet/'.$obItem->id) }}" class="card-link text-white">
                         <strong><?=$obItem->name?></strong>

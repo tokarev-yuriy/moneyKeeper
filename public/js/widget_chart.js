@@ -24,11 +24,24 @@ ChartWidget.prototype = {
         var self = this;
         
         if (self.chartType=='area') {
-            self.initAreaChart();
-            self.container.before('<a href="javascript: void(0);" onclick="$(\'#'+self.id+'\').toggle();" class="pull-right btn btn-dark mb-2"><i class="fa fa-area-chart fa-2x"></i></a><div class="clearfix"></div>');
+            self.initAreaChart();            
         } else {
             self.initPieChart();
-            self.container.before('<a href="javascript: void(0);" onclick="$(\'#'+self.id+'\').toggle();" class="pull-right btn btn-dark mb-2"><i class="fa fa-pie-chart fa-2x"></i></a><div class="clearfix"></div>');
+            var btnGroup = '<div class="widget-chart-btn pull-right">';
+            btnGroup += '<a href="javascript: void(0);" onclick="$(\'#'+self.id+'\').toggleClass(\'expand\'); $(\'.widget-chart-btn .btn[data-id='+self.id+']\').toggle();" class="btn btn-dark mb-2" data-id="'+self.id+'"><i class="fa fa-pie-chart"></i> '+langTranslations['mkeep.show_pie_chart']+'</a>';
+            btnGroup += '<a href="javascript: void(0);" onclick="$(\'#'+self.id+'\').toggleClass(\'expand\'); $(\'.widget-chart-btn .btn[data-id='+self.id+']\').toggle();" class="btn btn-dark mb-2" data-id="'+self.id+'" style="display: none;"><i class="fa fa-pie-chart"></i> '+langTranslations['mkeep.hide_pie_chart']+'</a>';
+            btnGroup += '</div><div class="clearfix"></div>';
+            self.container.before(btnGroup);
+            self.container.addClass('expandable');
+        }
+        
+        self.chart.addListener("dataUpdated", checkEmptyChart);
+        function checkEmptyChart() {
+            if (self.chart.chartData.length == 0) {
+                self.container.hide();
+                $('.widget-chart-btn .btn[data-id='+self.id+']').hide();
+                
+            }
         }
     },
     
@@ -43,7 +56,7 @@ ChartWidget.prototype = {
           },
           "addClassNames": true,
           "legend":{
-            "position":"bottom",
+            "position":"right",
             "marginTop":10,
             "autoMargins":false
           },
@@ -71,25 +84,24 @@ ChartWidget.prototype = {
               }
             }]
           },
+          "responsive": {
+            "enabled": true,
+            "addDefaultRules": false,
+            "rules": [
+                {
+                  "maxWidth": 902,
+                  "overrides": {
+                    "legend": {
+                      "position":"bottom"
+                    }
+                  }
+                }
+             ]
+          },
           "valueField": "sum",
           "titleField": "name",
+          "creditsPosition": "bottom-right"
         } );
-        
-        self.chart.addListener("init", handleInit);
-
-        self.chart.addListener("rollOverSlice", function(e) {
-          handleRollOver(e);
-        });
-
-        function handleInit(){
-          self.chart.legend.addListener("rollOverItem", handleRollOver);
-        }
-
-        function handleRollOver(e){
-          var wedge = e.dataItem.wedge.node;
-          wedge.parentNode.appendChild(wedge);
-        }
-        
     },
     
     initAreaChart: function() {
@@ -120,6 +132,11 @@ ChartWidget.prototype = {
             period = $(self.container).data('chart-period');
         }
         
+        var format = "MMMM YYYY";
+        if ($(self.container).data('chart-format')) {
+            format = $(self.container).data('chart-format');
+        }
+        
         var stackType = "regular";
         if ($(self.container).data('chart-stacktype')) {
             stackType = $(self.container).data('chart-stacktype');
@@ -135,7 +152,7 @@ ChartWidget.prototype = {
             "legend": {
                 "equalWidths": true,
                 "periodValueText": "[[value.sum]]",
-                "position": "top",
+                "position": "bottom",
                 "valueAlign": "left",
                 "valueWidth": 100
             },
@@ -154,16 +171,34 @@ ChartWidget.prototype = {
             "chartCursor": {
                 "cursorAlpha": 0
             },
+            "responsive": {
+                "enabled": true
+            },
             "dataDateFormat": "YYYY-MM-DD",
             "categoryField": "date",
             "categoryAxis": {
                 "minPeriod": period,
                 "gridPosition": "start",
                 "parseDates": true
-            }
+            },
+             "chartScrollbar": {
+                "scrollbarHeight": 80,
+                "backgroundAlpha": 0,
+                "selectedBackgroundAlpha": 0.1,
+                "selectedBackgroundColor": "#888888",
+                "graphFillAlpha": 0,
+                "graphLineAlpha": 0.5,
+                "selectedGraphFillAlpha": 0,
+                "selectedGraphLineAlpha": 1,
+                "autoGridCount": true,
+                "color": "#AAAAAA"
+            },
+            "chartCursor": {
+                "categoryBalloonDateFormat": format,
+                "cursorPosition": "mouse"
+            },
+            "creditsPosition": "bottom-right"
         } );
-        
-        
     },
     
     load: function() {

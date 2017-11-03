@@ -2,7 +2,7 @@
 
 @section('content')
     
-    <div class="container widget" id="categories-summ" data-url="/account/stat/categories" data-type="chart" style="min-height: 500px;"></div>
+    <div class="container widget" id="categories-summ" data-url="/account/stat/categories" data-type="chart" data-chart-type="pie"></div>
     
     <div id="operationsList">
         <div class="float-right">

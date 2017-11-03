@@ -96,7 +96,7 @@
     <div class="container widget" id="wallets-sum" data-url="/account/stat/wallets">
     </div>
     
-    <div class="container">
+    <div class="container main-container">
     
     @yield('content')
     </div>
@@ -114,12 +114,16 @@
         </div>
       </nav>
     </footer>
-
+    <script type="text/javascript">
+        var langTranslations = {};
+        langTranslations['mkeep.hide_pie_chart'] = '<?=trans('mkeep.hide_pie_chart')?>';
+        langTranslations['mkeep.show_pie_chart'] = '<?=trans('mkeep.show_pie_chart')?>';
+    </script>
     <!-- JavaScripts -->
     <script src="//code.jquery.com/jquery-3.2.1.min.js" crossorigin="anonymous"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
-    <script src="/js/slider/owl.carousel.min.js?v=<?=$version?>"></script>   
+    <script src="/js/popper.min.js?v=<?=$version?>" crossorigin="anonymous"></script>
     <script src="/js/bootstrap.min.js?v=<?=$version?>"></script>   
+    <script src="/js/slider/owl.carousel.min.js?v=<?=$version?>"></script>   
     <script src="/js/widget.js?v=<?=$version?>"></script>   
     <script src="/js/widget_chart.js?v=<?=$version?>"></script>   
     <script src="/js/widget_manager.js?v=<?=$version?>"></script>   
@@ -128,6 +132,7 @@
     <script src="//www.amcharts.com/lib/3/serial.js"></script>
     <script src="//www.amcharts.com/lib/3/plugins/dataloader/dataloader.min.js"></script>
     <script src="//www.amcharts.com/lib/3/themes/light.js"></script>
+    <script src="/js/amcharts.responsive.min.js?v=<?=$version?>"></script>
     @yield('appjsfile')
 </body>
 </html>

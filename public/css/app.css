@@ -45,6 +45,10 @@ body {
     }
 }
 
+.main-container {
+    position: relative;
+}
+
 /* Sticky footer styles
 -------------------------------------------------- */
 
@@ -80,10 +84,16 @@ footer {
       padding-left: 20px;
       padding-right: 20px;
     }
-    
-    .container.widget[data-type="chart"] {
-        display: none;
-    }
+}
+
+.container.widget.expandable {
+    display: none;
+}
+.container.widget[data-type="chart"] {
+    min-height: 500px;
+}
+.container.widget.expandable.expand {
+    display: block;
 }
 
 .card {

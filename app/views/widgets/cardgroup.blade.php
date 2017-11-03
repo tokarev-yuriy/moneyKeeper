@@ -40,6 +40,11 @@
     <?endif;?>
     
       <?$date = '';?>
+      <?if(empty($arItems) || count($arItems)==0):?>
+        <div class="card" style="border-radius: 0;">
+            <div class="card-header"><h3><?=trans('mkeep.no_data')?></h3></div>
+        </div>
+      <?endif;?>
       <?foreach($arItems as $obItem):?>
         <div class="card" style="border-radius: 0;">
             <?if($obItem->date!='' && $obItem->date!=$date):?>

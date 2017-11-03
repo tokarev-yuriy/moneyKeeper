@@ -13,7 +13,7 @@
         }
     ?>
     
-    <div class="container widget" id="categories-summ" data-url="/account/stat/categories/<?=$type?>" data-type="chart" style="min-height: 500px;"></div>
+    <div class="container widget" id="categories-summ" data-url="/account/stat/categories/<?=$type?>" data-type="chart" data-chart-type="pie"></div>
     
     <div id="operationsList">
         <a href="<?=URL::to($paths['add'])?>" data-btn-type="add" class="btn btn-<?=$btnClass?> float-right" data-title="<?=$titles['add']?>"><i class="fa <?=$iconClass?> fa-lg"></i> <?=$titles['add']?></a>
