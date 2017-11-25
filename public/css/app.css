@@ -121,3 +121,42 @@ footer {
 .card:hover .card-btns {
     display: block;
 }
+
+
+
+.categories-widget {
+    text-align: center;
+}
+.categories-widget .progress {
+    width: 75px;
+    height: 75px;
+    position: relative;
+    margin: 0 auto;
+}
+.categories-widget .progress .progress-bar {
+    width: 100%;
+}
+.categories-widget .progress .progress-text {
+    position: absolute;
+    display: block;
+    top: 50%;
+    margin-top: -14px;
+    color: #ffffff;
+    text-align: center;
+    width: 100%;
+    font-size: 14px;
+    font-weight: bold;
+}
+.categories-widget .progress .progress-text span {
+    font-size: 10px;
+}
+
+.progress.total {
+    height: 40px;
+}
+.progress.total .progress-bar {
+    height: 40px;
+    line-height: 40px;
+    font-size: 24px;
+    font-weight: bold;
+}

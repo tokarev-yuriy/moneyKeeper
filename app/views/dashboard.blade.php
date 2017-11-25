@@ -4,6 +4,8 @@
     
     <div class="container widget" id="categories-summ" data-url="/account/stat/categories" data-type="chart" data-chart-type="pie"></div>
     
+    <div class="container widget" id="categories-plan" data-url="/account/stat/progress"></div>
+    
     <div id="operationsList">
         <div class="float-right">
             <a href="<?=URL::to('/account/operations/spend/add')?>" data-btn-type="add" class="btn btn-danger" data-title="<?=trans('mkeep.add_spend')?>"><i class="fa fa-long-arrow-left fa-lg"></i> <?=trans('mkeep.add_spend')?></a>

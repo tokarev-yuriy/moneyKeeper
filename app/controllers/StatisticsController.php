@@ -390,5 +390,59 @@ class StatisticsController extends BaseController {
         
         return $arOperationsSum;
 	}
+    
+    /**
+     * Get data for categories progress
+     * 
+     * 
+     * @return <type>
+     */	
+	public function getProgress()
+	{
+        
+        $arCategories = Category::user()->whereIn('type', array('any', 'spend'))->orderBy('sort','asc')->get();
+        $dbOperations = Operation::select(DB::raw('sum(value) as sum, category_id'))->
+                user();
+                
+        $dbOperations->where('type', '=', 'spend');
+        $dbOperations->where('date', '>=', date('Y-m-01'));
+        $dbOperations->where('date', '<=', date('Y-m-d'));
+        
+        $arOperations = $dbOperations->
+                groupBy('category_id')->
+                get();
+        
+        $arCategoriesSum = array();        
+        foreach ($arOperations as $obOperation) {
+            $arCategoriesSum[$obOperation->category_id] = array('sum'=>$obOperation->sum, 'plan'=>0);
+        }
+        
+        $dbPlans = Plan::select(DB::raw('sum(value) as sum, category_id'))->
+                user();
+        $arPlans = $dbPlans->
+                groupBy('category_id')->
+                get();
+                
+        foreach ($arPlans as $obPlan) {
+            if (!isset($arCategoriesSum[$obPlan->category_id])) {
+                $arCategoriesSum[$obPlan->category_id] = array('sum'=>0);
+            }
+            $arCategoriesSum[$obPlan->category_id]['plan'] = $obPlan->sum;
+        }
+                
+        
+        foreach ($arCategories as $k=>$obCategory) {
+            if (!isset($arCategoriesSum[$obCategory->id])) {
+                $arCategoriesSum[$obCategory->id] = array('sum'=>0, 'plan'=>0);
+            }
+            $arCategoriesSum[$obCategory->id]['name'] = $obCategory->name;
+            $arCategoriesSum[$obCategory->id]['progress'] = 100;
+            if ($arCategoriesSum[$obCategory->id]['plan']>0) {
+                $arCategoriesSum[$obCategory->id]['progress'] = 100*$arCategoriesSum[$obCategory->id]['sum'] / $arCategoriesSum[$obCategory->id]['plan'];
+            }
+        }
+        
+        return View::make('account.stats.progress', array('arItems'=>$arCategoriesSum));
+	}
 
 }
