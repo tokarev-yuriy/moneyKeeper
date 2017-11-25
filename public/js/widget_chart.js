@@ -35,12 +35,22 @@ ChartWidget.prototype = {
             self.container.addClass('expandable');
         }
         
+
+        
         self.chart.addListener("dataUpdated", checkEmptyChart);
         function checkEmptyChart() {
             if (self.chart.chartData.length == 0) {
-                self.container.hide();
+                if (self.chartType=='area') {
+                    self.container.hide();
+                }
                 $('.widget-chart-btn .btn[data-id='+self.id+']').hide();
-                
+            } else {
+                if ($('.widget-chart-btn .btn[data-id='+self.id+']:visible').length == 0) {
+                    $('.widget-chart-btn .btn[data-id='+self.id+']').eq(0).show();
+                    if (self.chartType=='area') {
+                        self.container.show();
+                    }
+                }
             }
         }
     },
@@ -52,7 +62,22 @@ ChartWidget.prototype = {
         self.chart = AmCharts.makeChart( self.id, {
           "type": "pie",
           "dataLoader": {
-            "url": self.url
+            "url": self.url,
+            "complete": function() {
+                var summ = 0;
+                for(var i = 0; i < self.chart.dataProvider.length; i++ ) {
+                    var dp = self.chart.dataProvider[i];
+                    summ += parseFloat(dp.sum);
+                }
+                self.chart.allLabels = [{
+                    "y": "47%",
+                    "align": "center",
+                    "size": 25,
+                    "bold": true,
+                    "text": summ,
+                    "color": "#555"
+                  }];
+            }
           },
           "addClassNames": true,
           "legend":{
@@ -60,7 +85,7 @@ ChartWidget.prototype = {
             "marginTop":10,
             "autoMargins":false
           },
-          "innerRadius": "30%",
+          "innerRadius": "50%",
           "defs": {
             "filter": [{
               "id": "shadow",
