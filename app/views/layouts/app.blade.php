@@ -33,13 +33,14 @@
                 </button>
             </div>
 
-            <div class="collapse navbar-collapse" id="app-navbar-collapse">
+            <div class="collapse navbar-collapse col-9" id="app-navbar-collapse">
                 <!-- Left Side Of Navbar -->
                 <ul class="navbar-nav">                    
 					@if (!Auth::guest())
                         <li class="nav-item"><a href="{{ url('/account/operations/spend') }}" class="nav-link"><i class="fa fa-btn fa-long-arrow-left text-danger"></i><?=trans('mkeep.spends')?></a></li>
                         <li class="nav-item"><a href="{{ url('/account/operations/income') }}" class="nav-link"><i class="fa fa-btn fa-long-arrow-right text-success"></i><?=trans('mkeep.incomes')?></a></li>
                         <li class="nav-item"><a href="{{ url('/account/operations/transfer') }}" class="nav-link"><i class="fa fa-btn fa-exchange"></i><?=trans('mkeep.transfers')?></a></li>
+                        <li class="nav-item"><a href="{{ url('/account/plans') }}" class="nav-link"><i class="fa fa-btn fa-check-square-o"></i><?=trans('mkeep.plans')?></a></li>
                         
                         <li class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle text-nowrap" data-toggle="dropdown" role="button" aria-expanded="true">
@@ -54,7 +55,7 @@
                                 <a href="{{ url('/account/stat/year') }}" class="dropdown-item"><i class="fa fa-btn fa-area-chart"></i><?=trans('mkeep.stat_year')?></a>
                                 <a href="{{ url('/account/stat/yearavg') }}" class="dropdown-item"><i class="fa fa-btn fa-pie-chart"></i><?=trans('mkeep.stat_year_avg')?></a>
                             </div>
-                        </li>
+                        </li>                        
                         
                         
                         <li class="nav-item d-lg-none"><li class="dropdown-divider"></li>

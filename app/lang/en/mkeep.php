@@ -93,5 +93,9 @@ return array(
     "hide_pie_chart" => "Hide Pie Chart",
     "show_pie_chart" => "Show Pie Chart",
 
-
+    "plans" => "Plans",
+    "add_plan" => "Add plan",
+    "edit_plan" => "Edit plan",
+    "delete_plan" => "Delete plan",
+    
 );

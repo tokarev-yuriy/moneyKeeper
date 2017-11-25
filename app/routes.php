@@ -22,4 +22,5 @@ Route::controller('/account/operations/transfer', 'TransferController');
 Route::controller('/account/operations/income', 'IncomeController');
 Route::controller('/account/operations/spend', 'SpendController');
 Route::controller('/account/stat', 'StatisticsController');
+Route::controller('/account/plans', 'PlanController');
 Route::controller('/account', 'AccountController');
