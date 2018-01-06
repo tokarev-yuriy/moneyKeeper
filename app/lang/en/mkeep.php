@@ -32,6 +32,7 @@ return array(
     "type" => "Type",
     "date" => "Date",
     "summ" => "Summ",
+    "icon" => "Icon",
     "category" => "Category",
     "comment" => "Comment",
     "src_wallet" => "Source Wallet",

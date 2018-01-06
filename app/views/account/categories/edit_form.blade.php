@@ -1,4 +1,4 @@
-   <?=Form::open(array('url' => ((isset($obItem) && $obItem->id)?$paths['update'].'/'.$obItem->id:$paths['add'])))?>
+   <?=Form::open(array('url' => ((isset($obItem) && $obItem->id)?$paths['update'].'/'.$obItem->id:$paths['add']), 'files' => true))?>
 
         <div class="row form-group">
             <label for="name" class="col-md-4 control-label"><?=trans('mkeep.name')?></label>
@@ -8,6 +8,64 @@
                 <span class="invalid-feedback">
                 @if (isset($errors) && $errors->has('name'))
                         <strong>{{ $errors->first('name') }}</strong>
+                @endif
+                </span>
+            </div>
+        </div>
+        
+        <div class="row form-group">
+            <label for="icon" class="col-md-4 control-label"><?=trans('mkeep.icon')?></label>
+            <div class="col-md-6">
+                <?$itemId = ((isset($obItem) && $obItem->id)?$obItem->id:0)?>
+                <div id="iconselect-category-icon-<?=$itemId?>"></div>
+                <?=Form::hidden('icon', Input::get('icon', isset($obItem)?$obItem->icon:''), array('id'=>'category-icon-'.$itemId))?>
+                <script>
+                var iconSelect<?=$itemId?>;
+                var iconSelect<?=$itemId?>;
+
+                function iconCategorySelectInit() {
+                    
+                    selectedText<?=$itemId?> = document.getElementById('category-icon-<?=$itemId?>');
+            
+                    document.getElementById("iconselect-category-icon-<?=$itemId?>").addEventListener('changed', function(e){
+                       selectedText<?=$itemId?>.value = iconSelect<?=$itemId?>.getSelectedValue();
+                    });
+                    
+                    iconSelect<?=$itemId?> = new IconSelect("iconselect-category-icon-<?=$itemId?>", {
+                        'selectedIconWidth':48,
+                        'selectedIconHeight':48,
+                        'selectedBoxPadding':1,
+                        'iconsWidth':48,
+                        'iconsHeight':48,
+                        'boxIconSpace':3,
+                        'vectoralIconNumber':8,
+                        'horizontalIconNumber':1});
+
+                    var selectedIcon = selectedText<?=$itemId?>.value;
+                    var icons = [];
+                    <?foreach(Category::getCategoryIcons() as $icon=>$img):?>
+                    icons.push({'iconFilePath':'<?=$img?>', 'iconValue':'<?=$icon?>'});
+                    <?endforeach;?>
+                    
+                    iconSelect<?=$itemId?>.refresh(icons);
+                    for(var i = 0; i < icons.length; i++){
+                        if (icons[i].iconValue==selectedIcon) {
+                            iconSelect<?=$itemId?>.setSelectedIndex(i);
+                        }
+                    }
+                    
+                    
+                }
+                
+                window.onload = function(){
+                    iconCategorySelectInit();
+                };
+                    
+                </script>
+
+                <span class="invalid-feedback">
+                @if (isset($errors) && $errors->has('icon'))
+                        <strong>{{ $errors->first('icon') }}</strong>
                 @endif
                 </span>
             </div>

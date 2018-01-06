@@ -57,6 +57,7 @@ class CategoryController extends CrudListController {
                 'name' => trans('mkeep.name'),
                 'sort' => trans('mkeep.sort'),
                 'type' => trans('mkeep.type'),
+                'icon' => array('title'=>trans('mkeep.icon'), 'type'=>'image'),
             );
     }
     
@@ -87,6 +88,7 @@ class CategoryController extends CrudListController {
               'name'=>'required|max:255',
               'type'=>'required|in:'.implode(',',array_keys(Category::getTypeList())),
               'sort'=>'required|numeric',
+              'icon'=>'in:'.implode(',',array_keys(Category::getCategoryIcons())),
             );
     } 
     
@@ -100,6 +102,8 @@ class CategoryController extends CrudListController {
         $obItem->name = Input::get('name');
         $obItem->type = Input::get('type');
         $obItem->sort = Input::get('sort');
+        $obItem->icon = Input::get('icon');
+        
         $obItem->user_id = Auth::id();
         
         return $obItem;
@@ -112,7 +116,10 @@ class CategoryController extends CrudListController {
      * @return array (field=>array(code=>title))
      */      
     protected function __getDictionary () {
-        return array('type'=>Category::getTypeList());
+        return array(
+            'type'=>Category::getTypeList(),
+            'icon'=>Category::getCategoryIcons()
+        );
     }
 
 }

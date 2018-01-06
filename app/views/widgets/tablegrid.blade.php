@@ -58,9 +58,14 @@
         <?foreach($arHeads as $code=>$column):?>
           <?if(!is_array($column)) $column = array('title'=>$column)?>
           <td <?if(isset($column['style'])):?>style="<?=$column['style']?>"<?endif;?>>
-            <?$value = $obItem->{$code};?>
-            <?if(isset($arDictionaries) && is_array($arDictionaries) && isset($arDictionaries[$code])):?>                
-                <?if(isset($arDictionaries[$code][$value])):?><?=$arDictionaries[$code][$value]?><?endif;?>
+            <?
+                $value = $obItem->{$code};
+                if(isset($arDictionaries) && is_array($arDictionaries) && isset($arDictionaries[$code])) {
+                    if(isset($arDictionaries[$code][$value])) $value = $arDictionaries[$code][$value];
+                }
+            ?>
+            <?if(isset($column['type']) && $column['type']=='image'):?>                
+                <?if($value!=''):?><img src="<?=$value?>" style="width: 30px; height: 30px;"><?endif;?>
             <?else:?>
                 <?=$value?>
             <?endif;?>

@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="/js/slider/assets/owl.carousel.min.css?v=<?=$version?>" />
     <link rel="stylesheet" href="/js/slider/assets/owl.theme.default.min.css?v=<?=$version?>" />
     <link rel="stylesheet" href="/css/app.css?v=<?=$version?>">
+    <link rel="stylesheet" type="text/css" href="/css/lib/control/iconselect.css?v=<?=$version?>" >
 
 </head>
 <body id="app-layout">
@@ -134,6 +135,8 @@
     <script src="//www.amcharts.com/lib/3/plugins/dataloader/dataloader.min.js"></script>
     <script src="//www.amcharts.com/lib/3/themes/light.js"></script>
     <script src="/js/amcharts.responsive.min.js?v=<?=$version?>"></script>
+    <script type="text/javascript" src="/js/lib/control/iconselect.js?v=<?=$version?>"></script>
+    <script type="text/javascript" src="/js/lib/iscroll.js?v=<?=$version?>"></script>
     @yield('appjsfile')
 </body>
 </html>

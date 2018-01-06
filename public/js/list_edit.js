@@ -74,6 +74,10 @@ ListAjaxEditor.prototype = {
          $('#editModalBlock').modal('show');
        }
        
+       if (self.options['afterShow']) {
+           self.options['afterShow']();
+       }
+       
        $('#editModalBlock form').submit(function(){
             var form = this;
             if ($(form).attr('data-state')=='onload') {

@@ -54,5 +54,23 @@ class Category extends UserRelative {
             'transfer' => '<i class="fa fa-exchange fa-lg text-secondary"></i>',
         );
     }
+    
+    /**
+     * Returns possible category icons
+     * 
+     * 
+     * @return <type>
+     */    
+    public static function getCategoryIcons () {
+        $arIcons = array();
+        $files = scandir(public_path().'/img/categories/');
+        foreach ($files as $filename) {
+           $arInfo = pathinfo(public_path().'/img/categories/'.$filename); 
+           if ($arInfo['extension']=='svg') {
+               $arIcons[$arInfo['filename']] = '/img/categories/'.$filename;
+           }
+        }
+        return $arIcons;
+    }
 
 }

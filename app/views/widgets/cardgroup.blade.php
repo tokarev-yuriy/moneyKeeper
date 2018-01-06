@@ -56,7 +56,14 @@
                     <div class="col-1 text-center align-middle">
                         <?=$arDictionaries['type'][$obItem->type]?>
                     </div>
-                    <div class="col-4">
+                    <div class="col-1 text-center align-middle">
+                        <?if(isset($arHeads['category_id'])):?>
+                            <div class="rounded-circle bg-<?if($obItem->type=='spend'):?>danger<?elseif($obItem->type=='income'):?>success<?elseif($obItem->type=='transfer'):?>secondary<?endif;?> category-icon">
+                                <img src="<?=$arDictionaries['category_icon'][$obItem->category_id]?>" alt="<?=$arDictionaries['category_id'][$obItem->category_id]?>">
+                            </div>
+                        <?endif;?>
+                    </div>
+                    <div class="col-3">
                         <?if(isset($arHeads['category_id'])):?>
                             <h4><?=$arDictionaries['category_id'][$obItem->category_id]?></h4>
                         <?endif;?>

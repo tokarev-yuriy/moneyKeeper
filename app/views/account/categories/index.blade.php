@@ -16,7 +16,10 @@
         var obCategoryList;
         $(document).ready(function(){
             obCategoryList = new ListAjaxEditor({
-                'container': $('#categoryList')
+                'container': $('#categoryList'),
+                'afterShow': function(){
+                    iconCategorySelectInit();
+                }
             });
         });
     </script>
