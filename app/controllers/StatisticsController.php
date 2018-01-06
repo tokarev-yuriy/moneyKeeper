@@ -397,16 +397,81 @@ class StatisticsController extends BaseController {
      * 
      * @return <type>
      */	
-	public function getProgress()
+	public function getProgress($type = 'month', $period = false)
+    {
+        return View::make('account.stats.progress', array('arItems'=>$this->_getPlanStatistics($type, $period)));
+    }
+    
+    public function getMonthplan ($period = false)
+    {
+        if (!$period) {
+            $period = date('Y-m-01');
+        }
+        $period = date('Y-m-01', strtotime($period));
+        
+        $prevMonth = date('n', strtotime($period)) - 1;
+        $prevYear = date('Y', strtotime($period));
+        if ($prevMonth<1) {
+            $prevMonth = 12;
+            $prevYear -= 1;
+        }
+        $prevPeriod = date('Y-m-01', mktime(0,0,0,$prevMonth, 1, $prevYear));
+        
+        $nextMonth = date('n', strtotime($period)) + 1;
+        $nextYear = date('Y', strtotime($period));
+        if ($nextMonth>12) {
+            $nextMonth = 1;
+            $nextYear += 1;
+        }
+        $nextPeriod = date('Y-m-01', mktime(0,0,0,$nextMonth, 1, $nextYear));
+        
+        return View::make('account.stats.monthplan', array('prevPeriod'=>$prevPeriod, 'nextPeriod'=> $nextPeriod, 'period'=>$period));
+    }
+    
+    public function getYearplan ($period = false)
+    {
+        if (!$period) {
+            $period = date('Y-01-01');
+        }
+        $period = date('Y-01-01', strtotime($period));
+        
+        $prevPeriod = date('Y-01-01', mktime(0,0,0,1, 1, date("Y", strtotime($period)) - 1));
+        
+        $nextPeriod = date('Y-01-01', mktime(0,0,0,1, 1, date("Y", strtotime($period)) + 1));
+        
+        return View::make('account.stats.yearplan', array('prevPeriod'=>$prevPeriod, 'nextPeriod'=> $nextPeriod, 'period'=>$period));
+    }
+	
+    /**
+     * Calculate plan and spends for concreate period
+     * 
+     * @param string $type type of period (month or year)
+     * @param string $period date in period (ex.: 2000-01-01)
+     * 
+     * @return array progress of spends for categories
+     */    
+    protected function _getPlanStatistics($type='month', $period=false)
 	{
+        if (!$period) {
+            $period = date('Y-m-d');
+        }
+        $periodFrom = date('Y-m-01');
+        $periodTo = date('Y-m-d');
+        if ($type=='month') {
+            $periodFrom = date('Y-m-01', strtotime($period));
+            $periodTo = date('Y-m-31', strtotime($period));
+        } else {
+            $periodFrom = date('Y-01-01', strtotime($period));
+            $periodTo = date('Y-12-31', strtotime($period));
+        }
         
         $arCategories = Category::user()->whereIn('type', array('any', 'spend'))->orderBy('sort','asc')->get();
         $dbOperations = Operation::select(DB::raw('sum(value) as sum, category_id'))->
                 user();
                 
         $dbOperations->where('type', '=', 'spend');
-        $dbOperations->where('date', '>=', date('Y-m-01'));
-        $dbOperations->where('date', '<=', date('Y-m-d'));
+        $dbOperations->where('date', '>=', $periodFrom);
+        $dbOperations->where('date', '<=', $periodTo);
         
         $arOperations = $dbOperations->
                 groupBy('category_id')->
@@ -428,21 +493,28 @@ class StatisticsController extends BaseController {
                 $arCategoriesSum[$obPlan->category_id] = array('sum'=>0);
             }
             $arCategoriesSum[$obPlan->category_id]['plan'] = $obPlan->sum;
+            if ($type=='year') {
+                $arCategoriesSum[$obPlan->category_id]['plan'] *= 12;
+            }
         }
                 
-        
+        $arIcons = Category::getCategoryIcons();
         foreach ($arCategories as $k=>$obCategory) {
             if (!isset($arCategoriesSum[$obCategory->id])) {
                 $arCategoriesSum[$obCategory->id] = array('sum'=>0, 'plan'=>0);
             }
             $arCategoriesSum[$obCategory->id]['name'] = $obCategory->name;
+            $arCategoriesSum[$obCategory->id]['icon'] = false;
+            if ($obCategory->icon && isset($arIcons[$obCategory->icon])) {
+                $arCategoriesSum[$obCategory->id]['icon'] = $arIcons[$obCategory->icon];
+            }
             $arCategoriesSum[$obCategory->id]['progress'] = 100;
             if ($arCategoriesSum[$obCategory->id]['plan']>0) {
                 $arCategoriesSum[$obCategory->id]['progress'] = 100*$arCategoriesSum[$obCategory->id]['sum'] / $arCategoriesSum[$obCategory->id]['plan'];
             }
         }
         
-        return View::make('account.stats.progress', array('arItems'=>$arCategoriesSum));
+        return $arCategoriesSum;
 	}
 
 }

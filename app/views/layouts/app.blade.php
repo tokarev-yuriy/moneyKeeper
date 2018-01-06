@@ -52,9 +52,11 @@
                             <div class="dropdown-menu">
                                 <a href="{{ url('/account/stat/month') }}" class="dropdown-item"><i class="fa fa-btn fa-area-chart"></i><?=trans('mkeep.stat_monthly')?></a>
                                 <a href="{{ url('/account/stat/monthavg') }}" class="dropdown-item"><i class="fa fa-btn fa-pie-chart"></i><?=trans('mkeep.stat_monthly_avg')?></a>
+                                <a href="{{ url('/account/stat/monthplan') }}" class="dropdown-item"><i class="fa fa-btn fa-pie-chart"></i><?=trans('mkeep.stat_monthly_plan')?></a>
                                 <div class="dropdown-divider"></div>
                                 <a href="{{ url('/account/stat/year') }}" class="dropdown-item"><i class="fa fa-btn fa-area-chart"></i><?=trans('mkeep.stat_year')?></a>
                                 <a href="{{ url('/account/stat/yearavg') }}" class="dropdown-item"><i class="fa fa-btn fa-pie-chart"></i><?=trans('mkeep.stat_year_avg')?></a>
+                                <a href="{{ url('/account/stat/yearplan') }}" class="dropdown-item"><i class="fa fa-btn fa-pie-chart"></i><?=trans('mkeep.stat_year_plan')?></a>
                             </div>
                         </li>                        
                         

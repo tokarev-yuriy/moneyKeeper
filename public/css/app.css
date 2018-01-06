@@ -136,19 +136,29 @@ footer {
 .categories-widget .progress .progress-bar {
     width: 100%;
 }
-.categories-widget .progress .progress-text {
+.categories-widget .progress .progress-icon {
     position: absolute;
     display: block;
-    top: 50%;
-    margin-top: -14px;
-    color: #ffffff;
     text-align: center;
     width: 100%;
-    font-size: 14px;
-    font-weight: bold;
+    height: 100%;
 }
-.categories-widget .progress .progress-text span {
-    font-size: 10px;
+.categories-widget .progress .progress-icon img{
+    width: 70%;
+    height: 100%;
+    filter: invert(100%);
+    -webkit-filter: invert(100%);
+}
+.categories-widget .progress-text {
+    display: block;
+    text-align: center;
+    width: 100%;
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+.categories-widget .progress-text span {
+    font-size: 13px;
 }
 
 .progress.total {
@@ -159,4 +169,19 @@ footer {
     line-height: 40px;
     font-size: 24px;
     font-weight: bold;
+}
+.categories-widget a:hover {
+    text-decoration: none;
+}
+
+.category-icon {
+    width: 60px;
+    height: 60px;
+}
+.category-icon img {
+    filter: invert(100%);
+    -webkit-filter: invert(100%);
+    width: 70%;
+    height: 100%;
+    
 }

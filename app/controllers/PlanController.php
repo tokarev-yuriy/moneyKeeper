@@ -98,13 +98,19 @@ class PlanController extends CrudListController {
     protected function __loadDictionaries () {
         $this->arDictionaries = array(
             'category_id' => array(),
+            'category_icon' => array(),
             'type' => Category::getTypeVisualList(),
         );
         
         
-        $arCategories = Category::user()->select('id', 'name')->orderBy('sort')->get();
+        $arCategories = Category::user()->select('id', 'name', 'icon')->orderBy('sort')->get();
+        $arIcons = Category::getCategoryIcons();
         foreach($arCategories as $arCategory) {
             $this->arDictionaries['category_id'][$arCategory->id] = $arCategory->name;
+            $this->arDictionaries['category_icon'][$arCategory->id] = '';
+            if ($arCategory->icon && isset($arIcons[$arCategory->icon])) {
+                $this->arDictionaries['category_icon'][$arCategory->id] = $arIcons[$arCategory->icon];
+            }
         }
         
         return $this->arDictionaries;
