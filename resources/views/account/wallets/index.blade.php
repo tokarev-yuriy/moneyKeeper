@@ -17,7 +17,11 @@
         var obWalletList;
         $(document).ready(function(){
             obWalletList = new ListAjaxEditor({
-                'container': $('#walletList')
+                'container': $('#walletList'),
+                'afterShow': function(){
+                    iconWalletSelectInit();
+                    ColorSelectInit();
+                }
             });
         });
     </script>

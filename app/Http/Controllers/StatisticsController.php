@@ -54,6 +54,7 @@ class StatisticsController extends Controller {
             $arSpends[$obSpend->wallet_from_id] = $obSpend->sum;
         }
         
+        $arIcons = Wallet::getWalletIcons();
         foreach ($arWallets as $k=>$obWallet) {
             $obWallet->value = $obWallet->start;
             if (isset($arIncomes[$obWallet->id])) {
@@ -61,6 +62,12 @@ class StatisticsController extends Controller {
             }
             if (isset($arSpends[$obWallet->id])) {
                 $obWallet->value -= $arSpends[$obWallet->id];
+            }
+            
+            if ($obWallet->icon && isset($arIcons[$obWallet->icon])) {
+                $obWallet->icon = $arIcons[$obWallet->icon];
+            } else {
+                $obWallet->icon = false;
             }
             
             $arWallets[$k] = $obWallet;

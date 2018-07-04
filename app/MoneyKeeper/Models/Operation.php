@@ -62,4 +62,20 @@ class Operation extends UserRelative {
         
         return $arList;
     }
+		
+		/**
+		 * Returns colors of user wallets
+		 * 
+		 * @return [type] [description]
+		 */
+		public static function getWalletColors () {
+			$arList = array();
+			
+			$arItems = Wallet::user()->select('id', 'color')->orderBy('sort')->get();
+			foreach($arItems as $obItem) {
+					$arList[$obItem->id] = $obItem->color;
+			}
+			
+			return $arList;
+		}
 }

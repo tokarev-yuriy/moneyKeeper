@@ -33,6 +33,7 @@ return array(
     "date" => "Дата",
     "summ" => "Сумма",
     "icon" => "Иконка",
+    "color" => "Цвет",
     "category" => "Категория",
     "comment" => "Комментарий",
     "src_wallet" => "Источник",
@@ -77,7 +78,7 @@ return array(
     "delete_transfer" => "Удалить перевод",
     
     "spend" => "Расход",
-    "income" => "Дозод",
+    "income" => "Доход",
     "transfer" => "Перевод",
     "any" => "Любая",
     

@@ -27,7 +27,10 @@
         var obOperationList;
         $(document).ready(function(){
             obOperationList = new ListAjaxEditor({
-                'container': $('#operationsList')
+                'container': $('#operationsList'),
+                'afterShow': function(){
+                    WalletColorsInit();
+                }
             });
         });
     </script>

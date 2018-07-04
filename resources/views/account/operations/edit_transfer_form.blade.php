@@ -56,7 +56,7 @@
      <div class="row form-group">
          <label for="wallet_from_id" class="col-md-4 control-label">{{ trans('mkeep.src_wallet') }}</label>
          <div class="col-md-6">
-             {!! Form::select('wallet_from_id', \App\MoneyKeeper\Models\Operation::getWallets(), Input::get('wallet_from_id', isset($obItem)?$obItem->wallet_from_id:Session::get('wallet_from_id')), array('class'=>(isset($errors) && $errors->has('wallet_from_id') ? 'form-control is-invalid' : 'form-control'))) !!}
+             {!! Form::select('wallet_from_id', \App\MoneyKeeper\Models\Operation::getWallets(), Input::get('wallet_from_id', isset($obItem)?$obItem->wallet_from_id:Session::get('wallet_from_id')), array('class'=>(isset($errors) && $errors->has('wallet_from_id') ? 'form-control is-invalid' : 'form-control').' wallet-selector')) !!}
 
              <span class="invalid-feedback">
              @if (isset($errors) && $errors->has('wallet_from_id'))
@@ -69,7 +69,7 @@
      <div class="row form-group">
          <label for="wallet_to_id" class="col-md-4 control-label">{{ trans('mkeep.dest_wallet') }}</label>
          <div class="col-md-6">
-             {!! Form::select('wallet_to_id', \App\MoneyKeeper\Models\Operation::getWallets(), Input::get('wallet_to_id', isset($obItem)?$obItem->wallet_to_id:Session::get('wallet_to_id')), array('class'=>(isset($errors) && $errors->has('wallet_to_id') ? 'form-control is-invalid' : 'form-control'))) !!}
+             {!! Form::select('wallet_to_id', \App\MoneyKeeper\Models\Operation::getWallets(), Input::get('wallet_to_id', isset($obItem)?$obItem->wallet_to_id:Session::get('wallet_to_id')), array('class'=>(isset($errors) && $errors->has('wallet_to_id') ? 'form-control is-invalid' : 'form-control').' wallet-selector')) !!}
 
              <span class="invalid-feedback">
              @if (isset($errors) && $errors->has('wallet_to_id'))
@@ -87,4 +87,5 @@
              </button>
          </div>
      </div>
+     @include('account.operations.wallet')
  {!! Form::close() !!}

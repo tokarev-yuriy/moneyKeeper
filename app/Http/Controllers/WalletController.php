@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\BaseController;
 use App\Http\Controllers\CrudListController;
+use App\MoneyKeeper\Models\Wallet;
 use View, Input, Session, Config, Request, Auth, Validator, Redirect;
 
 /**
@@ -61,6 +62,8 @@ class WalletController extends CrudListController {
                 'name' => trans('mkeep.name'),
                 'sort' => trans('mkeep.sort'),
                 'start' => trans('mkeep.start'),
+                'color' => array('title'=>trans('mkeep.color'), 'type'=>'color'),
+                'icon' => array('title'=>trans('mkeep.icon'), 'type'=>'image'),
             );
     }
     
@@ -91,6 +94,8 @@ class WalletController extends CrudListController {
               'name'=>'required|max:255',
               'start'=>'required|numeric',
               'sort'=>'required|numeric',
+              'color'=>'required|in:'.implode(',',array_keys(Wallet::getColorList())),
+              'icon'=>'in:'.implode(',',array_keys(Wallet::getWalletIcons())),
             );
     } 
     
@@ -104,9 +109,24 @@ class WalletController extends CrudListController {
         $obItem->name = Input::get('name');
         $obItem->start = Input::get('start');
         $obItem->sort = Input::get('sort');
+        $obItem->icon = Input::get('icon');
+        $obItem->color = Input::get('color');
+        
         $obItem->user_id = Auth::id();
         
         return $obItem;
+    }
+    
+    /**
+     * Returns dictionaries for enum type fields
+     * 
+     * 
+     * @return array (field=>array(code=>title))
+     */      
+    protected function __getDictionary () {
+        return array(
+            'icon'=>Wallet::getWalletIcons()
+        );
     }
 
 }

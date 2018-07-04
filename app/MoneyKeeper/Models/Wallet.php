@@ -25,5 +25,38 @@ class Wallet extends UserRelative {
 	 * @var array
 	 */
 	protected $hidden = array('user_id');
+	
+	/**
+	 * Returns possible wallet icons
+	 * 
+	 * 
+	 * @return <type>
+	 */    
+	public static function getWalletIcons () {
+			$arIcons = array();
+			$files = scandir(public_path().'/img/wallets/');
+			foreach ($files as $filename) {
+				 $arInfo = pathinfo(public_path().'/img/wallets/'.$filename); 
+				 if ($arInfo['extension']=='svg') {
+						 $arIcons[$arInfo['filename']] = '/img/wallets/'.$filename;
+				 }
+			}
+			return $arIcons;
+	}
+	
+	/**
+	 * Returns possible wallet colors
+	 * 
+	 * 
+	 * @return <type>
+	 */    
+	public static function getColorList () {
+		return array(
+			'fff' => '&nbsp;',
+			'f1ece9' => '&nbsp;',
+			'f9e3be' => '&nbsp;',
+			'b8ccc6' => '&nbsp;',
+		);
+	}
 
 }

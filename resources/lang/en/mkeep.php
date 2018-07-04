@@ -33,6 +33,7 @@ return array(
     "date" => "Date",
     "summ" => "Summ",
     "icon" => "Icon",
+    "color" => "Color",
     "category" => "Category",
     "comment" => "Comment",
     "src_wallet" => "Source Wallet",

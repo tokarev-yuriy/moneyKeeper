@@ -82,9 +82,13 @@
                     if(isset($arDictionaries[$code][$value])) $value = $arDictionaries[$code][$value];
                 }
             @endphp
-            @if(isset($column['type']) && $column['type']=='image')               
+            @if(isset($column['type']) && $column['type']=='image')
                 @if($value!='')
                 <img src="{{ $value }}" style="width: 30px; height: 30px;">
+                @endif
+            @elseif(isset($column['type']) && $column['type']=='color')
+                @if($value!='')
+                <div style="width: 30px; height: 30px; background-color: #{{ $value }}">&nbsp;</div>
                 @endif
             @else
                 {{ $value }}
