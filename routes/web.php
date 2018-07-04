@@ -85,3 +85,13 @@ Route::get('/account/stat/yearavgspend', 'StatisticsController@getYearavgspend')
 Route::get('/account/stat/yearavgincome', 'StatisticsController@getYearavgincome');
 Route::get('/account/stat/monthplan/{period?}', 'StatisticsController@getMonthplan');
 Route::get('/account/stat/yearplan/{period?}', 'StatisticsController@getYearplan');
+
+Route::get('/account/import', 'ImportController@getIndex');
+Route::post('/account/import', 'ImportController@postIndex');
+
+Route::get('/account/import/profile', 'ImportProfileController@getIndex');
+Route::get('/account/import/profile/delete/{id}', 'ImportProfileController@getDelete');
+Route::get('/account/import/profile/add', 'ImportProfileController@getAdd');
+Route::post('/account/import/profile/add', 'ImportProfileController@postAdd');
+Route::get('/account/import/profile/update/{id}', 'ImportProfileController@getUpdate');
+Route::post('/account/import/profile/update/{id}', 'ImportProfileController@postUpdate');

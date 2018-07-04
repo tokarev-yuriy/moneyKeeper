@@ -41,6 +41,7 @@
                         <li class="nav-item"><a href="{{ url('/account/operations/income') }}" class="nav-link"><i class="fa fa-btn fa-long-arrow-right text-success"></i><?=trans('mkeep.incomes')?></a></li>
                         <li class="nav-item"><a href="{{ url('/account/operations/transfer') }}" class="nav-link"><i class="fa fa-btn fa-exchange"></i><?=trans('mkeep.transfers')?></a></li>
                         <li class="nav-item"><a href="{{ url('/account/plans') }}" class="nav-link"><i class="fa fa-btn fa-check-square-o"></i><?=trans('mkeep.plans')?></a></li>
+                        <li class="nav-item"><a href="{{ url('/account/import') }}" class="nav-link"><i class="fa fa-btn fa-upload"></i><?=trans('mkeep.import')?></a></li>
                         
                         <li class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle text-nowrap" data-toggle="dropdown" role="button" aria-expanded="true">
@@ -63,6 +64,7 @@
                         <li class="nav-item d-lg-none"><li class="dropdown-divider"></li>
                         <li class="nav-item d-lg-none"><a href="{{ url('/account/wallets') }}" class="nav-link"><i class="fa fa-btn fa-credit-card"></i><?=trans('mkeep.wallets')?></a></li>
                         <li class="nav-item d-lg-none"><a href="{{ url('/account/categories') }}" class="nav-link"><i class="fa fa-btn fa-list"></i><?=trans('mkeep.categories')?></a></li>
+                        <li class="nav-item d-lg-none"><a href="{{ url('/account/import/profile') }}" class="nav-link"><i class="fa fa-btn fa-upload"></i><?=trans('mkeep.import_profile')?></a></li>
                         <li class="nav-item d-lg-none"><li class="dropdown-divider"></li>
                         <li class="nav-item d-lg-none"><a href="{{ url('/account/logout') }}" class="nav-link"><i class="fa fa-btn fa-sign-out"></i><?=trans('mkeep.logout')?></a></li>
                         
@@ -87,6 +89,7 @@
                             <div class="dropdown-menu">
                                 <a href="{{ url('/account/wallets') }}" class="dropdown-item"><i class="fa fa-btn fa-credit-card"></i><?=trans('mkeep.wallets')?></a>
                                 <a href="{{ url('/account/categories') }}" class="dropdown-item"><i class="fa fa-btn fa-list"></i><?=trans('mkeep.categories')?></a>
+                                <a href="{{ url('/account/import/profile') }}" class="dropdown-item"><i class="fa fa-btn fa-upload"></i><?=trans('mkeep.import_profile')?></a>
                                 <div class="dropdown-divider"></div>
                                 <a href="{{ url('/account/logout') }}" class="dropdown-item"><i class="fa fa-btn fa-sign-out"></i><?=trans('mkeep.logout')?></a>
                             </div>
