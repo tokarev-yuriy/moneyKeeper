@@ -94,7 +94,7 @@ class StatisticsController extends Controller {
         
         $arCategoriesSum = array();        
         foreach ($arOperations as $obOperation) {
-            $arCategoriesSum[$obOperation->category_id] = array('sum'=>$obOperation->sum);
+            $arCategoriesSum[$obOperation->category_id] = array('sum'=>round($obOperation->sum, 2));
         }
                 
         
@@ -340,6 +340,8 @@ class StatisticsController extends Controller {
             foreach ($arCategories as $fieldName) {
                 if (!isset($arGroups[$fieldName])) {
                     $arOperationsSum[$date][$fieldName] = 0;
+                } else {
+                    $arOperationsSum[$date][$fieldName] = round($arOperationsSum[$date][$fieldName], 2);
                 }
             }
         }

@@ -133,7 +133,7 @@
                                 @elseif($arItem['type']=='income')
                                   +
                                 @endif
-                                {{ $arItem['value'] }}
+                                {{ Number::curf($arItem['value']) }}
                             </span>
                         </div>
                         <div class="card-btns pl-2">

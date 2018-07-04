@@ -113,7 +113,7 @@
                                 @elseif($obItem->type=='income')
                                   +
                                 @endif
-                                {{ $obItem->value }}
+                                {{ Number::curf($obItem->value) }}
                             </span>
                         @endif
                     </div>
