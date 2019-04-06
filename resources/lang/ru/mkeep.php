@@ -27,7 +27,7 @@ return array(
     "name" => "Имя",
     "confirm_password" => "Подтверждение пароля",
     "sort" => "Сортировка",
-    "start" => "НАчальная сумма",
+    "start" => "Начальная сумма",
     "save" => "Сохранить",
     "type" => "Тип",
     "date" => "Дата",
@@ -63,17 +63,17 @@ return array(
     "delete_operation" => "Удалить операцию",
     
     "spends" => "Расходы",
-    "add_spend" => "Добавить расход",
+    "add_spend" => "Расход",
     "edit_spend" => "Изменить расход",
     "delete_spend" => "Удалить расход",
     
     "incomes" => "Доходы",
-    "add_income" => "Добавить доход",
+    "add_income" => "Доход",
     "edit_income" => "Изменить доход",
     "delete_income" => "Удалить доход",
     
     "transfers" => "Переводы",
-    "add_transfer" => "Добавить перевод",
+    "add_transfer" => "Перевод",
     "edit_transfer" => "Изменить перевод",
     "delete_transfer" => "Удалить перевод",
     
@@ -123,6 +123,6 @@ return array(
     "import_profile_category_rules_help" => 'Укажите перечень ключевых слов или фраз для каждой категории, через запятую',
     "import_check_items" => 'Проверьте полученные данные перед сохранением в базу',
     
-
+    "not_selected" => 'Не выбрано',
 
 );

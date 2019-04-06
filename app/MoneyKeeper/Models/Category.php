@@ -49,9 +49,9 @@ class Category extends UserRelative {
      */    
     public static function getTypeVisualList () {
         return array(
-            'income' => '<i class="fa fa-long-arrow-right fa-lg text-success"></i>',
-            'spend' => '<i class="fa fa-long-arrow-left fa-lg text-danger"></i>',
-            'transfer' => '<i class="fa fa-exchange fa-lg text-secondary"></i>',
+            'income' => '<i class="material-icons text-success">arrow_forward</i>',
+            'spend' => '<i class="material-icons text-danger">arrow_back</i>',
+            'transfer' => '<i class="material-icons text-secondary">swap_horiz</i>',
         );
     }
     

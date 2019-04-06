@@ -11,7 +11,7 @@
     <div class="clearfix"></div>
 
     @if(count($arFilters)>0)
-    <div class="filter bg-dark p-2 rounded-top mt-2 text-white">
+    <div class="card col filter p-2 rounded-top mt-2">
         {!! Form::open(array('class'=>'form-inline')) !!}
         @foreach($arFilters as $code => $arFilterItem)
             <div class="form-group">
@@ -51,21 +51,39 @@
         </div>
       @endif
       @foreach($arItems as $obItem)
-        <div class="card" style="border-radius: 0;">
+        <div class="card mb-0 
+        @if($obItem->date!='' && $obItem->date!=$date)
+          
+        @else 
+          mt-0
+        @endif
+        " style="border-radius: 0;">
             @if($obItem->date!='' && $obItem->date!=$date)
-                <div class="card-header"><h3>{{ date("Y.m.d", strtotime($obItem->date)) }}</h3></div>
+              <div class="card-header card-header-info" style="width: auto;">
+                <h4 class="card-title" style="width: auto;">{{ date("d.m.Y", strtotime($obItem->date)) }}</h4>
+              </div>
                 @php 
                   $date = $obItem->date;
                 @endphp
             @endif
             <div class="card-body bg-{{ $obItem->type }} p-2">
+              <div class="col-12">
+                <div class="card-btns pl-2">
+                    @if(in_array('edit', $arActions))
+                        @if(isset($obItem->editPath))
+                        <a class="btn btn-info" data-btn-type="edit" href="{{ $obItem->editPath }}" data-title="{{ $obItem->editTitle }}"><i class="material-icons">edit</i></a>
+                        @endif
+                    @endif
+                    @if(in_array('delete', $arActions))
+                        @if(isset($obItem->deletePath))
+                        <a class="btn btn-dark" data-btn-type="delete" href="{{ $obItem->deletePath }}" data-title="{{ $obItem->deleteTitle }}"><i class="material-icons">close</i></a>
+                        @endif
+                    @endif
+                </div>
                 <div class="row">
-                    <div class="col-1 text-center align-middle">
-                        {!! $arDictionaries['type'][$obItem->type] !!}
-                    </div>
-                    <div class="col-1 text-center align-middle">
-                        @if(isset($arHeads['category_id']))
-                            <div class="rounded-circle 
+                  <div class="col-8">
+                        @if(isset($arHeads['category_id']) && isset($arDictionaries['category_id'][$obItem->category_id]))
+                            <div class="
                               @if($obItem->type=='spend')
                               bg-danger
                               @elseif($obItem->type=='income')
@@ -78,10 +96,6 @@
                                 <img src="{{ $arDictionaries['category_icon'][$obItem->category_id] }}" alt="{{ $arDictionaries['category_id'][$obItem->category_id] }}">
                                 @endif
                             </div>
-                        @endif
-                    </div>
-                    <div class="col-3">
-                        @if(isset($arHeads['category_id']) && isset($arDictionaries['category_id'][$obItem->category_id]))
                             <h4>{{ $arDictionaries['category_id'][$obItem->category_id] }}</h4>
                         @endif
                         @if(isset($arHeads['wallet']))
@@ -91,46 +105,33 @@
                         @elseif(isset($arHeads['wallet_to_id']) && isset($arDictionaries['wallet_to_id'][$obItem->wallet_to_id]))
                             {!! $arDictionaries['wallet_to_id'][$obItem->wallet_to_id] !!}
                         @endif
-                    </div>
-                    <div class="col-4">
-                        @if(isset($arHeads['comment']))
-                            <i>{{ $obItem->comment }}</i>
-                        @endif
-                    </div>
-                    <div class="col-3 text-right">
-                        @if(isset($arHeads['value']))
-                            <span class="h3 
+                    </div>                    
+                    <div class="col-4  text-right">
+                      @if(isset($arHeads['value']))
+                          <span class="h3 
+                            @if($obItem->type=='spend')
+                              text-danger
+                            @elseif($obItem->type=='income')
+                              text-success
+                            @elseif($obItem->type=='transfer')
+                              text-secondary
+                            @endif
+                          ">
                               @if($obItem->type=='spend')
-                                text-danger
+                                -
                               @elseif($obItem->type=='income')
-                                text-success
-                              @elseif($obItem->type=='transfer')
-                                text-secondary
+                                +
                               @endif
-                            ">
-                                @if($obItem->type=='spend')
-                                  -
-                                @elseif($obItem->type=='income')
-                                  +
-                                @endif
-                                {{ Number::curf($obItem->value) }}
-                            </span>
-                        @endif
-                    </div>
-                    <div class="card-btns pl-2">
-                        @if(in_array('edit', $arActions))
-                            @if(isset($obItem->editPath))
-                            <a class="btn btn-info" data-btn-type="edit" href="{{ $obItem->editPath }}" data-title="{{ $obItem->editTitle }}"><i class="fa fa-pencil fa-lg"></i></a>
-                            @endif
-                        @endif
-                        @if(in_array('delete', $arActions))
-                            @if(isset($obItem->deletePath))
-                            <a class="btn btn-dark" data-btn-type="delete" href="{{ $obItem->deletePath }}" data-title="{{ $obItem->deleteTitle }}"><i class="fa fa-remove fa-lg"></i></a>
-                            @endif
-                        @endif
+                              {{ Number::curf($obItem->value) }}
+                          </span>
+                      @endif
+                      @if(isset($arHeads['comment']))
+                          <div class="text-secondary card-comment">{{ $obItem->comment }}</div>
+                      @endif                      
                     </div>
                 </div>
             </div>
+          </div>
         </div>
     @endforeach
     

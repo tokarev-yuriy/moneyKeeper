@@ -1,89 +1,70 @@
-body {
-    min-width: 769px;
+.sidebar .sidebar-background:after {
+  background-color: rgba(27,27,27,.87);
+  opacity: .85; 
 }
 
-.container {
-    min-width: 748px!important;
+.nav .dropdown.show .dropdown-menu {
+    position: static!important;
+    background-color: transparent;
+    width: auto;
+    float: none;
+    box-shadow: none;
+    margin-left: 20px;
 }
 
-@media (min-width: 768px) {
-  .container {
-    max-width: 748px;
-  }
-}
-
-@media (min-width: 992px) {
-  .container {
-    max-width: 972px;
-  }
-}
-
-@media (min-width: 1200px) {
-  .container {
-    max-width: 1140px;
-  }
-}
 .fa-btn {
     margin-right: 6px;
 }
 
 .filter {
     display: inline-block!important;
+    max-width: 600px;
 }
-@media (max-width: 576px) {
-    .filter .form-group {
-      display: flex;
-      flex: 0 0 auto;
-      flex-flow: row wrap;
-      align-items: center;
-      margin-bottom: 0;
-    }
-    .filter .form-group .form-control {
-      display: inline-block;
-      width: auto; // Prevent labels from stacking above inputs in `.form-group`
-      vertical-align: middle;
-    }
+
+#wallets-sum {
+  padding-left: 0px;
+  padding-right: 0px;  
+  height: 200px;
+}
+#wallets-sum > div{
+  position: absolute;
+  right: 1px;
+}
+#operationsList {
+  max-width: 1000px;
+  margin: auto;
+}
+
+.card.card-stats {
+  margin-left: 15px; 
+  margin-right: 15px;
+  width: 125px;
+  padding: 10px 10px;
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+.card.card-stats .card-title {
+  margin-bottom: 0px;
+}
+.card.card-stats h3.card-title {
+  text-align: right;
+}
+.card.card-stats .card-stats-img {
+  margin: -20px 0;
+}
+
+.scrollable-menu {
+  height: auto;
+  max-height: 400px;
+  overflow-x: hidden;
+}
+.perfect-scrollbar-on .modal-open .main-panel {
+    height: auto;
+    max-height: none;
 }
 
 .main-container {
     position: relative;
-}
-
-/* Sticky footer styles
--------------------------------------------------- */
-
-html,
-body {
-    height: 100%;
-}
-
-#wrap {
-    min-height: 100%;
-    height: auto !important;
-    height: 100%;
-    margin: 0 auto -63px;
-}
-
-/* Set the fixed height of the footer here */
-#push {
-    margin-top: 20px;
-}
-#push,
-footer {
-    height: 63px;
-}
-footer {
-    background-color: #f5f5f5;
-}
-
-/* Lastly, apply responsive CSS fixes as necessary */
-@media (max-width: 767px) {
-    footer {
-      margin-left: -20px;
-      margin-right: -20px;
-      padding-left: 20px;
-      padding-right: 20px;
-    }
 }
 
 .container.widget.expandable {
@@ -94,10 +75,6 @@ footer {
 }
 .container.widget.expandable.expand {
     display: block;
-}
-
-.card {
-    border-radius: 0px!important;
 }
 
 .bg-transfer {
@@ -115,7 +92,7 @@ footer {
 .card-btns {
     position: absolute;
     z-index: 10;
-    left: 0;
+    right: 0;
     display: none;
 }
 .card:hover .card-btns {
@@ -163,6 +140,7 @@ footer {
 
 .progress.total {
     height: 40px;
+    margin: 0 -25px;
 }
 .progress.total .progress-bar {
     height: 40px;
@@ -174,16 +152,130 @@ footer {
     text-decoration: none;
 }
 
+.categories-widget span {
+  font-weight: bold;
+  white-space: nowrap;
+}
+
 .category-icon {
     width: 60px;
     height: 60px;
+    display: inline-block;
+    margin: auto;
+    float: left;
+    margin-right: 10px;
 }
 .category-icon img {
     filter: invert(100%);
     -webkit-filter: invert(100%);
     width: 70%;
     height: 100%;
-    
+    margin-left: 15%;
 }
 
 .pagination{display:inline-block;padding-left:0;margin:22px 0;border-radius:4px}.pagination>li{display:inline}.pagination>li>a,.pagination>li>span{position:relative;float:left;padding:6px 12px;line-height:1.6;text-decoration:none;color:#3097d1;background-color:#fff;border:1px solid #ddd;margin-left:-1px}.pagination>li:first-child>a,.pagination>li:first-child>span{margin-left:0;border-bottom-left-radius:4px;border-top-left-radius:4px}.pagination>li:last-child>a,.pagination>li:last-child>span{border-bottom-right-radius:4px;border-top-right-radius:4px}.pagination>li>a:focus,.pagination>li>a:hover,.pagination>li>span:focus,.pagination>li>span:hover{z-index:2;color:#216a94;background-color:#eee;border-color:#ddd}.pagination>.active>a,.pagination>.active>a:focus,.pagination>.active>a:hover,.pagination>.active>span,.pagination>.active>span:focus,.pagination>.active>span:hover{z-index:3;color:#fff;background-color:#3097d1;border-color:#3097d1;cursor:default}.pagination>.disabled>a,.pagination>.disabled>a:focus,.pagination>.disabled>a:hover,.pagination>.disabled>span,.pagination>.disabled>span:focus,.pagination>.disabled>span:hover{color:#777;background-color:#fff;border-color:#ddd;cursor:not-allowed}.pagination-lg>li>a,.pagination-lg>li>span{padding:10px 16px;font-size:18px;line-height:1.3333333}.pagination-lg>li:first-child>a,.pagination-lg>li:first-child>span{border-bottom-left-radius:6px;border-top-left-radius:6px}.pagination-lg>li:last-child>a,.pagination-lg>li:last-child>span{border-bottom-right-radius:6px;border-top-right-radius:6px}.pagination-sm>li>a,.pagination-sm>li>span{padding:5px 10px;font-size:12px;line-height:1.5}.pagination-sm>li:first-child>a,.pagination-sm>li:first-child>span{border-bottom-left-radius:3px;border-top-left-radius:3px}.pagination-sm>li:last-child>a,.pagination-sm>li:last-child>span{border-bottom-right-radius:3px;border-top-right-radius:3px}.pager{padding-left:0;margin:22px 0;list-style:none;text-align:center}.pager:after,.pager:before{content:" ";display:table}.pager:after{clear:both}.pager li{display:inline}.pager li>a,.pager li>span{display:inline-block;padding:5px 14px;background-color:#fff;border:1px solid #ddd;border-radius:15px}.pager li>a:focus,.pager li>a:hover{text-decoration:none;background-color:#eee}.pager .next>a,.pager .next>span{float:right}.pager .previous>a,.pager .previous>span{float:left}.pager .disabled>a,.pager .disabled>a:focus,.pager .disabled>a:hover,.pager .disabled>span{color:#777;background-color:#fff;cursor:not-allowed}
+
+
+
+@media (max-width: 576px) {
+    .filter .form-group {
+      display: flex;
+      flex: 0 0 auto;
+      flex-flow: row wrap;
+      align-items: center;
+      margin-bottom: 0;
+    }
+    .filter .form-group .form-control {
+      display: inline-block;
+      width: auto; // Prevent labels from stacking above inputs in `.form-group`
+      vertical-align: middle;
+    }
+    .col,.col-1,.col-2,.col-3,.col-4,.col-5,.col-6,.col-7,.col-8,.col-9 {
+      padding-right: 5px;
+      padding-left: 5px;
+    }
+    .h4:not(.modal-title), h4:not(.modal-title) {
+      line-height: 1.0em;
+      font-size: 1rem;
+    }
+    .category-icon {
+        width: 45px;
+        height: 45px;
+        margin-right: 5px;
+    }
+    
+    .categories-widget .progress {
+      width: 50px;
+      height: 50px;
+    }
+    .categories-widget span {
+      font-size: 14px;
+      font-weight: normal;
+      width: 70px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: inline-block;
+    }
+    #operationsList {
+      margin: 0 -15px;
+    }
+    .btn {
+      padding: 12px 15px;
+    }
+    .card-comment {
+      margin-top: -7px;
+    }
+    
+    
+    
+    
+    
+    
+    /*******************************
+* MODAL AS LEFT/RIGHT SIDEBAR
+* Add "left" or "right" in modal parent div, after class="modal".
+* Get free snippets on bootpen.com
+*******************************/
+	.modal .modal-dialog {
+		position: fixed;
+		margin: auto;
+		width: 90%;
+		height: 100%;
+		-webkit-transform: translate3d(0%, 0, 0);
+		    -ms-transform: translate3d(0%, 0, 0);
+		     -o-transform: translate3d(0%, 0, 0);
+		        transform: translate3d(0%, 0, 0);
+	}
+
+	.modal .modal-content {
+		height: 100%;
+		overflow-y: auto;
+    border-left: 0px;
+    border-top: 0px;
+    border-radius: 0px;
+	}
+	
+	.modal .modal-body{
+		padding: 15px 15px 80px;
+	}
+
+/*Left*/
+	.modal.fade .modal-dialog{
+		left: -320px;
+		-webkit-transition: opacity 0.3s linear, left 0.3s ease-out;
+		   -moz-transition: opacity 0.3s linear, left 0.3s ease-out;
+		     -o-transition: opacity 0.3s linear, left 0.3s ease-out;
+		        transition: opacity 0.3s linear, left 0.3s ease-out;
+	}
+	
+	.modal.fade.show .modal-dialog{
+		left: 0;
+	}
+  
+  .modal .modal-header {
+    padding: 1rem 1rem 1rem;
+  }
+    
+    
+    
+}

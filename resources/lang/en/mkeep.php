@@ -121,4 +121,6 @@ return array(
     "import_profile_category_rules_help" => 'Substrings of descriptions',
     "import_check_items" => 'Please check import data',
     
+    "not_selected" => 'Not selected',
+    
 );

@@ -52,12 +52,50 @@ class Operation extends UserRelative {
      * 
      * @return array user's wallets
      */
-    public static function getWallets () {
+    public static function getWallets ($onlyNames = true) {
         $arList = array();
         
-        $arItems = Wallet::user()->select('id', 'name')->orderBy('sort')->get();
+        $arItems = Wallet::user()->select('id', 'name', 'icon')->orderBy('sort')->get();
         foreach($arItems as $obItem) {
+					if($onlyNames)
             $arList[$obItem->id] = $obItem->name;
+					else
+						$arList[$obItem->id] = $obItem;
+        }
+        
+        return $arList;
+    }
+		
+		/**
+     * Returns available user's Categories of concrete operation type
+     * 
+     * @param string $type type of operation (spend, income, transfer or any)
+     * 
+     * @return array user's categories of selected operation type
+     */    
+    public static function getTypeCategoriesWithIcons ($type) {
+        $arList = array();
+        $categoryIcons = \App\MoneyKeeper\Models\Category::getCategoryIcons();
+        $arItems = Category::user()->select('id', 'name', 'icon')->whereIn('type', array('any', $type))->orderBy('sort')->get();
+        foreach($arItems as $obItem) {
+					$arList[$obItem->id] = (isset($categoryIcons[$obItem->icon])?'<img src="'.$categoryIcons[$obItem->icon].'" style="height: 20px; padding-right: 10px; margin-left: -5px;">':'').$obItem->name;
+        }
+        
+        return $arList;
+    }
+		
+		/**
+     * Returns available user's Wallets
+     * 
+     * 
+     * @return array user's wallets
+     */
+    public static function getWalletsWithIcons () {
+        $arList = array();
+        $walletIcons = \App\MoneyKeeper\Models\Wallet::getWalletIcons();
+        $arItems = Wallet::user()->select('id', 'name', 'icon')->orderBy('sort')->get();
+        foreach($arItems as $obItem) {
+          $arList[$obItem->id] = (isset($walletIcons[$obItem->icon])?'<img src="'.$walletIcons[$obItem->icon].'" style="height: 30px; padding-right: 5px; margin: -5px 0 -5px -10px;">':'').$obItem->name;
         }
         
         return $arList;

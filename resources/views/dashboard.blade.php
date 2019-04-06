@@ -4,7 +4,8 @@
     
     <div class="container widget" id="categories-summ" data-url="/account/stat/categories" data-type="chart" data-chart-type="pie"></div>
     
-    <div class="container widget" id="categories-plan" data-url="/account/stat/progress"></div>
+    <div class="widget" id="categories-plan" data-url="/account/stat/progress" style="align-items: center;
+  justify-content: center;"></div>
     
     <div id="operationsList">
         <div class="float-right">

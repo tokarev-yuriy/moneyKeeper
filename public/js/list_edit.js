@@ -74,6 +74,11 @@ ListAjaxEditor.prototype = {
          $('#editModalBlock').modal('show');
        }
        
+       $('#editModalBlock form').find('a[data-btn-type=edit]').click(function(){
+            self.editItem($(this).attr('href'), title);
+            return false;
+        });
+       
        if (self.options['afterShow']) {
            self.options['afterShow']();
        }

@@ -40,13 +40,13 @@
                         'iconsWidth':48,
                         'iconsHeight':48,
                         'boxIconSpace':3,
-                        'vectoralIconNumber':8,
+                        'vectoralIconNumber':12,
                         'horizontalIconNumber':1});
 
                     var selectedIcon = selectedText{{ $itemId }}.value;
                     var icons = [];
                     @foreach(App\MoneyKeeper\Models\Wallet::getWalletIcons() as $icon=>$img)
-                    icons.push({'iconFilePath':'{{ $img }}', 'iconValue':'{{ $icon }}'});
+                      icons.push({'iconFilePath':'{{ $img }}', 'iconValue':'{{ $icon }}'});
                     @endforeach
                     
                     iconSelect{{ $itemId }}.refresh(icons);
