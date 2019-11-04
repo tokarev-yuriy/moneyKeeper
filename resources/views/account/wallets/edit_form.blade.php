@@ -13,6 +13,19 @@
             </div>
         </div>
         
+         <div class="row form-group">
+            <label for="category_id" class="col-md-4 control-label">{{ trans('mkeep.wallet_group') }}</label>
+            <div class="col-md-6">
+                {!!Form::select('group_id', \App\MoneyKeeper\Models\Wallet::getWalletGroups(), Input::get('group_id', isset($obItem)?$obItem->group_id:''), array('class'=>(isset($errors) && $errors->has('group_id') ? 'form-control is-invalid' : 'form-control'))) !!}
+
+                <span class="invalid-feedback">
+                @if (isset($errors) && $errors->has('group_id'))
+                        <strong>{{ $errors->first('group_id') }}</strong>
+                @endif
+                </span>
+            </div>
+        </div>
+        
         <div class="row form-group">
             <label for="icon" class="col-md-4 control-label">{{ trans('mkeep.icon') }}</label>
             <div class="col-md-6">

@@ -80,6 +80,7 @@ class OperationController extends CrudListController {
             'wallet_from_id' => array(),
             'wallet_to_id' => array(),
             'category_id' => array(),
+            'category_id_icons' => array(),
             'category_icon' => array(),
             'type' => Category::getTypeVisualList(),
         );
@@ -93,6 +94,8 @@ class OperationController extends CrudListController {
             if ($arCategory->icon && isset($arIcons[$arCategory->icon])) {
                 $this->arDictionaries['category_icon'][$arCategory->id] = $arIcons[$arCategory->icon];
             }
+            
+            $this->arDictionaries['category_id_icons'][$arCategory->id] = (isset($arIcons[$arCategory->icon])?'<img src="'.$arIcons[$arCategory->icon].'" style="height: 20px; padding-right: 10px; margin-left: -5px;">':'').$arCategory->name;
         }
         
         $arWallets = Wallet::user()->select('id', 'name')->orderBy('sort')->get();
@@ -189,8 +192,8 @@ class OperationController extends CrudListController {
             ), 
             'category_id'=>array(
                 'title'=>trans('mkeep.category'), 
-                'type'=>'list', 
-                'values'=>array_replace(array('-1'=>trans('mkeep.all_categories')), $this->arDictionaries['category_id'])
+                'type'=>'list',
+                'values'=>array_replace(array('-1'=>trans('mkeep.all_categories')), $this->arDictionaries['category_id_icons'])
             )
         );
     } 

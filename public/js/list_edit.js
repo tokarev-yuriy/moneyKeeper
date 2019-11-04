@@ -17,18 +17,33 @@ ListAjaxEditor.prototype = {
     
     init: function() {
         var self = this;
-        $(self.options.container).find('a[data-btn-type=edit]').click(function(){
-            self.editItem($(this).attr('href'), $(this).attr('data-title'));
+        $(self.options.container).find('[data-btn-type=edit]').click(function(){
+            var url = $(this).attr('href');
+            if (!url && $(this).attr('data-href')) {
+                url = $(this).attr('data-href');
+            }
+                
+            self.editItem(url, $(this).attr('data-title'));
             return false;
         });
         
-        $(self.options.container).find('a[data-btn-type=add]').click(function(){
-            self.editItem($(this).attr('href'), $(this).attr('data-title'));
+        $(self.options.container).find('[data-btn-type=add]').click(function(){
+            var url = $(this).attr('href');
+            if (!url && $(this).attr('data-href')) {
+                url = $(this).attr('data-href');
+            }
+            
+            self.editItem(url, $(this).attr('data-title'));
             return false;
         });
         
-        $(self.options.container).find('a[data-btn-type=delete]').click(function(){
-            self.deleteItem($(this).attr('href'), $(this).attr('data-title'));
+        $(self.options.container).find('[data-btn-type=delete]').click(function(){
+            var url = $(this).attr('href');
+            if (!url && $(this).attr('data-href')) {
+                url = $(this).attr('data-href');
+            }
+            
+            self.deleteItem(url, $(this).attr('data-title'));
             return false;
         });  
     },

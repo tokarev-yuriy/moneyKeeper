@@ -1,51 +1,37 @@
         <div class="row  justify-content-center" id="progressWidget">
         @php
-            $totalSpend = 0;
-            $totalPlan = 0;
+            $i = 0;
         @endphp
-        
         @foreach($arItems as $categoryId=>$arItem)
           @php
-            $totalSpend += $arItem['sum'];
-            $totalPlan += $arItem['plan'];
+            $hidden = "";
+            $i++;
+            if ($i>10) {
+                //$hidden = 'display: none;';
+            }
             $class="success";
             if ($arItem['sum']>$arItem['plan']) {
                 $class="danger";
             }
           @endphp
-          <div class="categories-widget col">
-              <a href="<?=URL::to('/account/operations/spend/add')?>?category_id={{ $categoryId }}" data-btn-type="add" data-title="{{ trans('mkeep.add_spend') }}">
-              <span class="text-dark">{{ $arItem['name'] }}</span>
-              <div class="progress">
-                <div class="progress-bar bg-{{ $class }}" role="progressbar" aria-valuenow="{{ $arItem['sum'] }}" aria-valuemin="0" aria-valuemax="{{ $arItem['plan'] }}"  style="height: {{ $arItem['progress'] }}%; margin-top: {{ 100-$arItem['progress'] }}%;">                                
-                </div>
-                @if($arItem['icon'])
-                  <div class="progress-icon"><img src="{{ $arItem['icon'] }}?v=4"></div>
-                @endif
+          <div class="categories-widget card" style="{{ $hidden }}" data-href="<?=URL::to('/account/operations/spend/add')?>?category_id={{ $categoryId }}" data-btn-type="add" data-title="{{ trans('mkeep.add_spend') }}">
+              @if($arItem['icon'])
+                  <div class="categories-icon"><img src="{{ $arItem['icon'] }}?v=4"></div>
+              @endif
+              <div class="categories-info">
+                <span class="text-dark">{{ $arItem['name'] }}</span>
+                <br/>
+                <span class="text-{{ $class }}">{{ $arItem['sum'] }} / <span class="text-secondary">{{ $arItem['plan'] }}</span></span>
               </div>
-              <div class="progress-text text-{{ $class }}">{{ $arItem['sum'] }}<br/><span class="text-secondary">{{ $arItem['plan'] }}</span></div>
-              </a>
+              
+              <div class="progress total mb-2 mt-2" style="height: 2px;">
+                <div class="progress-bar bg-{{ $class }}" role="progressbar" aria-valuenow="{{ $arItem['sum'] }}" aria-valuemin="0" aria-valuemax="{{ $arItem['plan'] }}"  style="width: {{ $arItem['progress'] }}%;">                                
+                </div>                
+              </div>
           </div>
         @endforeach
         </div>
-        
-        @php
-            $progress = 100;
-            if ($totalPlan>0) {
-                $progress = 100 * $totalSpend / $totalPlan;
-            }
-            $class="bg-success";
-            if ($totalSpend>$totalPlan) {
-                $class="bg-danger";
-            }
-        @endphp
-        <div class="progress total mb-2 mt-2" style="height: 40px;">
-          <div class="progress-bar {{ $class }}" role="progressbar" aria-valuenow="{{ $totalSpend }}" aria-valuemin="0" aria-valuemax="{{ $totalPlan }}"  style="height: 40px; width: {{ $progress }}%;">                
-            {{ $totalSpend }} / {{ $totalPlan }}
-          </div>          
-        </div>
-        
-        
+
         <script type="text/javascript">
             var obProgressWidget;
             $(document).ready(function(){

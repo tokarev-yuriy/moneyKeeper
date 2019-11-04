@@ -3,7 +3,7 @@
  *
  *  @author   Yuriy Tokarev <yuriytok@gmail.com>
  */
-ChartWidget = function (id, url) {
+WidgetChart = function (id, url) {
     
     this.id = id;
     this.url = url;
@@ -18,7 +18,7 @@ ChartWidget = function (id, url) {
     this.init();
 }
 
-ChartWidget.prototype = {
+WidgetChart.prototype = {
     
     init: function() {
         var self = this;

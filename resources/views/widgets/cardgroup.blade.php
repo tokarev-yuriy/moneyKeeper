@@ -11,10 +11,11 @@
     <div class="clearfix"></div>
 
     @if(count($arFilters)>0)
-    <div class="card col filter p-2 rounded-top mt-2">
-        {!! Form::open(array('class'=>'form-inline')) !!}
+    {!! Form::open(array('class'=>'form-inline')) !!}
+        <div class="card col filter p-2 rounded-top mt-2">
+        <div class="filter">
         @foreach($arFilters as $code => $arFilterItem)
-            <div class="form-group">
+            <div class="filter-item">
             @switch($arFilterItem['type'])
                 @case('period')
                         @php
@@ -28,7 +29,9 @@
                         @endphp
                     @break
                 @case('list')
-                        {!! Form::select($code, $arFilterItem['values'], Input::get($code, Session::get($code)), array('class'=>'form-control mr-2')) !!}
+                    @php
+                        echo \App\MoneyKeeper\Helpers\Form::dropdownSelect('category_id', $arFilterItem['values'], Input::get($code, Session::get($code)));
+                    @endphp
                     @break
                 @default
                         {!! Form::text($code, Input::get($code, Session::get($code,'')), array('class'=>'form-control mr-2')) !!}
@@ -36,13 +39,14 @@
             @endswitch
             </div>
         @endforeach
+        </div>
         
         <button type="submit" class="btn btn-info">
             <i class="fa fa-btn fa-filter"></i> {{ trans('mkeep_tablegrid.filter') }}
         </button>
         
-        {!! Form::close() !!}
-    </div>
+        </div>
+    {!! Form::close() !!}
     @endif
     
       @if(empty($arItems) || count($arItems)==0)

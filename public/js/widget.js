@@ -32,31 +32,19 @@ Widget.prototype = {
                     var owlCnt = $(self.container).find('.owl-carousel').length;
                     var owl = $(self.container).find('.owl-carousel');
                     
-                    owl.on('initialize.owl.carousel', function(event) {
-                      if ($(self.container).find('.owl-carousel .card-stats').length < event.relatedTarget.settings.items) {
-                        event.relatedTarget.settings.center = true;
-                        event.relatedTarget.options.center = true;
-                      }
-                    });
-                    
                     owl.owlCarousel({
-                        margin:3,
-                        responsive:{
-                            0:{items:2},
-                            300:{items:3},
-                            450:{items:4},
-                            600:{items:5},
-                            750:{items:6},
-                            900:{items:7},
-                            1050:{items:8},
-                            1200:{items:9},
-                            1350:{items:10},
-                            1500:{items:11}
-                        },
-                        nav: false,
-                        dotsEach: 1,
+                        margin:10,
+                        loop: false,
                         center: false,
-                        loop:false,
+                        navigation: true,
+						autoWidth: true,
+                        responsive:{
+                            300:{items:1},
+                            600:{items:2},
+                            900:{items:3},
+                            1200:{items:4},
+                            1500:{items:5}
+                        },
                         navText : ["<i class='fa fa-chevron-left'></i>","<i class='fa fa-chevron-right'></i>"]
                     });                    
                 }
@@ -73,7 +61,7 @@ Widget.prototype = {
     },
     
     align: function() {
-      var self = this;
+      /*var self = this;
       if ($(self.container).find('.categories-widget.col').length) {
         $(self.container).find('.w-100').remove();
         var cnt = $(self.container).find('.categories-widget.col').length;
@@ -85,7 +73,7 @@ Widget.prototype = {
             $(self.container).find('.categories-widget.col').eq(perLine*i - 1).after('<div class="w-100" />');
           }
         }
-      }
+      }*/
     },
     
     reload: function() {

@@ -93,9 +93,22 @@ class Operation extends UserRelative {
     public static function getWalletsWithIcons () {
         $arList = array();
         $walletIcons = \App\MoneyKeeper\Models\Wallet::getWalletIcons();
-        $arItems = Wallet::user()->select('id', 'name', 'icon')->orderBy('sort')->get();
-        foreach($arItems as $obItem) {
-          $arList[$obItem->id] = (isset($walletIcons[$obItem->icon])?'<img src="'.$walletIcons[$obItem->icon].'" style="height: 30px; padding-right: 5px; margin: -5px 0 -5px -10px;">':'').$obItem->name;
+        $arItems = Wallet::user()->select('id', 'name', 'icon', 'group_id')->orderBy('sort')->get();
+		
+		$obWalletGroups = WalletGroup::user()->orderBy('sort','asc')->get();
+        foreach($obWalletGroups as $k=>$obGroup) {
+			$arList[$obGroup->name] = $obGroup->name;
+            foreach ($arItems as $obItem) {
+                if ($obItem->group_id == $obGroup->id) {
+                    $arList[$obItem->id] = (isset($walletIcons[$obItem->icon])?'<img src="'.$walletIcons[$obItem->icon].'" style="height: 30px; padding-right: 5px; margin: -5px 0 -5px -10px;">':'').$obItem->name;
+                }
+            }
+        }
+		$arList[trans('mkeep.wallet_group_others')] = trans('mkeep.wallet_group_others');
+		foreach($arItems as $obItem) {
+			if (!$obItem->group_id) {
+				$arList[$obItem->id] = (isset($walletIcons[$obItem->icon])?'<img src="'.$walletIcons[$obItem->icon].'" style="height: 30px; padding-right: 5px; margin: -5px 0 -5px -10px;">':'').$obItem->name;
+			}
         }
         
         return $arList;

@@ -58,5 +58,24 @@ class Wallet extends UserRelative {
 			'b8ccc6' => '&nbsp;',
 		);
 	}
+    
+    /**
+     * Returns available user's Wallet groups
+     * 
+     * 
+     * @return array user's wallet groups
+     */
+    public static function getWalletGroups () {
+        $arList = array(
+            0 => trans('mkeep.wallet_group_others')
+        );
+        
+        $arItems = WalletGroup::user()->select('id', 'name')->orderBy('sort')->get();
+        foreach($arItems as $obItem) {
+            $arList[$obItem->id] = $obItem->name;
+        }
+        
+        return $arList;
+    }
 
 }

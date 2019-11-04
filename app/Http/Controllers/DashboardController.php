@@ -57,6 +57,7 @@ class DashboardController extends Controller {
         $arDicts = array(
             'wallets' => array(),
             'category_id' => array(),
+            'category_id_icons' => array(),
             'category_icon' => array(),
             'type' => Category::getTypeVisualList(),
         );
@@ -70,6 +71,7 @@ class DashboardController extends Controller {
             if ($arCategory->icon && isset($arIcons[$arCategory->icon])) {
                 $arDicts['category_icon'][$arCategory->id] = $arIcons[$arCategory->icon];
             }
+            $arDicts['category_id_icons'][$arCategory->id] = (isset($arIcons[$arCategory->icon])?'<img src="'.$arIcons[$arCategory->icon].'" style="height: 20px; padding-right: 10px; margin-left: -5px;">':'').$arCategory->name;
         }
         
         $arWallets = Wallet::user()->select('id', 'name')->orderBy('sort')->get();
@@ -116,7 +118,7 @@ class DashboardController extends Controller {
                 'comment' => array('title'=>trans('mkeep.comment')),
             ),
             'arActions' => array('edit', 'delete'),
-            'arFilters' => array('date'=>array('title'=>trans('mkeep.date'), 'type'=>'period'), 'category_id'=>array('title'=>trans('mkeep.category'), 'type'=>'list', 'values'=>array_replace(array('-1'=>trans('mkeep.all_categories')), $arDicts['category_id']))),
+            'arFilters' => array('date'=>array('title'=>trans('mkeep.date'), 'type'=>'period'), 'category_id'=>array('title'=>trans('mkeep.category'), 'type'=>'list', 'values'=>array_replace(array('-1'=>trans('mkeep.all_categories')), $arDicts['category_id_icons']))),
             'arDictionaries' => $arDicts
         );
         

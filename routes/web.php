@@ -21,6 +21,13 @@ Route::get('/account/logout', 'AccountController@getLogout')->name('logout');
 Route::get('/account/register', 'AccountController@getRegister');
 Route::post('/account/register', 'AccountController@postRegister');
 
+Route::get('/account/wallets/groups', 'WalletGroupController@getIndex');
+Route::get('/account/wallets/groups/delete/{id}', 'WalletGroupController@getDelete');
+Route::get('/account/wallets/groups/add', 'WalletGroupController@getAdd');
+Route::post('/account/wallets/groups/add', 'WalletGroupController@postAdd');
+Route::get('/account/wallets/groups/update/{id}', 'WalletGroupController@getUpdate');
+Route::post('/account/wallets/groups/update/{id}', 'WalletGroupController@postUpdate');
+
 Route::get('/account/wallets', 'WalletController@getIndex');
 Route::get('/account/wallets/delete/{id}', 'WalletController@getDelete');
 Route::get('/account/wallets/add', 'WalletController@getAdd');
@@ -85,6 +92,7 @@ Route::get('/account/stat/yearavgspend', 'StatisticsController@getYearavgspend')
 Route::get('/account/stat/yearavgincome', 'StatisticsController@getYearavgincome');
 Route::get('/account/stat/monthplan/{period?}', 'StatisticsController@getMonthplan');
 Route::get('/account/stat/yearplan/{period?}', 'StatisticsController@getYearplan');
+Route::get('/account/stat/totals/{type?}/{period?}', 'StatisticsController@getTotals');
 
 Route::get('/account/import', 'ImportController@getIndex');
 Route::post('/account/import', 'ImportController@postIndex');

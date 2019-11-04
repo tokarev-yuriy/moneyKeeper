@@ -125,4 +125,9 @@ return array(
     
     "not_selected" => 'Не выбрано',
 
+    "wallet_group_others" => "Прочее",
+    "wallet_group" => "Группа",
+    "wallets_groups" => "Группы",
+    "add_wallets_group" => "Добавить",
+
 );

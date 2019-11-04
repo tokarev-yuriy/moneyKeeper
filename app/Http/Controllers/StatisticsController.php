@@ -4,6 +4,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\CrudListController;
 use App\MoneyKeeper\Models\Category;
 use App\MoneyKeeper\Models\Wallet;
+use App\MoneyKeeper\Models\WalletGroup;
 use App\MoneyKeeper\Models\Operation;
 use App\MoneyKeeper\Models\Plan;
 use View, Input, Session, Config, Request, Auth, Validator, Redirect, DB;
@@ -36,6 +37,7 @@ class StatisticsController extends Controller {
 	{
         
         $arWallets = Wallet::user()->orderBy('sort','asc')->get();
+       
         $arDbIncomes = Operation::select(DB::raw('sum(value) as sum, wallet_to_id'))->
                 user()->
                 groupBy('wallet_to_id')->
@@ -73,7 +75,34 @@ class StatisticsController extends Controller {
             $arWallets[$k] = $obWallet;
         }
         
-        return view('account.stats.wallets', array('arItems'=>$arWallets));
+        $arWalletGroups = [];
+        $obWalletGroups = WalletGroup::user()->orderBy('sort','asc')->get();
+        foreach($obWalletGroups as $k=>$obGroup) {
+            $arWalletGroups[$k] = [
+                'name' => $obGroup->name,
+                'summ' => 0,
+                'items' => [],
+            ];
+            foreach ($arWallets as $obWallet) {
+                if ($obWallet->group_id == $obGroup->id) {
+                    $arWalletGroups[$k]['items'][] = $obWallet;
+                    $arWalletGroups[$k]['summ'] += $obWallet->value;
+                }
+            }
+        }
+        $arWalletGroups['others'] = [
+            'name' => trans('mkeep.wallet_group_others'),
+            'summ' => 0,
+            'items' => []
+        ];
+        foreach ($arWallets as $k=>$obWallet) {
+            if (!$obWallet->group_id) {
+                $arWalletGroups['others']['items'][] = $obWallet;
+                $arWalletGroups['others']['summ'] += $obWallet->value;
+            }
+        }
+        
+        return view('account.stats.wallets', array('arItems'=>$arWalletGroups));
 	}
     
     
@@ -313,7 +342,7 @@ class StatisticsController extends Controller {
 	protected function __getStatByPeriod($period="month", $field="type", $type="any")
 	{
         
-        $dbOperations = Operation::select(DB::raw('value, year, month, '.$field))->
+        $dbOperations = Operation::select(DB::raw('value, year, month, type, category_id'))->
                 user();
                 
         if ($type!='any') {
@@ -405,7 +434,47 @@ class StatisticsController extends Controller {
         }
         
         return $arOperationsSum;
-	}
+    }
+    
+    /**
+     * Get data for categories progress
+     * 
+     * 
+     * @return <type>
+     */	
+	public function getTotals($type = 'month', $period = false)
+    {
+		if ($period) {
+			$period = strtotime($period);
+		} else {
+			$period = time();
+		}
+		$arPlan = Plan::select(DB::raw('sum(value) as sum'))->user()->get();
+		$totals = ['plan'=>$arPlan[0]['sum']];
+		
+		$dbOperations = Operation::select(DB::raw('sum(value) as sum, type'))->user()
+						->where('year','=',date('Y', $period));
+						
+		if ($type=='month') {
+			$dbOperations->where('month','=',date('m', $period));
+		} else {
+			$totals['plan'] *= 12;
+		}
+		
+		$arOperations = $dbOperations->groupBy('type')->get();
+		
+		foreach($arOperations as $arOperation) {
+			$totals[$arOperation['type']] = $arOperation['sum'];
+		}
+		$max = max($totals);
+		$totalsOld = $totals;
+		foreach ($totalsOld as $k=>$v) {
+			$totals[$k."_percent"] = 100*$v / $max;
+		}
+		$totals['max'] = $max;
+		
+        return json_encode($totals);
+    }
     
     /**
      * Get data for categories progress
