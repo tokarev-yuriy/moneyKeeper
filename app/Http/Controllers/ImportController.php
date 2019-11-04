@@ -270,7 +270,9 @@ class ImportController extends Controller {
         if ($arTransaction['value']<0) {
             $arTransaction['type'] = 'spend';
             $arTransaction['value'] *= -1;
-        } else {
+        } elseif(in_array('Debit', $arRow)) {
+			$arTransaction['type'] = 'spend';
+		} else {
             $arTransaction['type'] = 'income';
         }
         
