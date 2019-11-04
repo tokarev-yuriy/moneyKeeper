@@ -17,18 +17,25 @@
 }
 
 .filter {
-    display: inline-block!important;
-    max-width: 600px;
+   flex-direction: unset;
+   -webkit-box-pack: justify;
+   -ms-flex-pack: justify;
+   justify-content: space-between;
+   -webkit-box-align: center;
+   -ms-flex-align: center;
+   align-items: safe center;
+   display: flex;
 }
-
+.filter .btn {
+    float: right;
+    display: block;
+}
+.filter .filter-item {
+	position: relative;
+}
 #wallets-sum {
   padding-left: 0px;
-  padding-right: 0px;  
-  height: 200px;
-}
-#wallets-sum > div{
-  position: absolute;
-  right: 1px;
+  padding-right: 0px;
 }
 #operationsList {
   max-width: 1000px;
@@ -98,65 +105,6 @@
 .card:hover .card-btns {
     display: block;
 }
-
-
-
-.categories-widget {
-    text-align: center;
-}
-.categories-widget .progress {
-    width: 75px;
-    height: 75px;
-    position: relative;
-    margin: 0 auto;
-}
-.categories-widget .progress .progress-bar {
-    width: 100%;
-}
-.categories-widget .progress .progress-icon {
-    position: absolute;
-    display: block;
-    text-align: center;
-    width: 100%;
-    height: 100%;
-}
-.categories-widget .progress .progress-icon img{
-    width: 70%;
-    height: 100%;
-    filter: invert(100%);
-    -webkit-filter: invert(100%);
-}
-.categories-widget .progress-text {
-    display: block;
-    text-align: center;
-    width: 100%;
-    font-size: 16px;
-    font-weight: bold;
-    margin-bottom: 20px;
-}
-.categories-widget .progress-text span {
-    font-size: 13px;
-}
-
-.progress.total {
-    height: 40px;
-    margin: 0 -25px;
-}
-.progress.total .progress-bar {
-    height: 40px;
-    line-height: 40px;
-    font-size: 24px;
-    font-weight: bold;
-}
-.categories-widget a:hover {
-    text-decoration: none;
-}
-
-.categories-widget span {
-  font-weight: bold;
-  white-space: nowrap;
-}
-
 .category-icon {
     width: 60px;
     height: 60px;
@@ -204,18 +152,6 @@
         margin-right: 5px;
     }
     
-    .categories-widget .progress {
-      width: 50px;
-      height: 50px;
-    }
-    .categories-widget span {
-      font-size: 14px;
-      font-weight: normal;
-      width: 70px;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      display: inline-block;
-    }
     #operationsList {
       margin: 0 -15px;
     }
@@ -278,4 +214,71 @@
     
     
     
+}
+#wallets-sum .card {
+	min-width: 250px;
+}
+.wallet {
+    position: relative;
+    padding-left: 50px;
+    line-height: 40px;
+}
+.wallet .wallet-img {
+    width: 40px;
+    position: absolute;
+    left: 5px;
+}
+.group-title {
+	padding-left: 10px;
+    margin-top: 0px;
+	margin-bottom: 0px;
+    padding-right: 0px;
+}
+.group-summ,
+.wallet-summ {
+	float: right;
+}
+.group-summ {
+	margin-left: 20px;
+}
+#wallets-sum .card {
+    margin-top: 0px;
+    padding-right: 10px;
+}
+
+#categories-plan {
+    margin-top: 20px;
+}
+.categories-widget.card {
+    position: relative;
+    width: auto;
+    text-align: left;
+    margin-right: 10px;
+    padding: 10px;
+    margin-top: 0px;
+    cursor: pointer;
+    min-width: 155px;
+}
+.categories-widget .categories-icon {
+    width: 40px;
+    position: absolute;
+    left: 5px;
+}
+.categories-widget .categories-icon img {
+    width: 100%;
+}
+.categories-widget .progress .progress-bar {
+    width: 100%;
+}
+#categories-plan .row {
+    margin-right: -25px;
+}
+.categories-widget .categories-info {
+  font-weight: bold;
+  white-space: nowrap;
+  margin-left: 50px;
+}
+.show .dropdown-toggle:after {
+    -webkit-transform: none!important;
+    transform: none!important;
 }

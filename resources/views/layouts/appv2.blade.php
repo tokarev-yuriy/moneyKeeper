@@ -127,8 +127,8 @@
             </div>
         </div>
     </nav>
-    <div class="container widget" id="wallets-sum" data-url="/account/stat/wallets">
-    </div>
+    <div class="container widget" id="wallets-sum" data-url="/account/stat/wallets"></div>
+    <div class="container widget" id="totals-sum" data-url="/account/stat/totals" data-type="vue"></div>
     
     <div class="container main-container">
     
@@ -160,6 +160,7 @@
     <script src="/js/slider/owl.carousel.min.js?v=<?=time()?>"></script>   
     <script src="/js/widget.js?v=<?=time()?>"></script>   
     <script src="/js/widget_chart.js?v=<?=time()?>"></script>   
+    <script src="/js/widget_vue.js?v=<?=time()?>"></script>   
     <script src="/js/widget_manager.js?v=<?=time()?>"></script>   
     <script src="//www.amcharts.com/lib/3/amcharts.js"></script>
     <script src="//www.amcharts.com/lib/3/pie.js"></script>
@@ -169,6 +170,7 @@
     <script src="/js/amcharts.responsive.min.js?v=<?=time()?>"></script>
     <script type="text/javascript" src="/js/lib/control/iconselect.js?v=<?=time()?>"></script>
     <script type="text/javascript" src="/js/lib/iscroll.js?v=<?=time()?>"></script>
+    <script src="//cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     @yield('appjsfile')
 </body>
 </html>

@@ -81,6 +81,10 @@
             </a>
 
             <div class="dropdown-menu">
+                <a href="{{ url('/account/wallets/groups') }}" class="dropdown-item">
+                  <i class="material-icons">list</i>
+                  <p><?=trans('mkeep.wallets_groups')?></p>
+                </a>
                 <a href="{{ url('/account/wallets') }}" class="dropdown-item">
                   <i class="material-icons">credit_card</i>
                   <p><?=trans('mkeep.wallets')?></p>
@@ -233,6 +237,7 @@
     <script src="/js/slider/owl.carousel.min.js?v=<?=time()?>"></script>   
     <script src="/js/widget.js?v=<?=time()?>"></script>   
     <script src="/js/widget_chart.js?v=<?=time()?>"></script>   
+    <script src="/js/widget_vue.js?v=<?=time()?>"></script>   
     <script src="/js/widget_manager.js?v=<?=time()?>"></script>   
     <script src="//www.amcharts.com/lib/3/amcharts.js"></script>
     <script src="//www.amcharts.com/lib/3/pie.js"></script>
@@ -242,6 +247,7 @@
     <script src="/js/amcharts.responsive.min.js?v=<?=time()?>"></script>
     <script type="text/javascript" src="/js/lib/control/iconselect.js?v=<?=time()?>"></script>
     <script type="text/javascript" src="/js/lib/iscroll.js?v=<?=time()?>"></script>
+	<script src="//cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     @yield('appjsfile')
 </body>
 </html>

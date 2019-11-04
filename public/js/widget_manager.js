@@ -27,9 +27,10 @@ WidgetManager.prototype = {
                 console.log('WIDGET MANAGER: Duplicated widget id');
                 return;
             }
-            
-            if ($(this).attr('data-type')=='chart') {
-                self.widgets[id] = new ChartWidget(id, url);
+            if ($(this).attr('data-type')=='vue') {
+                self.widgets[id] = new WidgetVue(id, url);
+            } else if ($(this).attr('data-type')=='chart') {
+                self.widgets[id] = new WidgetChart(id, url);
             } else {
                 self.widgets[id] = new Widget(id, url);
             }            
