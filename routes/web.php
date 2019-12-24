@@ -96,6 +96,7 @@ Route::get('/account/stat/totals/{type?}/{period?}', 'StatisticsController@getTo
 
 Route::get('/account/import', 'ImportController@getIndex');
 Route::post('/account/import', 'ImportController@postIndex');
+Route::get('/account/sync', 'IntegrationController@getIndex');
 
 Route::get('/account/import/profile', 'ImportProfileController@getIndex');
 Route::get('/account/import/profile/delete/{id}', 'ImportProfileController@getDelete');
@@ -103,3 +104,12 @@ Route::get('/account/import/profile/add', 'ImportProfileController@getAdd');
 Route::post('/account/import/profile/add', 'ImportProfileController@postAdd');
 Route::get('/account/import/profile/update/{id}', 'ImportProfileController@getUpdate');
 Route::post('/account/import/profile/update/{id}', 'ImportProfileController@postUpdate');
+
+Route::get('/account/import/integration', 'IntegrationController@getIndex');
+Route::get('/account/import/integration/delete/{id}', 'IntegrationController@getDelete');
+Route::get('/account/import/integration/add', 'IntegrationController@getAdd');
+Route::post('/account/import/integration/add', 'IntegrationController@postAdd');
+Route::get('/account/import/integration/update/{id}', 'IntegrationController@getUpdate');
+Route::post('/account/import/integration/update/{id}', 'IntegrationController@postUpdate');
+Route::get('/account/import/integration/sync/{id}', 'IntegrationController@getSync');
+Route::post('/account/import/integration/sync/{id}', 'IntegrationController@postSync');

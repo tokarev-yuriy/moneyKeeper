@@ -97,6 +97,10 @@
                   <i class="material-icons">cloud_upload</i>
                   <p><?=trans('mkeep.import_profile')?></p>
                 </a>
+                <a href="{{ url('/account/import/integration') }}" class="dropdown-item">
+                  <i class="material-icons">sync</i>
+                  <p><?=trans('mkeep.integration')?></p>
+                </a>
                 <div class="dropdown-divider"></div>
                 <a href="{{ url('/account/logout') }}" class="dropdown-item">
                   <i class="material-icons">exit_to_app</i>
@@ -123,6 +127,11 @@
          <li class="nav-item"><a href="{{ url('/account/import') }}" class="nav-link">
            <i class="material-icons">cloud_upload</i>
            <p><?=trans('mkeep.import')?></p>
+         </a></li>
+         
+         <li class="nav-item"><a href="{{ url('/account/sync') }}" class="nav-link">
+           <i class="material-icons">sync</i>
+           <p><?=trans('mkeep.sync')?></p>
          </a></li>
          
          <li class="nav-item dropdown">

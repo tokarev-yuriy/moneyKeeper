@@ -21,7 +21,7 @@ class Form {
 	public static function dropdownSelect ($name, $arOptions, $value, $class = '') {
 	    $input = '<input type="hidden" name="'.htmlspecialchars($name).'" value="'.htmlspecialchars($value).'" />';
 			$title = trans('mkeep.not_selected');
-			$id = 'dropdown-'.htmlspecialchars($name).'-'.time();
+			$id = 'dropdown-'.htmlspecialchars(str_replace(["[","]"],"_",$name)).'-'.time();
 			
 			if (isset($arOptions[$value])) {
 				$title = $arOptions[$value];

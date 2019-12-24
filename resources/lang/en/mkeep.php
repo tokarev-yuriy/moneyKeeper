@@ -123,4 +123,19 @@ return array(
     
     "not_selected" => 'Not selected',
     
+    "wallet_group_others" => "Others",
+    "wallet_group" => "Group",
+    "wallets_groups" => "Groups",
+    "add_wallets_group" => "Add",
+    
+    "sync" => "Sync",
+    "integration" => "Integration",
+    "integrations" => "Integrations",
+    "clientId" => "clientId",
+    "clientSecret" => "clientSecret",
+    "refreshToken" => "refreshToken",
+    "edit_integration" => "Edit integration",
+    "add_integration" => "Add integration",
+    "delete_integration" => "Delete integration",
+    
 );

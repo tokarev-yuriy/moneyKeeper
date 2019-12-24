@@ -19,5 +19,6 @@ return array(
     "no" => "No",
     "delete_item" => "Delete Item",
     "filter" => "Filter",
+    "sync" => "Sync",
 
 );

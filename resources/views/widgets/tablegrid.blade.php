@@ -111,6 +111,14 @@
             @endif
           </td>
         @endif
+		@if(in_array('sync', $arActions))
+          <td>
+            @if(isset($obItem->syncPath))
+            <a class="btn btn-success d-none d-md-block" data-btn-type="sync" href="{{ $obItem->syncPath }}" data-title="{{ $obItem->syncTitle }}"><i class="fa fa-refresh fa-lg"></i> {{ trans('mkeep_tablegrid.sync') }}</a>
+            <a class="btn btn-success d-md-none" data-btn-type="sync" href="{{ $obItem->syncPath }}" data-title="{{ $obItem->syncTitle }}"><i class="fa fa-refresh fa-lg"></i></a>
+            @endif
+          </td>
+        @endif
         </tr>
       @endforeach
      </tbody>

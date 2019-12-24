@@ -130,4 +130,14 @@ return array(
     "wallets_groups" => "Группы",
     "add_wallets_group" => "Добавить",
 
+
+    "sync" => "Синхронизация",
+    "integration" => "Интеграция",
+    "integrations" => "Интеграции",
+    "clientId" => "clientId",
+    "clientSecret" => "clientSecret",
+    "refreshToken" => "refreshToken",
+    "edit_integration" => "Изменить интеграцию",
+    "add_integration" => "Добавить интеграцию",
+    "delete_integration" => "Удалить интеграцию",
 );

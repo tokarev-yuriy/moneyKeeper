@@ -10,22 +10,11 @@ use App\MoneyKeeper\Models\ImportProfile;
 use View, Input, Session, Config, Request, Auth, Validator, Redirect;
 
 /**
- *  Import controller
+ *  Tinkoff integration
  *
  *  @author   Yuriy Tokarev <yuriytok@gmail.com>
  */
-class ImportController extends Controller {
-
-    /**
-     * Only authorized users allowed
-     * 
-     * 
-     * @return <type>
-     */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
+class ImportTinkoffController extends ImportController {
 
     /**
      * Get form of import file upload
@@ -36,13 +25,7 @@ class ImportController extends Controller {
 	public function getIndex()
 	{
         
-        $arProfileList = array();
-        $arProfiles = ImportProfile::user()->select('id', 'name')->orderBy('name')->get();
-        foreach($arProfiles as $obProfile) {
-            $arProfileList[$obProfile->id] = $obProfile->name;
-        }
-        
-        return view('account.import.index', array('profileList'=>$arProfileList));
+        return view('account.import.tinkoff.index', array());
 	}
     
     /**
@@ -150,7 +133,7 @@ class ImportController extends Controller {
             $messages = $validator->messages();
         }
         
-        return view('account.import.index', array('profileList'=>$arProfileList, 'errors'=>$messages, 'arTransactions'=>$arTransactions, 'arDictionaries'=>$arDicts));
+        return view('account.import.tinkoff.index', array('profileList'=>$arProfileList, 'errors'=>$messages, 'arTransactions'=>$arTransactions, 'arDictionaries'=>$arDicts));
 	}
     
     /**
@@ -267,7 +250,6 @@ class ImportController extends Controller {
         $arTransaction['value'] = floatval(str_replace(array(' ', ','), array('','.'), $arRow[$obProfile->summ_col-1]));
         $arTransaction['comment'] = trim($arRow[$obProfile->desc_col-1]);
         $arTransaction['category'] = trim($arRow[$obProfile->category_col-1]);        
-        $arTransaction['ext_id'] = md5(print_r($arRow, true));        
         if ($arTransaction['value']<0) {
             $arTransaction['type'] = 'spend';
             $arTransaction['value'] *= -1;
@@ -280,66 +262,6 @@ class ImportController extends Controller {
         $arTransaction['category_id'] = $this->getCategoryId($arTransaction['comment'], $arTransaction['category'], $arTransaction['type'], $obProfile->category_rules);
         
         return $arTransaction;
-    }
-    
-    /**
-     * Get categoryId by comment category and rules
-     * 
-     * @param <type> $comment 
-     * @param <type> $category 
-     * @param <type> $categoryRules 
-     * 
-     * @return <type>
-     */    
-    protected function getCategoryId ($comment, $category, $type, $categoryRules) {
-        
-        $arCategories = Category::user()->select('id', 'name', 'icon')->whereIn('type', array('any', $type))->orderBy('sort')->get();
-        
-        foreach ($categoryRules as $categoryId=>$rule) {
-            $arRules = explode(',',$rule);
-            foreach ($arRules as $rule) {
-                $rule = trim($rule);
-                if (stripos($comment, $rule)!==FALSE || stripos($category, $rule)!==FALSE) {
-                    return $categoryId;
-                }
-            }
-        }
-        
-        return $arCategories[0]->id;
-    }
-    
-    /**
-     * Get Dictionaries
-     * 
-     * 
-     * @return <type>
-     */    
-    protected function getDictionaries() {
-        
-        $arDicts = array(
-            'wallets' => array(),
-            'category_id' => array(),
-            'category_icon' => array(),
-            'type' => Category::getTypeVisualList(),
-        );
-        
-        
-        $arCategories = Category::user()->select('id', 'name', 'icon')->orderBy('sort')->get();
-        $arIcons = Category::getCategoryIcons();
-        foreach($arCategories as $arCategory) {
-            $arDicts['category_id'][$arCategory->id] = $arCategory->name;
-            $arDicts['category_icon'][$arCategory->id] = '';
-            if ($arCategory->icon && isset($arIcons[$arCategory->icon])) {
-                $arDicts['category_icon'][$arCategory->id] = $arIcons[$arCategory->icon];
-            }
-        }
-        
-        $arWallets = Wallet::user()->select('id', 'name')->orderBy('sort')->get();
-        foreach($arWallets as $arWallet) {
-            $arDicts['wallets'][$arWallet->id] = $arWallet->name;
-        }
-        
-        return $arDicts;
     }
 
 }
