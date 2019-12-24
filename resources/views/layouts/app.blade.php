@@ -22,7 +22,7 @@
 
     <!-- Fonts -->
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
+    <script src="https://kit.fontawesome.com/8879f0fb4a.js" crossorigin="anonymous"></script>
 
     <!-- Styles -->
     <link href="/material/assets/css/material-dashboard.css?v=2.1.0" rel="stylesheet" />
@@ -108,31 +108,53 @@
                 </a>
             </div>
         </li>
-         <li class="nav-item"><a href="{{ url('/account/operations/spend') }}" class="nav-link">
-           <i class="material-icons text-danger">arrow_back</i>
-           <p><?=trans('mkeep.spends')?></p>
-         </a></li>
-         <li class="nav-item"><a href="{{ url('/account/operations/income') }}" class="nav-link">
-           <i class="material-icons text-success">arrow_forward</i>
-           <p><?=trans('mkeep.incomes')?></p>
-         </a></li>
-         <li class="nav-item"><a href="{{ url('/account/operations/transfer') }}" class="nav-link">
-           <i class="material-icons">swap_horiz</i>
-           <p><?=trans('mkeep.transfers')?></p>
-         </a></li>
-         <li class="nav-item"><a href="{{ url('/account/plans') }}" class="nav-link">
+        <li class="nav-item"><a href="{{ url('/account/plans') }}" class="nav-link">
            <i class="material-icons">done_all</i>
            <p><?=trans('mkeep.plans')?></p>
          </a></li>
-         <li class="nav-item"><a href="{{ url('/account/import') }}" class="nav-link">
-           <i class="material-icons">cloud_upload</i>
-           <p><?=trans('mkeep.import')?></p>
-         </a></li>
          
-         <li class="nav-item"><a href="{{ url('/account/sync') }}" class="nav-link">
-           <i class="material-icons">sync</i>
-           <p><?=trans('mkeep.sync')?></p>
-         </a></li>
+         <li class="nav-item dropdown">
+             <a href="#" class="nav-link text-nowrap" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="material-icons">assignment</i>
+                <p class=" dropdown-toggle"><?=trans('mkeep.operations')?></p>
+             </a>
+
+             
+             <div class="dropdown-menu">
+                 <a href="{{ url('/account/operations/spend') }}" class="dropdown-item">
+                   <i class="material-icons text-danger">arrow_back</i>
+                   <p><?=trans('mkeep.spends')?></p>
+                 </a>
+                 <a href="{{ url('/account/operations/income') }}" class="dropdown-item">
+                   <i class="material-icons text-success">arrow_forward</i>
+                   <p><?=trans('mkeep.incomes')?></p>
+                 </a>
+                 <a href="{{ url('/account/operations/transfer') }}" class="dropdown-item">
+                   <i class="material-icons">swap_horiz</i>
+                   <p><?=trans('mkeep.transfers')?></p>
+                 </a>
+             </div>
+         </li>
+         
+         <li class="nav-item dropdown">
+             <a href="#" class="nav-link text-nowrap" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="material-icons">sync</i>
+                <p class=" dropdown-toggle"><?=trans('mkeep.integrations')?></p>
+             </a>
+
+             
+             <div class="dropdown-menu">
+                 <a href="{{ url('/account/import') }}" class="dropdown-item">
+                   <i class="material-icons">cloud_upload</i>
+                   <p><?=trans('mkeep.import')?></p>
+                 </a>
+                 
+                 <a href="{{ url('/account/sync') }}" class="dropdown-item">
+                   <i class="material-icons">sync</i>
+                   <p><?=trans('mkeep.sync')?></p>
+                 </a>
+             </div>
+         </li>
          
          <li class="nav-item dropdown">
              <a href="#" class="nav-link text-nowrap" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -151,21 +173,8 @@
                    <p><?=trans('mkeep.stat_monthly_avg')?></p>
                  </a>
                  <a href="{{ url('/account/stat/monthplan') }}" class="dropdown-item">
-                   <i class="material-icons">pie_chart</i>
+                   <i class="material-icons">done_all</i>
                    <p><?=trans('mkeep.stat_monthly_plan')?></p>
-                 </a>
-                 <div class="dropdown-divider"></div>
-                 <a href="{{ url('/account/stat/year') }}" class="dropdown-item">
-                   <i class="material-icons">show_chart</i>
-                   <p><?=trans('mkeep.stat_year')?></p>
-                 </a>
-                 <a href="{{ url('/account/stat/yearavg') }}" class="dropdown-item">
-                   <i class="material-icons">pie_chart</i>
-                   <p><?=trans('mkeep.stat_year_avg')?></p>
-                 </a>
-                 <a href="{{ url('/account/stat/yearplan') }}" class="dropdown-item">
-                   <i class="material-icons">pie_chart</i>
-                   <p><?=trans('mkeep.stat_year_plan')?></p>
                  </a>
              </div>
          </li>

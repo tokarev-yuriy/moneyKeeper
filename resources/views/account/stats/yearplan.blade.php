@@ -2,15 +2,22 @@
 
 @section('content')
 
+    <div class="d-flex justify-content-center">
+        <div class="btn-group" role="group">
+          <a class="btn btn-secondary" href="{{ url('/account/stat/monthplan') }}">{{ trans('mkeep.per_month') }}</a>
+          <a class="btn btn-dark" href="javascript: void();">{{ trans('mkeep.per_year') }}</a>
+        </div>
+    </div>
+
     <ul class="nav nav-pills justify-content-center mt-3 mb-3">
       <li class="nav-item">
-        <a class="nav-link" href="/account/stat/yearplan/{{ $prevPeriod }}"><i class="fa fa-arrow-left fa-lg" aria-hidden="true"></i></a>
+        <a class="nav-link text-secondary" href="/account/stat/yearplan/{{ $prevPeriod }}"><i class="fa fa-arrow-left fa-lg" aria-hidden="true"></i></a>
       </li>
        <li class="nav-item">
         <a class="nav-link active" href="javascript: void(0);">{{ date("Y", strtotime($period)) }}</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/account/stat/yearplan/{{ $nextPeriod }}"><i class="fa fa-arrow-right fa-lg" aria-hidden="true"></i></a>
+        <a class="nav-link text-secondary" href="/account/stat/yearplan/{{ $nextPeriod }}"><i class="fa fa-arrow-right fa-lg" aria-hidden="true"></i></a>
       </li>
     </ul>
 	

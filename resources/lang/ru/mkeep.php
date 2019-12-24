@@ -83,9 +83,9 @@ return array(
     "any" => "Любая",
     
     "statistics" => "Статистика",
-    "stat_monthly" => "Статистика по месяцам",
-    "stat_monthly_avg" => "Статистика по месяцам средн.",
-    "stat_monthly_plan" => "План по месяцам",
+    "stat_monthly" => "За период",
+    "stat_monthly_avg" => "Средняя",
+    "stat_monthly_plan" => "План",
     "stat_year" => "Статистика по годам",
     "stat_year_avg" => "Статистика по годам средн.",
     "stat_year_plan" => "План по годам",
