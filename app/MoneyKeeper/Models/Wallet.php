@@ -33,15 +33,14 @@ class Wallet extends UserRelative {
 	 * @return <type>
 	 */    
 	public static function getWalletIcons () {
-			$arIcons = array();
-			$files = scandir(public_path().'/img/wallets/');
-			foreach ($files as $filename) {
-				 $arInfo = pathinfo(public_path().'/img/wallets/'.$filename); 
-				 if ($arInfo['extension']=='svg') {
-						 $arIcons[$arInfo['filename']] = '/img/wallets/'.$filename;
-				 }
-			}
-			return $arIcons;
+			$arIcons = [];
+            $arIcons['coins'] = 'fas fa-coins';
+            $arIcons['wallet'] = 'fas fa-wallet';
+            $arIcons['credit-card'] = 'fas fa-credit-card';
+            $arIcons['pound-sign'] = 'fas fa-pound-sign';
+            $arIcons['euro-sign'] = 'fas fa-euro-sign';
+            $arIcons['dollar-sign'] = 'fas fa-dollar-sign';
+            return $arIcons;
 	}
 	
 	/**

@@ -30,6 +30,7 @@
     <link rel="stylesheet" href="/js/slider/assets/owl.theme.default.min.css?v=<?=time()?>" />
     <link rel="stylesheet" href="/css/app.css?v=<?=time()?>">
     <link rel="stylesheet" type="text/css" href="/css/lib/control/iconselect.css?v=<?=time()?>" >
+    <link rel="stylesheet" type="text/css" href="/css/fontawesome-iconpicker.min.css?v=<?=time()?>" >
     
     <script>
     if ('serviceWorker' in navigator) {
@@ -265,6 +266,7 @@
     <script src="/js/amcharts.responsive.min.js?v=<?=time()?>"></script>
     <script type="text/javascript" src="/js/lib/control/iconselect.js?v=<?=time()?>"></script>
     <script type="text/javascript" src="/js/lib/iscroll.js?v=<?=time()?>"></script>
+    <script type="text/javascript" src="/js/fontawesome-iconpicker.min.js?v=<?=time()?>"></script>
 	<script src="//cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     @yield('appjsfile')
 </body>

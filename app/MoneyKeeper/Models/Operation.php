@@ -100,7 +100,7 @@ class Operation extends UserRelative {
 			$arList[$obGroup->name] = $obGroup->name;
             foreach ($arItems as $obItem) {
                 if ($obItem->group_id == $obGroup->id) {
-                    $arList[$obItem->id] = (isset($walletIcons[$obItem->icon])?'<img src="'.$walletIcons[$obItem->icon].'" style="height: 30px; padding-right: 5px; margin: -5px 0 -5px -10px;">':'').$obItem->name;
+                    $arList[$obItem->id] = (isset($walletIcons[$obItem->icon])?'<i class="dropdown-icon '.$walletIcons[$obItem->icon].'"></i>':'').$obItem->name;
                 }
             }
         }

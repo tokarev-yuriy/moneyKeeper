@@ -63,7 +63,7 @@ class WalletController extends CrudListController {
                 'sort' => trans('mkeep.sort'),
                 'start' => trans('mkeep.start'),
                 'color' => array('title'=>trans('mkeep.color'), 'type'=>'color'),
-                'icon' => array('title'=>trans('mkeep.icon'), 'type'=>'image'),
+                'icon' => array('title'=>trans('mkeep.icon'), 'type'=>'icon'),
                 'group_id' => trans('mkeep.wallet_group'),
             );
     }

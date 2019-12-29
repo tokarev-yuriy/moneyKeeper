@@ -86,6 +86,10 @@
                 @if($value!='')
                 <img src="{{ $value }}" style="width: 30px; height: 30px;">
                 @endif
+            @elseif(isset($column['type']) && $column['type']=='icon')
+                @if($value!='')
+                <i class="{{ $value }}"></i>
+                @endif
             @elseif(isset($column['type']) && $column['type']=='color')
                 @if($value!='')
                 <div style="width: 30px; height: 30px; background-color: #{{ $value }}">&nbsp;</div>

@@ -227,6 +227,8 @@
     width: 40px;
     position: absolute;
     left: 5px;
+    font-size: 25px;
+    text-align: center;
 }
 .group-title {
 	padding-left: 10px;
@@ -281,4 +283,9 @@
 .show .dropdown-toggle:after {
     -webkit-transform: none!important;
     transform: none!important;
+}
+
+.dropdown-icon {
+    padding-right: 0.5rem;
+    margin-left: -0.5rem;
 }

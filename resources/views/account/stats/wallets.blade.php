@@ -17,7 +17,7 @@
         <div class="wallet" onclick="document.location='/wallet/{{ $obItem->id }}';">
           @if($obItem->icon)
           <div class="wallet-img">
-              <img src="{{ $obItem->icon }}" alt="{{ $obItem->name }}">                              
+              <i class="{{ $obItem->icon }}" alt="{{ $obItem->name }}"></i>
           </div>
           @endif
           @php

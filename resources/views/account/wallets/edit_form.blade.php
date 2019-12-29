@@ -32,50 +32,36 @@
                 @php 
                   $itemId = ((isset($obItem) && $obItem->id)?$obItem->id:0);
                 @endphp
+				
+				<div class="form-group">
+					<div class="btn-group">
+						<button type="button" class="btn btn-secondary iconpicker-component">
+							<i class="fa fa-fw fa-{{ Input::get('icon', isset($obItem)?$obItem->icon:'') }}"></i>
+						</button>
+						<button type="button" id="icp-wallet-{{$itemId}}" class="btn btn-secondary dropdown-toggle" data-selected="fa-car" data-toggle="dropdown">
+							<span class="caret"></span>
+							<span class="sr-only">Toggle Dropdown</span>
+						</button>
+						<div class="dropdown-menu"></div>
+					</div>
+				</div>
+				
                 <div id="iconselect-wallet-icon-{{ $itemId }}"></div>
                 {!! Form::hidden('icon', Input::get('icon', isset($obItem)?$obItem->icon:''), array('id'=>'wallet-icon-'.$itemId)) !!}
                 <script>
-                var iconSelect{{ $itemId }};
-                var iconSelect{{ $itemId }};
-
-                function iconWalletSelectInit() {
-                    
-                    selectedText{{ $itemId }} = document.getElementById('wallet-icon-{{ $itemId }}');
-            
-                    document.getElementById("iconselect-wallet-icon-{{ $itemId }}").addEventListener('changed', function(e){
-                       selectedText{{ $itemId }}.value = iconSelect{{ $itemId }}.getSelectedValue();
-                    });
-                    
-                    iconSelect{{ $itemId }} = new IconSelect("iconselect-wallet-icon-{{ $itemId }}", {
-                        'selectedIconWidth':48,
-                        'selectedIconHeight':48,
-                        'selectedBoxPadding':1,
-                        'iconsWidth':48,
-                        'iconsHeight':48,
-                        'boxIconSpace':3,
-                        'vectoralIconNumber':12,
-                        'horizontalIconNumber':1});
-
-                    var selectedIcon = selectedText{{ $itemId }}.value;
-                    var icons = [];
-                    @foreach(App\MoneyKeeper\Models\Wallet::getWalletIcons() as $icon=>$img)
-                      icons.push({'iconFilePath':'{{ $img }}', 'iconValue':'{{ $icon }}'});
-                    @endforeach
-                    
-                    iconSelect{{ $itemId }}.refresh(icons);
-                    for(var i = 0; i < icons.length; i++){
-                        if (icons[i].iconValue==selectedIcon) {
-                            iconSelect{{ $itemId }}.setSelectedIndex(i);
-                        }
+                @php
+                    $jsIcons = [];
+                    foreach(\App\MoneyKeeper\Models\Wallet::getWalletIcons() as $code=>$title) {
+                        $jsIcons[] = ['title'=>$title, 'searchTerms'=>$code];
                     }
-                    
-                    
-                }
-                
-                window.onload = function(){
-                    iconWalletSelectInit();
-                };
-                    
+                @endphp
+				$('#icp-wallet-{{$itemId}}').iconpicker({
+					icons: <?=json_encode($jsIcons)?>
+				});
+				$('#icp-wallet-{{$itemId}}').on('iconpickerSelected', function(event){
+				  /* event.iconpickerValue */
+				  $('#wallet-icon-{{$itemId}}').val(event.iconpickerValue.replace('fas fa-',''));
+				});
                 </script>
 
                 <span class="invalid-feedback">
