@@ -30,6 +30,7 @@ Vue.filter('numberf', function (value) {
 
 Vue.component('planstat-component', require('./components/PlanstatComponent.vue').default);
 Vue.component('wallettotal-component', require('./components/WallettotalComponent.vue').default);
+Vue.component('plancategories-component', require('./components/PlancategoriesComponent.vue').default);
 
 
 const app = new Vue({

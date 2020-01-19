@@ -2,11 +2,7 @@
 
 @section('content')
     <planstat-component></planstat-component>
-    
-    <div class="container widget" id="categories-summ" data-url="/account/stat/categories" data-type="chart" data-chart-type="pie"></div>
-    
-    <div class="widget" id="categories-plan" data-url="/account/stat/progress" style="align-items: center;
-  justify-content: center;"></div>
+    <plancategories-component></plancategories-component>
     
     <div id="operationsList">
         <div class="float-right">

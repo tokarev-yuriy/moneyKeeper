@@ -140,7 +140,7 @@ class StatisticsController extends Controller {
             }
         }
         
-        return json_encode(array_values($arCategoriesSum));
+        return response()->json(array_values($arCategoriesSum));
 	}
     
     /**
@@ -230,7 +230,7 @@ class StatisticsController extends Controller {
      */	
 	public function getMonthtotal()
 	{
-        return json_encode(array_values($this->__getStatByPeriod('month', 'type', 'any')));
+        return response()->json(array_values($this->__getStatByPeriod('month', 'type', 'any')));
 	}
     
     /**
@@ -241,7 +241,7 @@ class StatisticsController extends Controller {
      */	
 	public function getMonthincome()
 	{
-        return json_encode(array_values($this->__getStatByPeriod('month', 'category_id', 'income')));
+        return response()->json(array_values($this->__getStatByPeriod('month', 'category_id', 'income')));
 	}
     
     /**
@@ -252,7 +252,7 @@ class StatisticsController extends Controller {
      */	
 	public function getMonthspend()
 	{
-        return json_encode(array_values($this->__getStatByPeriod('month', 'category_id', 'spend')));
+        return response()->json(array_values($this->__getStatByPeriod('month', 'category_id', 'spend')));
 	}
     
     /**
@@ -263,7 +263,7 @@ class StatisticsController extends Controller {
      */	
 	public function getYeartotal()
 	{
-        return json_encode(array_values($this->__getStatByPeriod('year', 'type', 'any')));
+        return response()->json(array_values($this->__getStatByPeriod('year', 'type', 'any')));
 	}
     
     /**
@@ -274,7 +274,7 @@ class StatisticsController extends Controller {
      */	
 	public function getYearincome()
 	{
-        return json_encode(array_values($this->__getStatByPeriod('year', 'category_id', 'income')));
+        return response()->json(array_values($this->__getStatByPeriod('year', 'category_id', 'income')));
 	}
     
     /**
@@ -285,7 +285,7 @@ class StatisticsController extends Controller {
      */	
 	public function getYearspend()
 	{
-        return json_encode(array_values($this->__getStatByPeriod('year', 'category_id', 'spend')));
+        return response()->json(array_values($this->__getStatByPeriod('year', 'category_id', 'spend')));
 	}
     
     
@@ -297,7 +297,7 @@ class StatisticsController extends Controller {
      */	
 	public function getMonthavgincome()
 	{
-        return json_encode(array_values($this->__getStatAvg('month','income')));
+        return response()->json(array_values($this->__getStatAvg('month','income')));
 	}
     
     /**
@@ -308,7 +308,7 @@ class StatisticsController extends Controller {
      */	
 	public function getMonthavgspend()
 	{
-        return json_encode(array_values($this->__getStatAvg('month', 'spend')));
+        return response()->json(array_values($this->__getStatAvg('month', 'spend')));
 	}
     
     /**
@@ -319,7 +319,7 @@ class StatisticsController extends Controller {
      */	
 	public function getYearavgincome()
 	{
-        return json_encode(array_values($this->__getStatAvg('year','income')));
+        return response()->json(array_values($this->__getStatAvg('year','income')));
 	}
     
     /**
@@ -330,7 +330,7 @@ class StatisticsController extends Controller {
      */	
 	public function getYearavgspend()
 	{
-        return json_encode(array_values($this->__getStatAvg('year','spend')));
+        return response()->json(array_values($this->__getStatAvg('year','spend')));
 	}
     
     /**
@@ -473,7 +473,7 @@ class StatisticsController extends Controller {
 		}
 		$totals['max'] = $max;
 		
-        return json_encode($totals);
+        return response()->json($totals);
     }
     
     /**
@@ -484,7 +484,7 @@ class StatisticsController extends Controller {
      */	
 	public function getProgress($type = 'month', $period = false)
     {
-        return view('account.stats.progress', array('arItems'=>$this->_getPlanStatistics($type, $period)));
+        return response()->json(['categories'=>$this->_getPlanStatistics($type, $period)]);
     }
     
     public function getMonthplan ($period = false)
