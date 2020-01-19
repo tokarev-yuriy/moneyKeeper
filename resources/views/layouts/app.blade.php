@@ -21,6 +21,9 @@
 
     <title><?=trans('mkeep.title')?></title>
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
+    
+    <!-- Scripts -->
+    <script src="/js/app.js?v=<?=time()?>" defer></script>
 
    <!--     Fonts and icons     -->
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
@@ -202,14 +205,13 @@
       </div>
     </nav>
     <!-- End Navbar -->
-    <div class="content">
+    <div class="content" id="app">
       @if (!Auth::guest())
       <div class="container-fluid widget" id="wallets-sum" data-url="/account/stat/wallets">
       </div>
       @endif
       
       <div class="container-fluid main-container">
-      
       @yield('content')
       </div>
       <div class="clearfix"></div>

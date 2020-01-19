@@ -1,21 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    
-      <div class="container-fluid widget" id="totals-sum" data-url="/account/stat/totals" data-type="vue">
-        План: @{{widget.plan}}
-        <div class="progress total mb-2 mt-2" style="height: 2px;">
-          <div class="progress-bar bg-info" role="progressbar" :aria-valuenow="widget.plan" aria-valuemin="0" :aria-valuemax="widget.max" :style="'width: '+widget.plan_percent+'%;'"></div>
-        </div>
-        Расходы: @{{widget.spend}}
-        <div class="progress total mb-2 mt-2" style="height: 2px;">
-          <div class="progress-bar bg-danger" role="progressbar" :aria-valuenow="widget.spend" aria-valuemin="0" :aria-valuemax="widget.max" :style="'width: '+widget.spend_percent+'%;'"></div>
-        </div>
-        Доход: @{{widget.income}}
-        <div class="progress total mb-2 mt-2" style="height: 2px;">
-          <div class="progress-bar bg-success" role="progressbar" :aria-valuenow="widget.income" aria-valuemin="0" :aria-valuemax="widget.max" :style="'width: '+widget.income_percent+'%;'"></div>
-        </div>
-      </div>
+    <planstat-component></planstat-component>
     
     <div class="container widget" id="categories-summ" data-url="/account/stat/categories" data-type="chart" data-chart-type="pie"></div>
     
