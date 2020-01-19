@@ -10,6 +10,18 @@
 window.Vue = require('vue');
 window.axios = require('axios');
 
+Vue.filter('numberf', function (value) {
+    if (typeof value !== "number") {
+        return value;
+    }
+    var formatter = new Intl.NumberFormat('ru-RU', {
+        style: 'currency',
+        currency: 'Rub',
+        minimumFractionDigits: 0
+    });
+    return formatter.format(value);
+});
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -17,6 +29,8 @@ window.axios = require('axios');
  */
 
 Vue.component('planstat-component', require('./components/PlanstatComponent.vue').default);
+Vue.component('wallettotal-component', require('./components/WallettotalComponent.vue').default);
+
 
 const app = new Vue({
     el: '#app'

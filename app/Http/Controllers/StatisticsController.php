@@ -102,7 +102,7 @@ class StatisticsController extends Controller {
             }
         }
         
-        return view('account.stats.wallets', array('arItems'=>$arWalletGroups));
+        return response()->json(['groups' => array_values($arWalletGroups)]);
 	}
     
     

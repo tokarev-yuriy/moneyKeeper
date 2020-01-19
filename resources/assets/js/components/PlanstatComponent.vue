@@ -1,14 +1,14 @@
 <template>
     <div class="container-fluid" id="totals-sum">
-        План: {{plan}}
+        План: {{plan | numberf}}
         <div class="progress total mb-2 mt-2" style="height: 2px;">
           <div class="progress-bar bg-info" role="progressbar" :aria-valuenow="plan" aria-valuemin="0" :aria-valuemax="max" :style="{width: plan_percent + '%'}"></div>
         </div>
-        Расходы: {{spend}}
+        Расходы: {{spend | numberf}}
         <div class="progress total mb-2 mt-2" style="height: 2px;">
           <div class="progress-bar bg-danger" role="progressbar" :aria-valuenow="spend" aria-valuemin="0" :aria-valuemax="max" :style="{width: spend_percent + '%'}"></div>
         </div>
-        Доход: {{income}}
+        Доход: {{income | numberf}}
         <div class="progress total mb-2 mt-2" style="height: 2px;">
           <div class="progress-bar bg-success" role="progressbar" :aria-valuenow="income" aria-valuemin="0" :aria-valuemax="max" :style="{width: income_percent + '%'}"></div>
         </div>

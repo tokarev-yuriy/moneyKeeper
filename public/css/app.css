@@ -90,11 +90,6 @@
   margin-left: -0.5rem;
 }
 
-#wallets-sum {
-  padding-left: 0px;
-  padding-right: 0px;
-}
-
 #operationsList {
   max-width: 1000px;
   margin: auto;
@@ -166,10 +161,6 @@
   }
 }
 
-#wallets-sum .card {
-  min-width: 250px;
-}
-
 .wallet {
   position: relative;
   padding-left: 50px;
@@ -200,9 +191,19 @@
   margin-left: 20px;
 }
 
+#wallets-sum {
+  padding-left: 0px;
+  padding-right: 0px;
+}
+
 #wallets-sum .card {
   margin-top: 0px;
   padding-right: 10px;
+  min-width: 250px;
+}
+
+#wallets-sum .slick-slide {
+  margin-right: 10px;
 }
 
 #categories-plan {

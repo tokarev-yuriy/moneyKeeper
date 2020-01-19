@@ -72,7 +72,7 @@ class Form {
 			});
 			</script>
 			';
-			
+			$js = '';
 			return '<div class="dropdown '.htmlspecialchars($class).'" id="'.$id.'">'.$input.$btn.$options.'</div>'.$js;
 			
 	}

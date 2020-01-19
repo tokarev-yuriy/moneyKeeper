@@ -37,6 +37,8 @@
     <link rel="stylesheet" href="/css/app.css?v=<?=time()?>">
     <link rel="stylesheet" type="text/css" href="/css/lib/control/iconselect.css?v=<?=time()?>" >
     <link rel="stylesheet" type="text/css" href="/css/fontawesome-iconpicker.min.css?v=<?=time()?>" >
+    <link rel="stylesheet" type="text/css" href="/css/slick.css?v=<?=time()?>" >
+    <link rel="stylesheet" type="text/css" href="/css/slick-theme.css?v=<?=time()?>" >
     
     <script>
     if ('serviceWorker' in navigator) {
@@ -207,8 +209,7 @@
     <!-- End Navbar -->
     <div class="content" id="app">
       @if (!Auth::guest())
-      <div class="container-fluid widget" id="wallets-sum" data-url="/account/stat/wallets">
-      </div>
+        <wallettotal-component></wallettotal-component>
       @endif
       
       <div class="container-fluid main-container">
