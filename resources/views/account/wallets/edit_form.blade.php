@@ -1,6 +1,6 @@
    {!! Form::open(array('url' => ((isset($obItem) && $obItem->id)?$paths['update'].'/'.$obItem->id:$paths['add']))) !!}
 
-        <div class="row form-group">
+        <div class="row">
             <label for="name" class="col-md-4 control-label">{{ trans('mkeep.name') }}</label>
             <div class="col-md-6">
                 {!! Form::text('name', Input::get('name', isset($obItem)?$obItem->name:''), array('class'=>(isset($errors) && $errors->has('name') ? 'form-control is-invalid' : 'form-control'))) !!}
@@ -13,7 +13,7 @@
             </div>
         </div>
         
-         <div class="row form-group">
+         <div class="row">
             <label for="category_id" class="col-md-4 control-label">{{ trans('mkeep.wallet_group') }}</label>
             <div class="col-md-6">
                 {!!Form::select('group_id', \App\MoneyKeeper\Models\Wallet::getWalletGroups(), Input::get('group_id', isset($obItem)?$obItem->group_id:''), array('class'=>(isset($errors) && $errors->has('group_id') ? 'form-control is-invalid' : 'form-control'))) !!}
@@ -26,7 +26,7 @@
             </div>
         </div>
         
-        <div class="row form-group">
+        <div class="row">
             <label for="icon" class="col-md-4 control-label">{{ trans('mkeep.icon') }}</label>
             <div class="col-md-6">
                 @php 
@@ -72,7 +72,7 @@
             </div>
         </div>
         
-        <div class="row form-group">
+        <div class="row">
             <label for="type" class="col-md-4 control-label">{{ trans('mkeep.color') }}</label>
             <div class="col-md-6">
                 {!! Form::select('color', \App\MoneyKeeper\Models\Wallet::getColorList(), Input::get('color', isset($obItem)?$obItem->color:''), array('class'=>(isset($errors) && $errors->has('color') ? 'form-control is-invalid color-selector' : 'form-control color-selector'), 'style'=>'width: 55px; height: 38px;')) !!}
@@ -100,7 +100,7 @@
             </div>
         </div>
         
-        <div class="row form-group">
+        <div class="row">
             <label for="sort" class="col-md-4 control-label">{{ trans('mkeep.sort') }}</label>
             <div class="col-md-6">
                 {!! Form::text('sort', Input::get('sort', isset($obItem)?$obItem->sort:''), array('class'=>(isset($errors) && $errors->has('sort') ? 'form-control is-invalid' : 'form-control'))) !!}
@@ -113,7 +113,7 @@
             </div>
         </div>
         
-        <div class="row form-group">
+        <div class="row">
             <label for="start" class="col-md-4 control-label">{{ trans('mkeep.start') }}</label>
             <div class="col-md-6">
                 {!! Form::text('start', Input::get('start', isset($obItem)?$obItem->start:''), array('class'=>(isset($errors) && $errors->has('start') ? 'form-control is-invalid' : 'form-control'))) !!}
@@ -126,7 +126,7 @@
             </div>
         </div>
 
-        <div class="row form-group">
+        <div class="row">
             <div class="col-md-4"></div>
             <div class="col-md-6">
                 <button type="submit" class="btn btn-success">

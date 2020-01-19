@@ -1,0 +1,42 @@
+.fa-btn {
+    margin-right: 6px;
+}
+.main-container {
+    position: relative;
+}
+
+.bg-transfer {
+    #background-color: #efefef;
+}
+
+.bg-spend {
+    #background-color: #ffc9d5;
+}
+
+.bg-income {
+    #background-color: #cfe5ce;
+}
+
+.card-btns {
+    position: absolute;
+    z-index: 10;
+    right: 0;
+    display: none;
+}
+.card:hover .card-btns {
+    display: block;
+}
+
+@media (max-width: 576px) {
+    col,.col-1,.col-2,.col-3,.col-4,.col-5,.col-6,.col-7,.col-8,.col-9 {
+      padding-right: 5px;
+      padding-left: 5px;
+    }
+    .h4:not(.modal-title), h4:not(.modal-title) {
+      line-height: 1.0em;
+      font-size: 1rem;
+    }
+    .btn {
+      padding: 12px 15px;
+    }
+}

@@ -34,7 +34,7 @@
                </span>
          </div>
         
-        <div class="row form-group">
+        <div class="row">
             <label for="clientId" class="col-md-4 control-label">{{ trans('mkeep.clientId') }}</label>
             <div class="col-md-8">
                  {!! Form::text('params[clientId]', Input::get('params[clientId]', isset($obItem)?$obItem->params['clientId']:''), array('class'=>(isset($errors) && $errors->has('params') ? 'form-control is-invalid' : 'form-control'))) !!}
@@ -47,7 +47,7 @@
             </div>
         </div>
         
-        <div class="row form-group">
+        <div class="row">
             <label for="clientSecret" class="col-md-4 control-label">{{ trans('mkeep.clientSecret') }}</label>
             <div class="col-md-8">
                  {!! Form::text('params[clientSecret]', Input::get('params[clientSecret]', isset($obItem)?$obItem->params['clientSecret']:''), array('class'=>(isset($errors) && $errors->has('params') ? 'form-control is-invalid' : 'form-control'))) !!}
@@ -60,7 +60,7 @@
             </div>
         </div>
         
-        <div class="row form-group">
+        <div class="row">
             <label for="refreshToken" class="col-md-4 control-label">{{ trans('mkeep.refreshToken') }}</label>
             <div class="col-md-8">
                  {!! Form::text('params[refreshToken]', Input::get('params[refreshToken]', isset($obItem)?$obItem->params['refreshToken']:''), array('class'=>(isset($errors) && $errors->has('params') ? 'form-control is-invalid' : 'form-control'))) !!}
@@ -79,7 +79,7 @@
           $arCategories = \App\MoneyKeeper\Models\Category::user()->select('id', 'name')->orderBy('sort')->get();
         @endphp
         @foreach($arCategories as $obCategory)
-        <div class="row form-group">
+        <div class="row">
             <label for="desc_col" class="col-md-4 control-label">{{ $obCategory->name }}</label>
             <div class="col-md-8">
                  {!! Form::textarea('category_rules['.$obCategory->id.']', Input::get('category_rules['.$obCategory->id.']', (isset($obItem)&&isset($obItem->category_rules[$obCategory->id]))?$obItem->category_rules[$obCategory->id]:''), array('class'=>'form-control', 'rows'=>2, 'placeholder'=>trans('mkeep.import_profile_category_rules_help'))) !!}
@@ -87,7 +87,7 @@
         </div>
         @endforeach
 
-        <div class="row form-group">
+        <div class="row">
             <div class="col-md-4"></div>
             <div class="col-md-6">
                 <button type="submit" class="btn btn-success">

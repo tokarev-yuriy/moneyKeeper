@@ -1,0 +1,47 @@
+@media (max-width: 576px) {
+    
+    /*******************************
+    * MODAL AS LEFT/RIGHT SIDEBAR
+    * Add "left" or "right" in modal parent div, after class="modal".
+    * Get free snippets on bootpen.com
+    *******************************/
+	.modal .modal-dialog {
+		position: fixed;
+		margin: auto;
+		width: 90%;
+		height: 100%;
+		-webkit-transform: translate3d(0%, 0, 0);
+		    -ms-transform: translate3d(0%, 0, 0);
+		     -o-transform: translate3d(0%, 0, 0);
+		        transform: translate3d(0%, 0, 0);
+	}
+
+	.modal .modal-content {
+		height: 100%;
+		overflow-y: auto;
+    border-left: 0px;
+    border-top: 0px;
+    border-radius: 0px;
+	}
+	
+	.modal .modal-body{
+		padding: 15px 15px 80px;
+	}
+
+    /*Left*/
+	.modal.fade .modal-dialog{
+		left: -320px;
+		-webkit-transition: opacity 0.3s linear, left 0.3s ease-out;
+		   -moz-transition: opacity 0.3s linear, left 0.3s ease-out;
+		     -o-transition: opacity 0.3s linear, left 0.3s ease-out;
+		        transition: opacity 0.3s linear, left 0.3s ease-out;
+	}
+	
+	.modal.fade.show .modal-dialog{
+		left: 0;
+	}
+  
+  .modal .modal-header {
+    padding: 1rem 1rem 1rem;
+  }
+}

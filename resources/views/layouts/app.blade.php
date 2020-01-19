@@ -1,9 +1,10 @@
 <!doctype html>
-<html lang="ru">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <meta charset="utf-8">
-    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -19,13 +20,15 @@
     <meta name="theme-color" content="#ffffff">
 
     <title><?=trans('mkeep.title')?></title>
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
 
-    <!-- Fonts -->
+   <!--     Fonts and icons     -->
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
     <script src="https://kit.fontawesome.com/8879f0fb4a.js" crossorigin="anonymous"></script>
-
-    <!-- Styles -->
-    <link href="/material/assets/css/material-dashboard.css?v=2.1.0" rel="stylesheet" />
+    
+    <!-- CSS Files -->
+    <link href="/css/material-dashboard.css?v=2.1.1" rel="stylesheet" />    
     <link rel="stylesheet" href="/js/slider/assets/owl.carousel.min.css?v=<?=time()?>" />
     <link rel="stylesheet" href="/js/slider/assets/owl.theme.default.min.css?v=<?=time()?>" />
     <link rel="stylesheet" href="/css/app.css?v=<?=time()?>">
@@ -51,11 +54,6 @@
 <body id="app-layout">
 <div id="wrap" class="wrapper">
   <div class="sidebar" data-color="purple" data-background-color="black" data-image="/material/assets/img/sidebar-1.jpg">
-    <!--
-      Tip 1: You can change the color of the sidebar using: data-color="purple | azure | green | orange | danger"
-
-      Tip 2: you can also add an image using data-image tag
-    -->
     <div class="logo">
       <a href="{{ url('/') }}" class="simple-text logo-mini">
         <div class="logo-img">
@@ -236,22 +234,43 @@
     </script>
     <!-- JavaScripts -->
     <!--   Core JS Files   -->
-    <script src="/material/assets/js/core/jquery.min.js" type="text/javascript"></script>
-    <script src="/material/assets/js/core/popper.min.js" type="text/javascript"></script>
-    <script src="/material/assets/js/core/bootstrap-material-design.min.js" type="text/javascript"></script>
-    <script src="/material/assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
-
-    <!--  Google Maps Plugin    -->
-    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
-
-    <!-- Chartist JS -->
-    <script src="/material/assets/js/plugins/chartist.min.js"></script>
-
+    <script src="/js/material/core/jquery.min.js" type="text/javascript"></script>
+    <script src="/js/material/core/popper.min.js" type="text/javascript"></script>
+    <script src="/js/material/core/bootstrap-material-design.min.js" type="text/javascript"></script>
+    <script src="/js/material/plugins/perfect-scrollbar.jquery.min.js"></script>
+    
+    <!-- Plugin for the momentJs  -->
+    <script src="/js/material/plugins/moment.min.js"></script>
+    <!--  Plugin for Sweet Alert -->
+    <script src="/js/material/plugins//sweetalert2.js"></script>
+    <!-- Forms Validations Plugin -->
+    <script src="/js/material/plugins//jquery.validate.min.js"></script>
+    <!-- Plugin for the Wizard, full documentation here: https://github.com/VinceG/twitter-bootstrap-wizard -->
+    <script src="/js/material/plugins//jquery.bootstrap-wizard.js"></script>
+    <!--	Plugin for Select, full documentation here: http://silviomoreto.github.io/bootstrap-select -->
+    <script src="/js/material/plugins//bootstrap-selectpicker.js"></script>
+    <!--  Plugin for the DateTimePicker, full documentation here: https://eonasdan.github.io/bootstrap-datetimepicker/ -->
+    <script src="/js/material/plugins//bootstrap-datetimepicker.min.js"></script>
+    <!--  DataTables.net Plugin, full documentation here: https://datatables.net/  -->
+    <script src="/js/material/plugins//jquery.dataTables.min.js"></script>
+    <!--	Plugin for Tags, full documentation here: https://github.com/bootstrap-tagsinput/bootstrap-tagsinputs  -->
+    <script src="/js/material/plugins//bootstrap-tagsinput.js"></script>
+    <!-- Plugin for Fileupload, full documentation here: http://www.jasny.net/bootstrap/javascript/#fileinput -->
+    <script src="/js/material/plugins//jasny-bootstrap.min.js"></script>
+    <!--  Full Calendar Plugin, full documentation here: https://github.com/fullcalendar/fullcalendar    -->
+    <script src="/js/material/plugins//fullcalendar.min.js"></script>
+    <!-- Vector Map plugin, full documentation here: http://jvectormap.com/documentation/ -->
+    <script src="/js/material/plugins//jquery-jvectormap.js"></script>
+    <!--  Plugin for the Sliders, full documentation here: http://refreshless.com/nouislider/ -->
+    <script src="/js/material/plugins//nouislider.min.js"></script>
+    <!-- Include a polyfill for ES6 Promises (optional) for IE11, UC Browser and Android browser support SweetAlert -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/core-js/2.4.1/core.js"></script>
+    <!-- Library for adding dinamically elements -->
+    <script src="/js/material/plugins//arrive.min.js"></script>
     <!--  Notifications Plugin    -->
-    <script src="/material/assets/js/plugins/bootstrap-notify.js"></script>
-
+    <script src="/js/material/plugins//bootstrap-notify.js"></script>
     <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
-    <script src="/material/assets/js/material-dashboard.min.js?v=2.1.0" type="text/javascript"></script>
+    <script src="/js/material-dashboard.js?v=2.1.1" type="text/javascript"></script>
     
     <script src="/js/slider/owl.carousel.min.js?v=<?=time()?>"></script>   
     <script src="/js/widget.js?v=<?=time()?>"></script>   
@@ -263,10 +282,10 @@
     <script src="//www.amcharts.com/lib/3/serial.js"></script>
     <script src="//www.amcharts.com/lib/3/plugins/dataloader/dataloader.min.js"></script>
     <script src="//www.amcharts.com/lib/3/themes/light.js"></script>
-    <script src="/js/amcharts.responsive.min.js?v=<?=time()?>"></script>
+    <script src="/js/lib/amcharts.responsive.min.js?v=<?=time()?>"></script>
     <script type="text/javascript" src="/js/lib/control/iconselect.js?v=<?=time()?>"></script>
     <script type="text/javascript" src="/js/lib/iscroll.js?v=<?=time()?>"></script>
-    <script type="text/javascript" src="/js/fontawesome-iconpicker.min.js?v=<?=time()?>"></script>
+    <script type="text/javascript" src="/js/lib/fontawesome-iconpicker.min.js?v=<?=time()?>"></script>
 	<script src="//cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     @yield('appjsfile')
 </body>

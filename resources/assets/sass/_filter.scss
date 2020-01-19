@@ -1,0 +1,35 @@
+.filter {
+   flex-direction: unset;
+   -webkit-box-pack: justify;
+   -ms-flex-pack: justify;
+   justify-content: space-between;
+   -webkit-box-align: center;
+   -ms-flex-align: center;
+   align-items: safe center;
+   display: flex;
+
+    .btn {
+        float: right;
+        display: block;
+    }
+    .filter-item {
+        position: relative;
+    }
+}
+
+@media (max-width: 576px) {
+    .filter {
+        .form-group {
+          display: flex;
+          flex: 0 0 auto;
+          flex-flow: row wrap;
+          align-items: center;
+          margin-bottom: 0;
+          form-control {
+              display: inline-block;
+              width: auto; // Prevent labels from stacking above inputs in `.form-group`
+              vertical-align: middle;
+          }
+        }
+    }
+}

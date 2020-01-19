@@ -1,0 +1,33 @@
+
+.sidebar .sidebar-background:after {
+  background-color: rgba(27,27,27,.87);
+  opacity: .85; 
+}
+
+.nav .dropdown.show .dropdown-menu {
+    position: static!important;
+    background-color: transparent;
+    width: auto;
+    float: none;
+    box-shadow: none;
+    margin-left: 20px;
+}
+.scrollable-menu {
+  height: auto;
+  max-height: 400px;
+  overflow-x: hidden;
+}
+.perfect-scrollbar-on .modal-open .main-panel {
+    height: auto;
+    max-height: none;
+}
+
+.show .dropdown-toggle:after {
+    -webkit-transform: none!important;
+    transform: none!important;
+}
+
+.dropdown-icon {
+    padding-right: 0.5rem;
+    margin-left: -0.5rem;
+}
