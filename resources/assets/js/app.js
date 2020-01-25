@@ -22,6 +22,14 @@ Vue.filter('numberf', function (value) {
     return formatter.format(value);
 });
 
+Vue.filter('cuttext', function (value) {
+    if (value.length > 12) {
+        value = value.substr(0,9);
+        value = value + "...";
+    }
+    return value;
+});
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

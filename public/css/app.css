@@ -245,6 +245,10 @@
   margin-right: -25px;
 }
 
+#totals-sum {
+  margin-bottom: 40px;
+}
+
 .filter {
   -webkit-box-orient: unset;
   -webkit-box-direction: unset;

@@ -13272,7 +13272,7 @@ var render = function() {
           _vm._v(" "),
           _c("div", { staticClass: "categories-info" }, [
             _c("span", { staticClass: "text-dark" }, [
-              _vm._v(_vm._s(category.name))
+              _vm._v(_vm._s(_vm._f("cuttext")(category.name)))
             ]),
             _vm._v(" "),
             _c("br"),
@@ -28919,6 +28919,14 @@ Vue.filter('numberf', function (value) {
     minimumFractionDigits: 0
   });
   return formatter.format(value);
+});
+Vue.filter('cuttext', function (value) {
+  if (value.length > 12) {
+    value = value.substr(0, 9);
+    value = value + "...";
+  }
+
+  return value;
 });
 /**
  * Next, we will create a fresh Vue application instance and attach it to

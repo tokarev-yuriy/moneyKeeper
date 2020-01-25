@@ -6,7 +6,7 @@
         @click="addSpend(category.id)">
           <div class="categories-icon" v-if="category.icon"><img :src="category.icon"></div>
           <div class="categories-info">
-            <span class="text-dark">{{ category.name }}</span>
+            <span class="text-dark">{{ category.name | cuttext}}</span>
             <br/>
             <span :class="{'text-success': (category.sum <= category.plan),'text-danger': (category.sum > category.plan)}">{{ category.sum }} / <span class="text-secondary">{{ category.plan }}</span></span>
           </div>
