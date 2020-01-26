@@ -5,7 +5,7 @@
             <div class="card-header" v-if="operations===false"><h3>mkeep.loading</h3></div>
             <div class="card-header" v-else=""><h3>mkeep.no_data</h3></div>
         </div>
-        <div v-for="operation in operations" :class="{'mt-0': operation.date && operation.date!=date}" class="card mb-0" style="border-radius: 0;">
+        <div v-for="operation in operations" :class="{'mt-0': !operation.date || operation.date==date}" class="card mb-0" style="border-radius: 0;">
           <div class="card-header card-header-info" style="width: auto;" v-if="operation.date && operation.date!=date">
             <h4 class="card-title" style="width: auto;" :set="date = operation.date">{{ operation.date }}</h4>
           </div>
@@ -24,7 +24,7 @@
                             <img v-if="categoryIcons[operation.category_id]" :src="categoryIcons[operation.category_id]" :alt="categories[operation.category_id]">
                         </div>
                         <h4 v-if="header.category_id && categories[operation.category_id]">{{ categories[operation.category_id] }}</h4>
-                        <span v-if="header.wallet">{{ operation.wallet }}</span>
+                        <span v-if="header.wallet" v-html="operation.wallet"></span>
                         <span v-else-if="header.wallet_from_id && walletsFrom[operation.wallet_from_id]">{{ walletsFrom[operation.wallet_from_id] }}</span>
                         <span v-else-if="header.wallet_to_id && walletsTo[operation.wallet_to_id]">{{ walletsTo[operation.wallet_to_id] }}</span>
                     </div>                    

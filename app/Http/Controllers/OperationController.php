@@ -77,6 +77,7 @@ class OperationController extends CrudListController {
      */
     protected function __loadDictionaries () {
         $this->arDictionaries = array(
+            'wallets' => array(),
             'wallet_from_id' => array(),
             'wallet_to_id' => array(),
             'category_id' => array(),
@@ -100,6 +101,7 @@ class OperationController extends CrudListController {
         
         $arWallets = Wallet::user()->select('id', 'name')->orderBy('sort')->get();
         foreach($arWallets as $arWallet) {
+            $this->arDictionaries['wallets'][$arWallet->id] = $arWallet->name;
             $this->arDictionaries['wallet_to_id'][$arWallet->id] = $arWallet->name;
             $this->arDictionaries['wallet_from_id'][$arWallet->id] = $arWallet->name;
         }
@@ -146,16 +148,44 @@ class OperationController extends CrudListController {
                 orderBy($this->sort['by'],$this->sort['order'])->
                 orderBy('id','desc')->
                 paginate(Config::get('view.itemsPerPage'));
-        
-        $arItems = $this->__prepareItems($arItems);
+				
+		$arDicts = $this->__getDictionary();
         
         if(Request::wantsJson()){
+			
+			
+			foreach($arItems as $k=>$obItem) {
+				$wallet = '';
+				if ($obItem->type=='transfer') {
+					$wallet = '';
+					if (isset($arDicts['wallets'][$obItem->wallet_from_id])) {
+						$wallet .= '<span class="text-secondary">'.$arDicts['wallets'][$obItem->wallet_from_id].'</span>';
+					}
+					$wallet .= '&nbsp;<i class="fa fa-arrow-right" aria-hidden="true"></i>&nbsp;';
+					if (isset($arDicts['wallets'][$obItem->wallet_to_id])) {
+						$wallet .= '<span class="text-success">'.$arDicts['wallets'][$obItem->wallet_to_id].'</span>';
+					}
+					$wallet .= '';
+				} else {
+					if (isset($arDicts['wallets'][$obItem->wallet_from_id])) {
+						$wallet .= $arDicts['wallets'][$obItem->wallet_from_id];
+					} elseif (isset($arDicts['wallets'][$obItem->wallet_to_id])) {
+						$wallet .= $arDicts['wallets'][$obItem->wallet_to_id];
+					}
+				}
+				
+				$arItems[$k]->wallet = $wallet;
+				$arItems[$k]->editPath = '/account/operations/'.$obItem->type.'/update/'.$obItem->id;
+				$arItems[$k]->deletePath = '/account/operations/'.$obItem->type.'/delete/'.$obItem->id;
+				$arItems[$k]->editTitle = trans('mkeep.edit_operation');
+				$arItems[$k]->deleteTitle = trans('mkeep.delete_operation');
+			}
             
             return [
                 'operations' => $arItems,
                 'header' => $this->__getHeads(),
                 'actions' => $this->__getActions(),
-                'dicts' => $this->__getDictionary(),
+                'dicts' => $arDicts,
             ];
         }
         
@@ -165,7 +195,7 @@ class OperationController extends CrudListController {
             'arHeads' => $this->__getHeads(),
             'arActions' => $this->__getActions(),
             'arFilters' => $this->__getFilters(),
-            'arDictionaries' => $this->__getDictionary()
+            'arDictionaries' => $arDicts
         );
         
         return view($this->__getView('index'), $arTable);
