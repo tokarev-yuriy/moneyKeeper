@@ -137,8 +137,10 @@ class OperationController extends CrudListController {
      */    
     public function getIndex()
     {
-        $dbItems = Operation::user()->
-                where('type', '=', $this->type);
+        $dbItems = Operation::user();
+        if ($this->type) {
+            $dbItems->where('type', '=', $this->type);
+        }
         $dbItems = $this->__processFilter($dbItems);
         $arItems = $dbItems->
                 orderBy($this->sort['by'],$this->sort['order'])->
@@ -146,6 +148,16 @@ class OperationController extends CrudListController {
                 paginate(Config::get('view.itemsPerPage'));
         
         $arItems = $this->__prepareItems($arItems);
+        
+        if(Request::wantsJson()){
+            
+            return [
+                'operations' => $arItems,
+                'header' => $this->__getHeads(),
+                'actions' => $this->__getActions(),
+                'dicts' => $this->__getDictionary(),
+            ];
+        }
         
         $arTable = array(
             'items' => $arItems,
@@ -243,6 +255,23 @@ class OperationController extends CrudListController {
         }
         
         return $arItems;
+    }
+    
+    /**
+     * Returns column titles of the list table
+     * 
+     * 
+     * @return array (field=>title)
+     */    
+    protected function __getHeads () {
+        return array(
+                'date' => array('title'=>trans('mkeep.date')),
+                'type' => array('title'=>trans('mkeep.type')),
+                'wallet' => array('title'=>trans('mkeep.wallet')),
+                'value' => array('title'=>trans('mkeep.summ')),
+                'category_id' => array('title'=>trans('mkeep.category')),
+                'comment' => array('title'=>trans('mkeep.comment')),
+            );
     }
     
     /**

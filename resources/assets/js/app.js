@@ -39,6 +39,8 @@ Vue.filter('cuttext', function (value) {
 Vue.component('planstat-component', require('./components/PlanstatComponent.vue').default);
 Vue.component('wallettotal-component', require('./components/WallettotalComponent.vue').default);
 Vue.component('plancategories-component', require('./components/PlancategoriesComponent.vue').default);
+Vue.component('operation-btns', require('./components/OperationBtns.vue').default);
+Vue.component('operation-list', require('./components/OperationList.vue').default);
 
 
 const app = new Vue({
