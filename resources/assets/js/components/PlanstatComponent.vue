@@ -29,7 +29,10 @@
             };
         },
         mounted() {
-            this.load()
+            this.load();
+            this.$root.$on('operationchanged', data => {
+                this.load();
+            });
         },
         methods: {
             /**

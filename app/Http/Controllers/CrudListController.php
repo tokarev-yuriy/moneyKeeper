@@ -162,6 +162,9 @@ class CrudListController extends Controller {
         
         $messages = $validator->messages();
         
+         if (Request::wantsJson()) {
+             return ['errors' => $messages];
+         }
          if (Request::ajax()) {
             return view($this->__getView('form'), array(
                 'errors' => $messages,

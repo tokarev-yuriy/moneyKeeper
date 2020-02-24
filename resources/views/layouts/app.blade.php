@@ -240,7 +240,6 @@
     <script src="/js/material/core/jquery.min.js" type="text/javascript"></script>
     <script src="/js/material/core/popper.min.js" type="text/javascript"></script>
     <script src="/js/material/core/bootstrap-material-design.min.js" type="text/javascript"></script>
-    <script src="/js/material/plugins/perfect-scrollbar.jquery.min.js"></script>
     
     <!-- Plugin for the momentJs  -->
     <script src="/js/material/plugins/moment.min.js"></script>
@@ -269,7 +268,7 @@
     <!-- Include a polyfill for ES6 Promises (optional) for IE11, UC Browser and Android browser support SweetAlert -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/core-js/2.4.1/core.js"></script>
     <!-- Library for adding dinamically elements -->
-    <script src="/js/material/plugins//arrive.min.js"></script>
+    <script src="/js/material/plugins/arrive.min.js"></script>
     <!--  Notifications Plugin    -->
     <script src="/js/material/plugins//bootstrap-notify.js"></script>
     <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->

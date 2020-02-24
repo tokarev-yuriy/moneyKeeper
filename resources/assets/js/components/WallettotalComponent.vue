@@ -38,7 +38,10 @@
             };
         },
         mounted() {
-            this.load()
+            this.load();
+            this.$root.$on('operationchanged', data => {
+                this.load();
+            });
         },
         methods: {
             /**
@@ -46,13 +49,12 @@
              */
             load: function () {
             
-                if (this.$refs.slick) {
-                    this.$refs.slick.destroy();
-                }
-            
                 axios
                     .get('/account/stat/wallets')
                     .then((response) => {
+                        if (this.$refs.slick) {
+                            this.$refs.slick.destroy();
+                        }
                         this.groups = response.data['groups'];
                         this.$nextTick(function () {
                             if (this.$refs.slick) {

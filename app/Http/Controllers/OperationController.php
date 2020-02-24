@@ -5,6 +5,7 @@ use App\Http\Controllers\BaseController;
 use App\Http\Controllers\CrudListController;
 use App\MoneyKeeper\Models\Category;
 use App\MoneyKeeper\Models\Wallet;
+use App\MoneyKeeper\Models\WalletGroup;
 use App\MoneyKeeper\Models\Operation;
 use View, Input, Session, Config, Request, Auth, Validator, Redirect;
 
@@ -80,6 +81,7 @@ class OperationController extends CrudListController {
             'wallets' => array(),
             'wallet_from_id' => array(),
             'wallet_to_id' => array(),
+            'categories' => array(),
             'category_id' => array(),
             'category_id_icons' => array(),
             'category_icon' => array(),
@@ -199,6 +201,68 @@ class OperationController extends CrudListController {
         );
         
         return view($this->__getView('index'), $arTable);
+    }
+    
+    /**
+     * Edit item
+     * 
+     * @param int $id 
+     * 
+     * @return <type>
+     */    
+    public function getEdit($id)
+    {
+        
+        $categories = [];
+        $categories['spend'] = \App\MoneyKeeper\Models\Operation::getTypeCategories('spend', false);
+        $categories['income'] = \App\MoneyKeeper\Models\Operation::getTypeCategories('income', false);
+        $categories['transfer'] = \App\MoneyKeeper\Models\Operation::getTypeCategories('transfer', false);
+		
+		$wallets = [];
+		$arWallets = [];
+        $arWallets = \App\MoneyKeeper\Models\Operation::getWallets(false);
+        
+        $arWalletGroups = [];
+        $obWalletGroups = \App\MoneyKeeper\Models\WalletGroup::user()->orderBy('sort','asc')->get();
+        foreach($obWalletGroups as $k=>$obGroup) {
+            $wallets[] = [
+                'name' => $obGroup->name,
+                'is_group' => true,
+            ];
+            foreach ($arWallets as $obWallet) {
+                if ($obWallet->group_id == $obGroup->id) $wallets[] = $obWallet;
+            }
+        }
+        $wallets[] = [
+            'name' => trans('mkeep.wallet_group_others'),
+            'is_group' => true,
+        ];
+        foreach ($arWallets as $k=>$obWallet) {
+            if (!$obWallet->group_id) $wallets[] = $obWallet;
+        }
+        
+        
+        $model = $this->modelName;
+        $obItem = $model::user()->find($id);
+        
+        if (!$obItem) {
+            $obItem = [
+                'type' => Input::get('type'),
+                'date' => date("Y-m-d"),
+                'wallet_from_id' => Session::get('wallet_from_id'),
+                'wallet_to_id' => Session::get('wallet_to_id'),
+            ];
+            if (!in_array($obItem['type'], ['spend', 'income', 'transfer'])) $obItem['type'] = 'spend';
+            
+            $cat = current($categories[$obItem['type']]);
+            $obItem['category_id'] = $cat->id;
+            
+            $wallet = current($arWallets);
+            if (!$obItem['wallet_from_id']) $obItem['wallet_from_id'] = $wallet->id;
+            if (!$obItem['wallet_to_id']) $obItem['wallet_to_id'] = $wallet->id;
+        }
+        
+        return ['operation'=>$obItem, 'categories'=>$categories, 'wallets'=>$wallets];
     }
     
    
