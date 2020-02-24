@@ -10,6 +10,9 @@
 window.Vue = require('vue');
 window.axios = require('axios');
 
+/**
+ *  @brief number_format function
+ */
 Vue.filter('numberf', function (value) {
     if (typeof value !== "number") {
         return value;
@@ -22,12 +25,32 @@ Vue.filter('numberf', function (value) {
     return formatter.format(value);
 });
 
+/**
+ *  @brief cut text function
+ */
 Vue.filter('cuttext', function (value) {
     if (value.length > 12) {
         value = value.substr(0,9);
         value = value + "...";
     }
     return value;
+});
+
+/**
+ *  @brief Translate function
+ */
+Vue.filter('trans', function (value) {
+    let codes = value.split('.');
+    let translate = window.translations;
+    
+    for(var x in codes) {
+        if (!translate || !translate[codes[x]]) {
+            return value;
+        }
+        translate = translate[codes[x]];
+    }
+    
+    return translate;
 });
 
 /**

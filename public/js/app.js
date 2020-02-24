@@ -13759,7 +13759,7 @@ var render = function() {
       },
       [
         _c("i", { staticClass: "fa fa-long-arrow-left fa-lg" }),
-        _vm._v(" mkeep.add_spend")
+        _vm._v(" " + _vm._s(_vm._f("trans")("mkeep.add_spend")))
       ]
     ),
     _vm._v(" "),
@@ -13776,7 +13776,7 @@ var render = function() {
       },
       [
         _c("i", { staticClass: "fa fa-long-arrow-right fa-lg" }),
-        _vm._v(" mkeep.add_income")
+        _vm._v(" " + _vm._s(_vm._f("trans")("mkeep.add_income")))
       ]
     ),
     _vm._v(" "),
@@ -13793,7 +13793,7 @@ var render = function() {
       },
       [
         _c("i", { staticClass: "fa fa-exchange fa-lg" }),
-        _vm._v(" mkeep.add_transfer")
+        _vm._v(" " + _vm._s(_vm._f("trans")("mkeep.add_transfer")))
       ]
     )
   ])
@@ -13839,12 +13839,35 @@ var render = function() {
           { staticClass: "modal-dialog", attrs: { role: "document" } },
           [
             _c("div", { staticClass: "modal-content" }, [
-              _vm._m(0),
+              _c("div", { staticClass: "modal-header" }, [
+                _c("h4", { staticClass: "modal-title" }),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "close",
+                    attrs: {
+                      type: "button",
+                      "data-dismiss": "modal",
+                      "aria-label": _vm._f("trans")("mkeep_tablegrid.close")
+                    }
+                  },
+                  [
+                    _c("span", { attrs: { "aria-hidden": "true" } }, [
+                      _vm._v("×")
+                    ])
+                  ]
+                )
+              ]),
               _vm._v(" "),
               _c("div", { staticClass: "modal-body" }, [
                 _vm.operation.id
-                  ? _c("h1", [_vm._v("mkeep.edit")])
-                  : _c("h1", [_vm._v("mkeep.add")]),
+                  ? _c("h1", [
+                      _vm._v(_vm._s(_vm._f("trans")("mkeep.edit_item")))
+                    ])
+                  : _c("h1", [
+                      _vm._v(_vm._s(_vm._f("trans")("mkeep.add_item")))
+                    ]),
                 _vm._v(" "),
                 _c("form", { attrs: { method: "post" } }, [
                   _c("div", { staticClass: "form-row" }, [
@@ -13860,7 +13883,10 @@ var render = function() {
                         ],
                         staticClass: "form-control",
                         class: { "is-invalid": _vm.errors && _vm.errors.date },
-                        attrs: { type: "date", placeholder: "mkeep.date" },
+                        attrs: {
+                          type: "date",
+                          placeholder: _vm._f("trans")("mkeep.date")
+                        },
                         domProps: { value: _vm.operation.date },
                         on: {
                           input: function($event) {
@@ -13891,7 +13917,10 @@ var render = function() {
                         ],
                         staticClass: "form-control",
                         class: { "is-invalid": _vm.errors && _vm.errors.value },
-                        attrs: { type: "number", placeholder: "mkeep.summ" },
+                        attrs: {
+                          type: "number",
+                          placeholder: _vm._f("trans")("mkeep.summ")
+                        },
                         domProps: { value: _vm.operation.value },
                         on: {
                           input: function($event) {
@@ -13926,7 +13955,7 @@ var render = function() {
                             staticClass: "mb-0",
                             attrs: { for: "category_id" }
                           },
-                          [_vm._v("mkeep.category ")]
+                          [_vm._v(_vm._s(_vm._f("trans")("mkeep.category")))]
                         ),
                         _vm._v(" "),
                         _c("dropdown-items", {
@@ -13962,7 +13991,7 @@ var render = function() {
                                 staticClass: "mb-0",
                                 attrs: { for: "wallet_from_id" }
                               },
-                              [_vm._v("mkeep.wallet")]
+                              [_vm._v(_vm._s(_vm._f("trans")("mkeep.wallet")))]
                             ),
                             _vm._v(" "),
                             _c("dropdown-items", {
@@ -14003,7 +14032,7 @@ var render = function() {
                                 staticClass: "mb-0",
                                 attrs: { for: "wallet_to_id" }
                               },
-                              [_vm._v("mkeep.wallet")]
+                              [_vm._v(_vm._s(_vm._f("trans")("mkeep.wallet")))]
                             ),
                             _vm._v(" "),
                             _c("dropdown-items", {
@@ -14046,7 +14075,11 @@ var render = function() {
                                 staticClass: "mb-0",
                                 attrs: { for: "wallet_from_id" }
                               },
-                              [_vm._v("mkeep.src_wallet")]
+                              [
+                                _vm._v(
+                                  _vm._s(_vm._f("trans")("mkeep.src_wallet"))
+                                )
+                              ]
                             ),
                             _vm._v(" "),
                             _c("dropdown-items", {
@@ -14085,7 +14118,11 @@ var render = function() {
                                 staticClass: "mb-0",
                                 attrs: { for: "wallet_to_id" }
                               },
-                              [_vm._v("mkeep.dest_wallet")]
+                              [
+                                _vm._v(
+                                  _vm._s(_vm._f("trans")("mkeep.dest_wallet"))
+                                )
+                              ]
                             ),
                             _vm._v(" "),
                             _c("dropdown-items", {
@@ -14128,7 +14165,10 @@ var render = function() {
                       ],
                       staticClass: "form-control",
                       class: { "is-invalid": _vm.errors && _vm.errors.comment },
-                      attrs: { type: "text", placeholder: "mkeep.comment" },
+                      attrs: {
+                        type: "text",
+                        placeholder: _vm._f("trans")("mkeep.comment")
+                      },
                       domProps: { value: _vm.operation.comment },
                       on: {
                         input: function($event) {
@@ -14166,7 +14206,11 @@ var render = function() {
                         },
                         [
                           _c("i", { staticClass: "fa fa-btn fa-save" }),
-                          _vm._v(" mkeep.save\n                        ")
+                          _vm._v(
+                            " " +
+                              _vm._s(_vm._f("trans")("mkeep.save")) +
+                              "\n                        "
+                          )
                         ]
                       )
                     ]),
@@ -14195,18 +14239,29 @@ var render = function() {
                                 _c("i", {
                                   staticClass: "fa fa-long-arrow-left"
                                 }),
-                                _vm._v("  mkeep.add_spend")
+                                _vm._v(
+                                  "  " +
+                                    _vm._s(_vm._f("trans")("mkeep.add_spend"))
+                                )
                               ])
                             : _vm.operation.type == "income"
                             ? _c("span", [
                                 _c("i", {
                                   staticClass: "fa fa-long-arrow-right"
                                 }),
-                                _vm._v("  mkeep.add_income")
+                                _vm._v(
+                                  "  " +
+                                    _vm._s(_vm._f("trans")("mkeep.add_income"))
+                                )
                               ])
                             : _c("span", [
                                 _c("i", { staticClass: "fa fa-exchange" }),
-                                _vm._v("  mkeep.add_transfer")
+                                _vm._v(
+                                  "  " +
+                                    _vm._s(
+                                      _vm._f("trans")("mkeep.add_transfer")
+                                    )
+                                )
                               ])
                         ]
                       ),
@@ -14233,7 +14288,10 @@ var render = function() {
                                   _c("i", {
                                     staticClass: "fa fa-long-arrow-left"
                                   }),
-                                  _vm._v("  mkeep.add_spend")
+                                  _vm._v(
+                                    "  " +
+                                      _vm._s(_vm._f("trans")("mkeep.add_spend"))
+                                  )
                                 ]
                               )
                             : _vm._e(),
@@ -14253,7 +14311,12 @@ var render = function() {
                                   _c("i", {
                                     staticClass: "fa fa-long-arrow-right"
                                   }),
-                                  _vm._v("  mkeep.add_income")
+                                  _vm._v(
+                                    "  " +
+                                      _vm._s(
+                                        _vm._f("trans")("mkeep.add_income")
+                                      )
+                                  )
                                 ]
                               )
                             : _vm._e(),
@@ -14271,7 +14334,12 @@ var render = function() {
                                 },
                                 [
                                   _c("i", { staticClass: "fa fa-exchange" }),
-                                  _vm._v("  mkeep.add_transfer")
+                                  _vm._v(
+                                    "  " +
+                                      _vm._s(
+                                        _vm._f("trans")("mkeep.add_transfer")
+                                      )
+                                  )
                                 ]
                               )
                             : _vm._e()
@@ -14288,29 +14356,7 @@ var render = function() {
     )
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "modal-header" }, [
-      _c("h4", { staticClass: "modal-title" }),
-      _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "close",
-          attrs: {
-            type: "button",
-            "data-dismiss": "modal",
-            "aria-label": "mkeep_tablegrid.close"
-          }
-        },
-        [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
-      )
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -14352,12 +14398,10 @@ var render = function() {
             [
               _vm.operations === false
                 ? _c("div", { staticClass: "card-header" }, [
-                    _c("h3", [_vm._v("mkeep.loading")])
+                    _c("h3", [_vm._v(_vm._s(_vm._f("trans")("mkeep.loading")))])
                   ])
                 : _c("div", { staticClass: "card-header" }, [
-                    _c("h3", [
-                      _vm._v(_vm._s(_vm._f("translate")(_vm.mkeep.no_data)))
-                    ])
+                    _c("h3", [_vm._v(_vm._s(_vm._f("trans")("mkeep.no_data")))])
                   ])
             ]
           )
@@ -30234,6 +30278,10 @@ module.exports = g;
 //require('./bootstrap');
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
 window.axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/**
+ *  @brief number_format function
+ */
+
 Vue.filter('numberf', function (value) {
   if (typeof value !== "number") {
     return value;
@@ -30246,6 +30294,10 @@ Vue.filter('numberf', function (value) {
   });
   return formatter.format(value);
 });
+/**
+ *  @brief cut text function
+ */
+
 Vue.filter('cuttext', function (value) {
   if (value.length > 12) {
     value = value.substr(0, 9);
@@ -30253,6 +30305,24 @@ Vue.filter('cuttext', function (value) {
   }
 
   return value;
+});
+/**
+ *  @brief Translate function
+ */
+
+Vue.filter('trans', function (value) {
+  var codes = value.split('.');
+  var translate = window.translations;
+
+  for (var x in codes) {
+    if (!translate || !translate[codes[x]]) {
+      return value;
+    }
+
+    translate = translate[codes[x]];
+  }
+
+  return translate;
 });
 /**
  * Next, we will create a fresh Vue application instance and attach it to

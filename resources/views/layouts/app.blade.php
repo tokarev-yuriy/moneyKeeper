@@ -272,7 +272,7 @@
     <!--  Notifications Plugin    -->
     <script src="/js/material/plugins//bootstrap-notify.js"></script>
     <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
-    <script src="/js/material-dashboard.js?v=2.1.1" type="text/javascript"></script>
+    <script src="/js/material-dashboard.js?v=2.1.2" type="text/javascript"></script>
     
     <script src="/js/slider/owl.carousel.min.js?v=<?=time()?>"></script>   
     <script src="/js/widget.js?v=<?=time()?>"></script>   
@@ -290,5 +290,10 @@
     <script type="text/javascript" src="/js/lib/fontawesome-iconpicker.min.js?v=<?=time()?>"></script>
 	<script src="//cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     @yield('appjsfile')
+    
+    <script>
+        window.translations = {!! Cache::get('translations') !!};
+    </script>
+    
 </body>
 </html>

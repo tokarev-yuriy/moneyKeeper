@@ -3,8 +3,8 @@
         <operation-btns v-on:addbtnclick="add($event)"></operation-btns>
         <div class="clearfix"></div>
         <div class="card" style="border-radius: 0;" v-if="!operations">
-            <div class="card-header" v-if="operations===false"><h3>mkeep.loading</h3></div>
-            <div class="card-header" v-else=""><h3>{{ mkeep.no_data | translate }}</h3></div>
+            <div class="card-header" v-if="operations===false"><h3>{{ 'mkeep.loading' | trans }}</h3></div>
+            <div class="card-header" v-else=""><h3>{{ 'mkeep.no_data' | trans }}</h3></div>
         </div>
         <div v-for="operation in operations" :class="{'mt-0': !operation.date || operation.date==date}" class="card mb-0" style="border-radius: 0;">
           <div class="card-header card-header-info" style="width: auto;" v-if="operation.date && operation.date!=date">

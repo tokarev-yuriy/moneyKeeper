@@ -5,76 +5,76 @@
             <div class="modal-content">
               <div class="modal-header">
                 <h4 class="modal-title"></h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="mkeep_tablegrid.close">
+                <button type="button" class="close" data-dismiss="modal" :aria-label="'mkeep_tablegrid.close'|trans">
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
               <div class="modal-body">
-                <h1 v-if="operation.id">mkeep.edit</h1>    
-                <h1 v-else="">mkeep.add</h1>
+                <h1 v-if="operation.id">{{ 'mkeep.edit_item' | trans }}</h1>    
+                <h1 v-else="">{{ 'mkeep.add_item' | trans }}</h1>
                 <form method="post">
                   <div class="form-row">
                     <div class="form-group col-6">
-                        <input type="date" v-model="operation.date" class="form-control" :class="{'is-invalid': errors && errors.date}" placeholder="mkeep.date" />
+                        <input type="date" v-model="operation.date" class="form-control" :class="{'is-invalid': errors && errors.date}" :placeholder="'mkeep.date'|trans" />
                         <span class="invalid-feedback" v-if="errors && errors.date"><strong>{{ errors.date }}</strong></span>
                     </div>  
 
                     <div class="col-6 form-group">
-                        <input type="number" v-model="operation.value" class="form-control" :class="{'is-invalid': errors && errors.value}" placeholder="mkeep.summ" />
+                        <input type="number" v-model="operation.value" class="form-control" :class="{'is-invalid': errors && errors.value}" :placeholder="'mkeep.summ'|trans" />
                         <span class="invalid-feedback" v-if="errors && errors.value"><strong>{{ errors.value }}</strong></span>
                     </div>
                   </div>
                   <div class="form-row">
                     <div class="col-6 form-group">
-                        <label for="category_id" class="mb-0">mkeep.category </label>
+                        <label for="category_id" class="mb-0">{{ 'mkeep.category' | trans }}</label>
                         <dropdown-items v-model="operation.category_id" :items="categories"/>
                         <span class="invalid-feedback" v-if="errors && errors.category_id"><strong>{{ errors.category_id }}</strong></span>
                     </div>
                     <div class="col-6 form-group" v-if="operation.type=='spend'">
-                        <label for="wallet_from_id" class="mb-0">mkeep.wallet</label>
+                        <label for="wallet_from_id" class="mb-0">{{ 'mkeep.wallet' | trans }}</label>
                         <dropdown-items v-model="operation.wallet_from_id" :items="wallets"/>
                         <span class="invalid-feedback" v-if="errors && errors.wallet_from_id"><strong>{{ errors.wallet_from_id }}</strong></span>
                     </div>
                     <div class="col-6 form-group" v-if="operation.type=='income'">
-                        <label for="wallet_to_id" class="mb-0">mkeep.wallet</label>
+                        <label for="wallet_to_id" class="mb-0">{{ 'mkeep.wallet' | trans }}</label>
                         <dropdown-items v-model="operation.wallet_to_id" :items="wallets"/>
                         <span class="invalid-feedback" v-if="errors && errors.wallet_to_id"><strong>{{ errors.wallet_to_id }}</strong></span>
                     </div>
                   </div>
                   <div class="form-row" v-if="operation.type=='transfer'">
                     <div class="col-6 form-group">
-                        <label for="wallet_from_id" class="mb-0">mkeep.src_wallet</label>
+                        <label for="wallet_from_id" class="mb-0">{{ 'mkeep.src_wallet' | trans }}</label>
                         <dropdown-items v-model="operation.wallet_from_id" :items="wallets"/>
                         <span class="invalid-feedback" v-if="errors && errors.wallet_from_id"><strong>{{ errors.wallet_from_id }}</strong></span>
                     </div>
                     <div class="col-6 form-group">
-                        <label for="wallet_to_id" class="mb-0">mkeep.dest_wallet</label>
+                        <label for="wallet_to_id" class="mb-0">{{ 'mkeep.dest_wallet' | trans }}</label>
                         <dropdown-items v-model="operation.wallet_to_id" :items="wallets"/>
                         <span class="invalid-feedback" v-if="errors && errors.wallet_to_id"><strong>{{ errors.wallet_to_id }}</strong></span>
                     </div>
                   </div>
 
                      <div class="row form-group">
-                        <input type="text" v-model="operation.comment" class="form-control" :class="{'is-invalid': errors && errors.comment}" placeholder="mkeep.comment">
+                        <input type="text" v-model="operation.comment" class="form-control" :class="{'is-invalid': errors && errors.comment}" :placeholder="'mkeep.comment'|trans">
                         <span class="invalid-feedback" v-if="errors && errors.comment"><strong>{{ errors.comment }}</strong></span>
                      </div>
 
                      <div class="row form-group">
                         <div class="col-6 pl-0">
                             <button type="button" class="btn btn-success" @click="save()">
-                                <i class="fa fa-btn fa-save"></i> mkeep.save
+                                <i class="fa fa-btn fa-save"></i> {{ 'mkeep.save' | trans }}
                             </button>
                         </div>
                         <div class="col-6 pr-0">
                             <button id="btn-type-drop" type="button" class="btn pull-right dropdown-toggle" :class="{'btn-danger': operation.type=='spend', 'btn-success': operation.type=='income', 'btn-secondary': operation.type=='transfer'}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                              <span v-if="operation.type=='spend'"><i class="fa fa-long-arrow-left"></i>&nbsp;&nbsp;mkeep.add_spend</span>
-                              <span v-else-if="operation.type=='income'"><i class="fa fa-long-arrow-right"></i>&nbsp;&nbsp;mkeep.add_income</span>
-                              <span v-else=""><i class="fa fa-exchange"></i>&nbsp;&nbsp;mkeep.add_transfer</span>
+                              <span v-if="operation.type=='spend'"><i class="fa fa-long-arrow-left"></i>&nbsp;&nbsp;{{ 'mkeep.add_spend' | trans }}</span>
+                              <span v-else-if="operation.type=='income'"><i class="fa fa-long-arrow-right"></i>&nbsp;&nbsp;{{ 'mkeep.add_income' | trans }}</span>
+                              <span v-else=""><i class="fa fa-exchange"></i>&nbsp;&nbsp;{{ 'mkeep.add_transfer' | trans }}</span>
                             </button>
                             <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">              
-                              <a v-if="operation.type!='spend'" class="dropdown-item text-danger" @click="operation.type='spend'"><i class="fa fa-long-arrow-left"></i>&nbsp;&nbsp;mkeep.add_spend</a>
-                              <a v-if="operation.type!='income'" class="dropdown-item text-success" @click="operation.type='income'"><i class="fa fa-long-arrow-right"></i>&nbsp;&nbsp;mkeep.add_income</a>
-                              <a v-if="operation.type!='transfer'" class="dropdown-item" @click="operation.type='transfer'"><i class="fa fa-exchange"></i>&nbsp;&nbsp;mkeep.add_transfer</a>
+                              <a v-if="operation.type!='spend'" class="dropdown-item text-danger" @click="operation.type='spend'"><i class="fa fa-long-arrow-left"></i>&nbsp;&nbsp;{{ 'mkeep.add_spend' | trans }}</a>
+                              <a v-if="operation.type!='income'" class="dropdown-item text-success" @click="operation.type='income'"><i class="fa fa-long-arrow-right"></i>&nbsp;&nbsp;{{ 'mkeep.add_income' | trans }}</a>
+                              <a v-if="operation.type!='transfer'" class="dropdown-item" @click="operation.type='transfer'"><i class="fa fa-exchange"></i>&nbsp;&nbsp;{{ 'mkeep.add_transfer' | trans }}</a>
                             </div>
                         </div>
                      </div>
