@@ -55,6 +55,11 @@
   }
 }
 
+.dropdown-with-icons .dropdown-toggle i,
+.dropdown-with-icons .dropdown-item i {
+  margin-right: 10px;
+}
+
 .sidebar .sidebar-background:after {
   background-color: rgba(27, 27, 27, 0.87);
   opacity: 0.85;

@@ -40,3 +40,11 @@
       padding: 12px 15px;
     }
 }
+
+
+.dropdown-with-icons {
+    .dropdown-toggle i,
+    .dropdown-item i {
+        margin-right: 10px;
+    }
+}
