@@ -60,6 +60,10 @@
   margin-right: 10px;
 }
 
+input.form-control[type=date] {
+  max-width: 125px;
+}
+
 .sidebar .sidebar-background:after {
   background-color: rgba(27, 27, 27, 0.87);
   opacity: 0.85;

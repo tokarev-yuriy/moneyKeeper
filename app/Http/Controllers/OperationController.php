@@ -32,10 +32,6 @@ class OperationController extends CrudListController {
     {
         $this->middleware('auth');
         parent::__construct();
-        
-        View::composer($this->__getViews(), function ($view) {
-          $view->with('type', $this->type);
-        }); 
     }
     
     /**
@@ -92,6 +88,7 @@ class OperationController extends CrudListController {
         $arCategories = Category::user()->select('id', 'name', 'icon')->orderBy('sort')->get();
         $arIcons = Category::getCategoryIcons();
         foreach($arCategories as $arCategory) {
+            $this->arDictionaries['categories'][$arCategory->id] = $arCategory;
             $this->arDictionaries['category_id'][$arCategory->id] = $arCategory->name;
             $this->arDictionaries['category_icon'][$arCategory->id] = '';
             if ($arCategory->icon && isset($arIcons[$arCategory->icon])) {
@@ -129,9 +126,9 @@ class OperationController extends CrudListController {
      * 
      * @return <type>
      */    
-    public function postIndex()
+    public function postIndex($type = false)
     {
-        return $this->getIndex();
+        return $this->getIndex($type);
     }
     
     /**
@@ -139,11 +136,11 @@ class OperationController extends CrudListController {
      * 
      * @return <type>
      */    
-    public function getIndex()
+    public function getIndex($type = false)
     {
         $dbItems = Operation::user();
-        if ($this->type) {
-            $dbItems->where('type', '=', $this->type);
+        if ($type) {
+            $dbItems->where('type', '=', $type);
         }
         $dbItems = $this->__processFilter($dbItems);
         $arItems = $dbItems->
@@ -177,21 +174,19 @@ class OperationController extends CrudListController {
 				}
 				
 				$arItems[$k]->wallet = $wallet;
-				$arItems[$k]->editPath = '/account/operations/'.$obItem->type.'/update/'.$obItem->id;
-				$arItems[$k]->deletePath = '/account/operations/'.$obItem->type.'/delete/'.$obItem->id;
-				$arItems[$k]->editTitle = trans('mkeep.edit_operation');
-				$arItems[$k]->deleteTitle = trans('mkeep.delete_operation');
 			}
             
             return [
                 'operations' => $arItems,
                 'header' => $this->__getHeads(),
                 'actions' => $this->__getActions(),
+                'filters' => $this->__getFilters(),
                 'dicts' => $arDicts,
             ];
         }
         
         $arTable = array(
+            'type' => $type,
             'items' => $arItems,
             'arItems' => $arItems,
             'arHeads' => $this->__getHeads(),
@@ -275,6 +270,7 @@ class OperationController extends CrudListController {
     protected function __getValidators () {
         return array(
               'value'=>'required|numeric',
+              'type'=>'required|in:spend,transfer,income',
               //'comment'=>'required|max:255',
               'date'=>'required|date',
             );
@@ -293,13 +289,17 @@ class OperationController extends CrudListController {
         }
         return array(
             'date'=>array(
-                'title'=>trans('mkeep.date'), 
-                'type'=>'period'
+                'title' => trans('mkeep.date'), 
+                'code'  => 'date',
+                'value' => Session::get('operation_filter_date'),
+                'type'  => 'period',
             ), 
             'category_id'=>array(
-                'title'=>trans('mkeep.category'), 
-                'type'=>'list',
-                'values'=>array_replace(array('-1'=>trans('mkeep.all_categories')), $this->arDictionaries['category_id_icons'])
+                'title' => trans('mkeep.category'), 
+                'code'  => 'category_id',
+                'value' => (Session::get('operation_filter_category_id'))?Session::get('operation_filter_category_id'):0,
+                'type'  => 'list',
+                'values'=> array_replace(array('0'=>['id'=>'0', 'name'=>trans('mkeep.all_categories')]), $this->arDictionaries['categories'])
             )
         );
     } 
@@ -316,7 +316,7 @@ class OperationController extends CrudListController {
         $obItem->year = date('Y', strtotime(Input::get('date')));
         $obItem->month = date('n', strtotime(Input::get('date')));
         $obItem->user_id = Auth::id();
-        $obItem->type = $this->type;
+        $obItem->type = Input::get('type');
         $obItem->value = floatval(Input::get('value'));
         $obItem->category_id = intval(Input::get('category_id'));
         $obItem->wallet_from_id = intval(Input::get('wallet_from_id'));
@@ -330,25 +330,6 @@ class OperationController extends CrudListController {
         }
         
         return $obItem;
-    }
-    
-    /**
-     * Preparing the object fields to display in the table
-     * 
-     * @param array $arItems 
-     * 
-     * @return array
-     */
-    protected function __prepareItems($arItems) {
-        
-        foreach($arItems as $k=>$obItem) {
-            $arItems[$k]->editPath = '/account/operations/'.$obItem->type.'/update/'.$obItem->id;
-            $arItems[$k]->deletePath = '/account/operations/'.$obItem->type.'/delete/'.$obItem->id;
-            $arItems[$k]->editTitle = $this->__getTitle('edit');
-            $arItems[$k]->deleteTitle = $this->__getTitle('delete');
-        }
-        
-        return $arItems;
     }
     
     /**
@@ -376,38 +357,31 @@ class OperationController extends CrudListController {
      * @return Eloquent
      */    
     protected function __processFilter ($dbRes) {
-        if (strlen(Input::get('date_from'))>0) {
-            Session::put('date_from', Input::get('date_from'));
-        } 
         
-        if (strlen(Input::get('date_to'))>0) {
-            Session::put('date_to', Input::get('date_to'));
+        /* date */
+        $filterDate = Session::get('operation_filter_date');
+        if (!is_array($filterDate)) $filterDate = [];
+        if (!isset($filterDate['from']) || !$filterDate['from']) $filterDate['from'] = date('Y-m-01');
+        if (!isset($filterDate['to']) || !$filterDate['to']) $filterDate['to'] = date('Y-m-d');
+        
+        $date = Input::get('date');
+        if (isset($date['from']) && strlen($date['from'])>0) $filterDate['from'] = $date['from'];
+        if (isset($date['to']) && strlen($date['to'])>0) $filterDate['to'] = $date['to'];
+        Session::put('operation_filter_date', $filterDate);
+        
+        if(strlen($filterDate['from'])>0) {
+            $dbRes->where('date', '>=', date("Y-m-d", strtotime($filterDate['from'])));
         }
+        if (strlen($filterDate['to'])>0) {
+            $dbRes->where('date', '<=', date("Y-m-d", strtotime($filterDate['to'])));
+        }
+        
+        /* categoryId */        
         if (strlen(Input::get('category_id'))>0) {
-            Session::put('category_id', Input::get('category_id'));
+            Session::put('operation_filter_category_id', Input::get('category_id'));
         }
-        
-        
-        if(strlen(Session::get('date_from'))>0) {
-            $dateFrom = date("Y-m-d", strtotime(Session::get('date_from')));
-            
-            $dbRes->where('date', '>=', $dateFrom);
-        } else {
-            $dbRes->where('date', '>=', date('Y-m-01'));
-        }
-        
-        if (strlen(Session::get('date_to'))>0) {
-            $dateTo = date("Y-m-d", strtotime(Session::get('date_to')));
-            
-            $dbRes->where('date', '<=', $dateTo);
-        } else {
-            $dbRes->where('date', '<=', date('Y-m-d'));
-        }
-        
-        if (strlen(Session::get('category_id'))>0 && intval(Session::get('category_id'))>0) {
-            $categoryId = intval(Session::get('category_id'));
-            
-            $dbRes->where('category_id', '=', $categoryId);
+        if (strlen(Session::get('operation_filter_category_id'))>0 && intval(Session::get('operation_filter_category_id'))>0) {
+            $dbRes->where('category_id', '=', intval(Session::get('operation_filter_category_id')));
         }
         
         return $dbRes;

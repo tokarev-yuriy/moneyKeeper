@@ -4,14 +4,13 @@
           <div class="modal-dialog" role="document">
             <div class="modal-content">
               <div class="modal-header">
-                <h4 class="modal-title"></h4>
+                <h4 class="modal-title" v-if="operation.id">{{ 'mkeep_tablegrid.edit' | trans }}</h4>    
+                <h4 class="modal-title" v-else="">{{ 'mkeep_tablegrid.add' | trans }}</h4>
                 <button type="button" class="close" data-dismiss="modal" :aria-label="'mkeep_tablegrid.close'|trans">
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
-              <div class="modal-body">
-                <h1 v-if="operation.id">{{ 'mkeep.edit_item' | trans }}</h1>    
-                <h1 v-else="">{{ 'mkeep.add_item' | trans }}</h1>
+              <div class="modal-body">                
                 <form method="post">
                   <div class="form-row">
                     <div class="form-group col-6">
@@ -134,7 +133,7 @@
              * Save opeartion
              */
             save: function() {
-                let url = '/account/operations/'+this.operation.type+'/';
+                let url = '/account/operations/';
                 if (this.operation.id) {
                     url = url + 'update/' + this.operation.id;
                 } else {

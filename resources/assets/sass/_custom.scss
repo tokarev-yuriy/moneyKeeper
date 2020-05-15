@@ -48,3 +48,7 @@
         margin-right: 10px;
     }
 }
+
+input.form-control[type=date] {
+	max-width: 125px;
+}

@@ -36,28 +36,11 @@ Route::get('/account/wallets/update/{id}', 'WalletController@getUpdate');
 Route::post('/account/wallets/update/{id}', 'WalletController@postUpdate');
 
 
-Route::any('/account/operations', 'OperationController@getIndex');
+Route::any('/account/operations/delete/{id}', 'OperationController@getDelete');
 Route::any('/account/operations/edit/{id}', 'OperationController@getEdit');
-Route::any('/account/operations/spend', 'SpendController@getIndex');
-Route::get('/account/operations/spend/delete/{id}', 'SpendController@getDelete');
-Route::get('/account/operations/spend/add', 'SpendController@getAdd');
-Route::post('/account/operations/spend/add', 'SpendController@postAdd');
-Route::get('/account/operations/spend/update/{id}', 'SpendController@getUpdate');
-Route::post('/account/operations/spend/update/{id}', 'SpendController@postUpdate');
-
-Route::any('/account/operations/income', 'IncomeController@getIndex');
-Route::get('/account/operations/income/delete/{id}', 'IncomeController@getDelete');
-Route::get('/account/operations/income/add', 'IncomeController@getAdd');
-Route::post('/account/operations/income/add', 'IncomeController@postAdd');
-Route::get('/account/operations/income/update/{id}', 'IncomeController@getUpdate');
-Route::post('/account/operations/income/update/{id}', 'IncomeController@postUpdate');
-
-Route::any('/account/operations/transfer', 'TransferController@getIndex');
-Route::get('/account/operations/transfer/delete/{id}', 'TransferController@getDelete');
-Route::get('/account/operations/transfer/add', 'TransferController@getAdd');
-Route::post('/account/operations/transfer/add', 'TransferController@postAdd');
-Route::get('/account/operations/transfer/update/{id}', 'TransferController@getUpdate');
-Route::post('/account/operations/transfer/update/{id}', 'TransferController@postUpdate');
+Route::post('/account/operations/add', 'OperationController@postAdd');
+Route::post('/account/operations/update/{id}', 'OperationController@postUpdate');
+Route::any('/account/operations/{type?}', 'OperationController@getIndex');
 
 Route::get('/account/plans', 'PlanController@getIndex');
 Route::get('/account/plans/delete/{id}', 'PlanController@getDelete');

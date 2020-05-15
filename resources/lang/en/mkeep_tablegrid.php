@@ -12,6 +12,7 @@ return array(
 	*/
 
     "sure" => "Are you sure?",
+    "add" => "Add",
     "edit" => "Edit",
     "actions" => "Actions",
     "delete" => "Delete",

@@ -19,7 +19,7 @@
 
 <script>
     export default {
-        props: ['items', 'value'],
+        props: ['items', 'value', 'size'],
         data: function () {
             return {
                 itemId: false,
