@@ -40,6 +40,7 @@ Route::any('/account/operations/delete/{id}', 'OperationController@getDelete');
 Route::any('/account/operations/edit/{id}', 'OperationController@getEdit');
 Route::post('/account/operations/add', 'OperationController@postAdd');
 Route::post('/account/operations/update/{id}', 'OperationController@postUpdate');
+Route::post('/account/operations/filter', 'OperationController@postFilter');
 Route::any('/account/operations/{type?}', 'OperationController@getIndex');
 
 Route::get('/account/plans', 'PlanController@getIndex');

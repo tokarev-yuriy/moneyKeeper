@@ -121,7 +121,7 @@ class OperationController extends CrudListController {
         return $this->arDictionaries;
     }
 
-     /**
+    /**
      * List of items
      * 
      * @return <type>
@@ -259,6 +259,24 @@ class OperationController extends CrudListController {
         
         return ['operation'=>$obItem, 'categories'=>$categories, 'wallets'=>$wallets];
     }
+
+    /**
+     * Process post
+     * 
+     * @return <type>
+     */    
+    public function postFilter()
+    {
+        $filterDate = [];
+        $date = Input::get('date');
+        if (isset($date['from']) && strlen($date['from'])>0) $filterDate['from'] = $date['from'];
+        if (isset($date['to']) && strlen($date['to'])>0) $filterDate['to'] = $date['to'];
+        Session::put('operation_filter_date', $filterDate);
+
+        if (strlen(Input::get('category_id'))>0) {
+            Session::put('operation_filter_category_id', Input::get('category_id'));
+        }
+    }
     
    
     /**
@@ -364,11 +382,6 @@ class OperationController extends CrudListController {
         if (!isset($filterDate['from']) || !$filterDate['from']) $filterDate['from'] = date('Y-m-01');
         if (!isset($filterDate['to']) || !$filterDate['to']) $filterDate['to'] = date('Y-m-d');
         
-        $date = Input::get('date');
-        if (isset($date['from']) && strlen($date['from'])>0) $filterDate['from'] = $date['from'];
-        if (isset($date['to']) && strlen($date['to'])>0) $filterDate['to'] = $date['to'];
-        Session::put('operation_filter_date', $filterDate);
-        
         if(strlen($filterDate['from'])>0) {
             $dbRes->where('date', '>=', date("Y-m-d", strtotime($filterDate['from'])));
         }
@@ -376,10 +389,7 @@ class OperationController extends CrudListController {
             $dbRes->where('date', '<=', date("Y-m-d", strtotime($filterDate['to'])));
         }
         
-        /* categoryId */        
-        if (strlen(Input::get('category_id'))>0) {
-            Session::put('operation_filter_category_id', Input::get('category_id'));
-        }
+        /* categoryId */
         if (strlen(Session::get('operation_filter_category_id'))>0 && intval(Session::get('operation_filter_category_id'))>0) {
             $dbRes->where('category_id', '=', intval(Session::get('operation_filter_category_id')));
         }

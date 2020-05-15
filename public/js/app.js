@@ -2266,6 +2266,18 @@ __webpack_require__.r(__webpack_exports__);
           };
         }
       }
+    },
+
+    /**
+     *  Apply Filter
+     */
+    applyFilter: function applyFilter() {
+      var _this = this;
+
+      axios.post('/account/operations/filter', this.filter).then(function (response) {
+        _this.$root.$emit('operationchanged');
+      });
+      return false;
     }
   }
 });
@@ -14628,13 +14640,17 @@ var render = function() {
                 _c("div", { staticClass: "col-6 col-md-3 text-right" }, [
                   _c(
                     "button",
-                    { staticClass: "btn btn-info", attrs: { type: "submit" } },
+                    {
+                      staticClass: "btn btn-info",
+                      attrs: { type: "button" },
+                      on: { click: _vm.applyFilter }
+                    },
                     [
                       _c("i", { staticClass: "fa fa-btn fa-filter" }),
                       _vm._v(
                         " " +
                           _vm._s(_vm._f("trans")("mkeep_tablegrid.filter")) +
-                          "\n\t\t\t\t\t\t"
+                          "\n                    "
                       )
                     ]
                   )
