@@ -47,6 +47,10 @@
     .dropdown-item i {
         margin-right: 10px;
     }
+    .dropdown-menu {
+        max-height: 20rem;
+        overflow: auto;
+    }
 }
 
 input.form-control[type=date] {

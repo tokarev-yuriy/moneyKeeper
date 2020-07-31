@@ -1,6 +1,6 @@
 <template>
-    <div class="dropdown show dropdown-with-icons">
-      <a class="btn btn-secondary dropdown-toggle" href="javascipt:void(0);" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <div class="dropdown show dropdown-with-icons" id="operationFilterDrop">
+      <a class="btn btn-secondary dropdown-toggle" href="javascipt:void(0);" role="button" data-toggle="dropdown" :data-boundary="boundary" aria-haspopup="true" aria-expanded="false">
 		<span v-if="item">
 			<i v-if="item.icon" :class="'fas fa-'+item.icon" :alt="item.name"></i> {{ item.name }}
 		</span>
@@ -19,7 +19,7 @@
 
 <script>
     export default {
-        props: ['items', 'value', 'size'],
+        props: ['items', 'value', 'size', 'boundary'],
         data: function () {
             return {
                 itemId: false,

@@ -60,6 +60,11 @@
   margin-right: 10px;
 }
 
+.dropdown-with-icons .dropdown-menu {
+  max-height: 20rem;
+  overflow: auto;
+}
+
 input.form-control[type=date] {
   max-width: 125px;
 }
