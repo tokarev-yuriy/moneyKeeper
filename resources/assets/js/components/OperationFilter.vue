@@ -8,7 +8,7 @@
                             <input type="date" v-model="filter[field.code].from" class="form-control" @change="applyFilter()">&nbsp;&mdash;&nbsp;<input type="date" v-model="filter[field.code].to" class="form-control mr-2" @change="applyFilter()">
                         </div>
                         <div v-else-if="field.type=='list'">
-                            <multi-select v-model="filter[field.code]" :items="field.values" @change="applyFilter()"/>
+                            <multi-select v-model="filter[field.code]" :items="field.values" @change="applyFilter()" :code="field.code" :title="field.title"/>
                         </div>
                         <div v-else>
                             <input type="text" v-model="filter[field.code]" class="form-control mr-2" @change="applyFilter()">

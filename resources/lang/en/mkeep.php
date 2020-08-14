@@ -41,6 +41,7 @@ return array(
     "wallet" => "Wallet",
     "wrong_pass" => "Wrong Password or Login",
     
+    "all_items" => "All",
     "items" => "Items",
     "add_item" => "Add item",
     "edit_item" => "Edit item",

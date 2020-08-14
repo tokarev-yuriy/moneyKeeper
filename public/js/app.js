@@ -2044,7 +2044,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['items', 'value'],
+  props: ['items', 'value', 'code', 'title'],
   data: function data() {
     return {
       selected: []
@@ -2057,6 +2057,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   mounted: function mounted() {
     this.setValue(this.value);
+    console.log(this.items);
   },
   methods: {
     /**
@@ -2091,7 +2092,7 @@ __webpack_require__.r(__webpack_exports__);
      *  Open popup
      */
     select: function select() {
-      $('#multiSelectModalBlock').modal('show');
+      $('#multiSelectModalBlock-' + this.code).modal('show');
     },
 
     /**
@@ -2116,7 +2117,7 @@ __webpack_require__.r(__webpack_exports__);
     apply: function apply() {
       this.$emit('input', this.selected);
       this.$emit('change');
-      $('#multiSelectModalBlock').modal('hide');
+      $('#multiSelectModalBlock-' + this.code).modal('hide');
     }
   }
 });
@@ -14037,7 +14038,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { attrs: { id: "operationFilterDrop" } }, [
+  return _c("div", [
     _c(
       "a",
       {
@@ -14050,9 +14051,7 @@ var render = function() {
         }
       },
       [
-        _vm._v(
-          "\n    " + _vm._s(_vm._f("trans")("mkeep.categories")) + "\n    "
-        ),
+        _vm._v("\n    " + _vm._s(this.title) + "\n    "),
         _c("span", { staticClass: "badge badge-light" }, [
           _vm._v(_vm._s(this.selected.length))
         ])
@@ -14065,7 +14064,7 @@ var render = function() {
         staticClass: "modal fade",
         staticStyle: { display: "none" },
         attrs: {
-          id: "multiSelectModalBlock",
+          id: "multiSelectModalBlock-" + _vm.code,
           tabindex: "-1",
           role: "dialog",
           "aria-hidden": "true"
@@ -14079,7 +14078,7 @@ var render = function() {
             _c("div", { staticClass: "modal-content" }, [
               _c("div", { staticClass: "modal-header" }, [
                 _c("h4", { staticClass: "modal-title" }, [
-                  _vm._v(_vm._s(_vm._f("trans")("mkeep.categories")))
+                  _vm._v(_vm._s(this.title))
                 ]),
                 _vm._v(" "),
                 _c(
@@ -14159,7 +14158,7 @@ var render = function() {
                           _c("i", { staticClass: "fa fa-btn fa-remove" }),
                           _vm._v(
                             " " +
-                              _vm._s(_vm._f("trans")("mkeep.all_categories")) +
+                              _vm._s(_vm._f("trans")("mkeep.all_items")) +
                               "\n                    "
                           )
                         ]
@@ -14928,7 +14927,11 @@ var render = function() {
                         "div",
                         [
                           _c("multi-select", {
-                            attrs: { items: field.values },
+                            attrs: {
+                              items: field.values,
+                              code: field.code,
+                              title: field.title
+                            },
                             on: {
                               change: function($event) {
                                 return _vm.applyFilter()

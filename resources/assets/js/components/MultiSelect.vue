@@ -1,15 +1,15 @@
 <template>
-    <div id="operationFilterDrop">
+    <div>
       <a class="btn btn-secondary" href="javascipt:void(0);" role="button" @click="select()">
-        {{ 'mkeep.categories' | trans }}
+        {{ this.title }}
         <span class="badge badge-light">{{ this.selected.length }}</span>
       </a>
       
-      <div class="modal fade" id="multiSelectModalBlock" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
+      <div class="modal fade" :id="'multiSelectModalBlock-'+code" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
           <div class="modal-dialog" role="document">
             <div class="modal-content">
               <div class="modal-header">
-                <h4 class="modal-title">{{ 'mkeep.categories' | trans }}</h4>    
+                <h4 class="modal-title">{{ this.title }}</h4>    
                 <button type="button" class="close" data-dismiss="modal" :aria-label="'mkeep_tablegrid.close'|trans">
                   <span aria-hidden="true">&times;</span>
                 </button>
@@ -23,7 +23,7 @@
                 <div class="row form-group">
                     <div class="col-6 pl-0">
                         <button type="button" class="btn btn-primary" @click="clear()">
-                            <i class="fa fa-btn fa-remove"></i> {{ 'mkeep.all_categories' | trans }}
+                            <i class="fa fa-btn fa-remove"></i> {{ 'mkeep.all_items' | trans }}
                         </button>
                     </div>
                     <div class="col-6 pr-0">
@@ -41,7 +41,7 @@
 
 <script>
     export default {
-        props: ['items', 'value'],
+        props: ['items', 'value', 'code', 'title'],
         data: function () {
             return {
                 selected: []
@@ -54,6 +54,7 @@
         },
         mounted() {
             this.setValue(this.value);
+            console.log(this.items);
 		},
         methods: {
             /**
@@ -83,7 +84,7 @@
              *  Open popup
              */
             select: function() {
-                $('#multiSelectModalBlock').modal('show');
+                $('#multiSelectModalBlock-'+this.code).modal('show');
             },
             /**
              *  Check if item is selected
@@ -105,7 +106,7 @@
             apply: function() {
                 this.$emit('input', this.selected);
                 this.$emit('change');
-                $('#multiSelectModalBlock').modal('hide');
+                $('#multiSelectModalBlock-'+this.code).modal('hide');
             }
         }
     }

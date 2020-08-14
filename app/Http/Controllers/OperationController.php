@@ -74,6 +74,7 @@ class OperationController extends CrudListController {
      */
     protected function __loadDictionaries () {
         $this->arDictionaries = array(
+            'walletsList' => array(),
             'wallets' => array(),
             'wallet_from_id' => array(),
             'wallet_to_id' => array(),
@@ -98,8 +99,9 @@ class OperationController extends CrudListController {
             $this->arDictionaries['category_id_icons'][$arCategory->id] = (isset($arIcons[$arCategory->icon])?'<img src="'.$arIcons[$arCategory->icon].'" style="height: 20px; padding-right: 10px; margin-left: -5px;">':'').$arCategory->name;
         }
         
-        $arWallets = Wallet::user()->select('id', 'name')->orderBy('sort')->get();
+        $arWallets = Wallet::user()->select('id', 'name', 'icon')->orderBy('sort')->get();
         foreach($arWallets as $arWallet) {
+            $this->arDictionaries['walletsList'][$arWallet->id] = $arWallet;
             $this->arDictionaries['wallets'][$arWallet->id] = $arWallet->name;
             $this->arDictionaries['wallet_to_id'][$arWallet->id] = $arWallet->name;
             $this->arDictionaries['wallet_from_id'][$arWallet->id] = $arWallet->name;
@@ -279,6 +281,10 @@ class OperationController extends CrudListController {
         if (is_array(Input::get('category_id'))) {
             Session::put('operation_filter_category_id', Input::get('category_id'));
         }
+        
+        if (is_array(Input::get('wallet_id'))) {
+            Session::put('operation_filter_wallet_id', Input::get('wallet_id'));
+        }
     }
     
    
@@ -316,11 +322,18 @@ class OperationController extends CrudListController {
                 'type'  => 'period',
             ), 
             'category_id'=>array(
-                'title' => trans('mkeep.category'), 
+                'title' => trans('mkeep.categories'), 
                 'code'  => 'category_id',
                 'value' => (Session::get('operation_filter_category_id'))?Session::get('operation_filter_category_id'):0,
                 'type'  => 'list',
                 'values'=> $this->arDictionaries['categories']
+            ),
+            'wallet_id'=>array(
+                'title' => trans('mkeep.wallets'), 
+                'code'  => 'wallet_id',
+                'value' => (Session::get('operation_filter_wallet_id'))?Session::get('operation_filter_wallet_id'):0,
+                'type'  => 'list',
+                'values'=> $this->arDictionaries['walletsList']
             )
         );
     } 
@@ -395,6 +408,14 @@ class OperationController extends CrudListController {
         /* categoryId */
         if (is_array(Session::get('operation_filter_category_id')) && count(Session::get('operation_filter_category_id'))) {
             $dbRes->whereIn('category_id', Session::get('operation_filter_category_id'));
+        }
+        
+        /* walletId */
+        if (is_array(Session::get('operation_filter_wallet_id')) && count(Session::get('operation_filter_wallet_id'))) {
+            $dbRes->where(function ($q) {
+                $q->whereIn('wallet_from_id', Session::get('operation_filter_wallet_id'));
+                $q->orWhereIn('wallet_to_id', Session::get('operation_filter_wallet_id'));
+            });
         }
         
         return $dbRes;
