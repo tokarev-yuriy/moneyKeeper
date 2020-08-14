@@ -564,7 +564,7 @@ class StatisticsController extends Controller {
         
         $arCategoriesSum = array();        
         foreach ($arOperations as $obOperation) {
-            $arCategoriesSum[$obOperation->category_id] = array('sum'=>$obOperation->sum, 'plan'=>0);
+            $arCategoriesSum[$obOperation->category_id] = array('sum'=>$obOperation->sum, 'plan'=>0, 'id'=>$obOperation->category_id);
         }
         
         $dbPlans = Plan::select(DB::raw('sum(value) as sum, category_id'))->
@@ -575,7 +575,7 @@ class StatisticsController extends Controller {
                 
         foreach ($arPlans as $obPlan) {
             if (!isset($arCategoriesSum[$obPlan->category_id])) {
-                $arCategoriesSum[$obPlan->category_id] = array('sum'=>0);
+                $arCategoriesSum[$obPlan->category_id] = array('sum'=>0, 'id'=>$obPlan->category_id);
             }
             $arCategoriesSum[$obPlan->category_id]['plan'] = $obPlan->sum;
             if ($type=='year') {
@@ -586,7 +586,7 @@ class StatisticsController extends Controller {
         $arIcons = Category::getCategoryIcons();
         foreach ($arCategories as $k=>$obCategory) {
             if (!isset($arCategoriesSum[$obCategory->id])) {
-                $arCategoriesSum[$obCategory->id] = array('sum'=>0, 'plan'=>0);
+                $arCategoriesSum[$obCategory->id] = array('sum'=>0, 'plan'=>0, 'id'=>$obCategory->id);
             }
             $arCategoriesSum[$obCategory->id]['name'] = $obCategory->name;
             $arCategoriesSum[$obCategory->id]['icon'] = false;

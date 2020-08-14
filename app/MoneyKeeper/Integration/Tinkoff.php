@@ -97,7 +97,7 @@ class Tinkoff extends Integration {
      */
     protected function getOperationsByBill($bill) {
         $operations = [];
-        $response = $this->call("https://openapi.tinkoff.ru/sme/api/v1/partner/company/".$this->params['inn']."/excerpt", "GET", 
+        $response = $this->call("https://business.tinkoff.ru/openapi/api/v1/company/".$this->params['inn']."/bankStatement", "GET", 
                     [
 						'accountNumber'=>$bill,
 						'from'=>date("Y-m-d", strtotime($this->obItem->last_sync)-10*24*60*60)."+03:00:00"
@@ -124,7 +124,7 @@ class Tinkoff extends Integration {
      */
     protected function getBills() {
         $this->bills = [];
-        $response = $this->call("https://openapi.tinkoff.ru/sme/api/v1/partner/company/".$this->params['inn']."/accounts", "GET", 
+        $response = $this->call("https://business.tinkoff.ru/openapi/api/v1/company/".$this->params['inn']."/accounts", "GET", 
                     [],
                     [
                         'Authorization'=> 'Bearer '.$this->token,
@@ -147,24 +147,8 @@ class Tinkoff extends Integration {
      *  Get token by refresh token
      */
     protected function getToken() {
-        
-        $response = $this->call("https://openapi.tinkoff.ru/sso//secure/token", "POST", 
-                    [
-                        'grant_type'=>'refresh_token', 
-                        'refresh_token'=>$this->params['refreshToken'], 
-                    ],
-                    [
-                        'Content-Type'=> 'application/x-www-form-urlencoded'
-                    ]
-                );
-        
-        if (is_array($response)) {
-            if ($response['code']==200 && is_object($response['result']) && isset($response['result']->access_token)) {
-                $this->token = $response['result']->access_token;
-                return true;
-            }
-        }
-        return false;
+        $this->token = $this->params['refreshToken'];
+        return true;
     }
 
 }

@@ -43,7 +43,7 @@
         </div>
         <operation-edit ref="operationEdit"></operation-edit>
         <div class="clearfix"></div>
-        <operation-btns></operation-btns>
+        <operation-btns v-on:addbtnclick="add($event)"></operation-btns>
         
         <div class="modal fade" id="deleteModalBlock" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
           <div class="modal-dialog" role="document">
@@ -67,6 +67,7 @@
 
 <script>
     export default {
+        props: ['type'],
         data: function () {
             return {
                 operations: false,
@@ -92,8 +93,12 @@
              *  Load operations
              */
             load: function () {
+                var url = '/account/operations';
+                if (this.type) {
+                    url = url + "/" + this.type;
+                }
                 axios
-                    .get('/account/operations')
+                    .get(url)
                     .then((response) => {
                         this.operations = response.data['operations'].data;
                         if (this.operations) {

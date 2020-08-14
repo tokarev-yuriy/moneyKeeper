@@ -251,6 +251,9 @@ class OperationController extends CrudListController {
             
             $cat = current($categories[$obItem['type']]);
             $obItem['category_id'] = $cat->id;
+            if (Input::get('category_id') && $categories[$obItem['type']][Input::get('category_id')]) {
+                $obItem['category_id'] = $categories[$obItem['type']][Input::get('category_id')]->id;
+            }
             
             $wallet = current($arWallets);
             if (!$obItem['wallet_from_id']) $obItem['wallet_from_id'] = $wallet->id;
@@ -273,7 +276,7 @@ class OperationController extends CrudListController {
         if (isset($date['to']) && strlen($date['to'])>0) $filterDate['to'] = $date['to'];
         Session::put('operation_filter_date', $filterDate);
 
-        if (strlen(Input::get('category_id'))>0) {
+        if (is_array(Input::get('category_id'))) {
             Session::put('operation_filter_category_id', Input::get('category_id'));
         }
     }
@@ -317,7 +320,7 @@ class OperationController extends CrudListController {
                 'code'  => 'category_id',
                 'value' => (Session::get('operation_filter_category_id'))?Session::get('operation_filter_category_id'):0,
                 'type'  => 'list',
-                'values'=> array_replace(array('0'=>['id'=>'0', 'name'=>trans('mkeep.all_categories')]), $this->arDictionaries['categories'])
+                'values'=> $this->arDictionaries['categories']
             )
         );
     } 
@@ -390,8 +393,8 @@ class OperationController extends CrudListController {
         }
         
         /* categoryId */
-        if (strlen(Session::get('operation_filter_category_id'))>0 && intval(Session::get('operation_filter_category_id'))>0) {
-            $dbRes->where('category_id', '=', intval(Session::get('operation_filter_category_id')));
+        if (is_array(Session::get('operation_filter_category_id')) && count(Session::get('operation_filter_category_id'))) {
+            $dbRes->whereIn('category_id', Session::get('operation_filter_category_id'));
         }
         
         return $dbRes;

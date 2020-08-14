@@ -47,7 +47,7 @@
              *  Добавляем новый расход
              */
             addSpend: function(categoryId) {
-                let url = '/account/operations/spend/add?category_id=' + categoryId;
+                this.$root.$emit('categoryclick', categoryId);
             }
         }
     }

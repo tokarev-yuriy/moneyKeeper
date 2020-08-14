@@ -98,6 +98,10 @@
         },
         mounted() {
             //this.load()
+            var self = this;
+            this.$root.$on('categoryclick', function($categoryId) {
+                self.add('spend', $categoryId);
+            });
         },
         methods: {
             /**
@@ -117,10 +121,14 @@
             /**
              * prepare the add form
              */
-            add: function (type) {
+            add: function (type, categoryId) {
                 this.errors = false;
+                var url = '/account/operations/edit/0?type='+type;
+                if (categoryId) {
+                    url = url + "&category_id=" + categoryId;
+                }
                 axios
-                    .get('/account/operations/edit/0?type='+type)
+                    .get(url)
                     .then((response) => {
                         this.operation = response.data['operation'];
                         this.categories = response.data['categories'][this.operation.type];

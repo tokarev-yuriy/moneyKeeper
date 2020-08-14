@@ -1,23 +1,18 @@
 <template>
-    <div id="operationsFilter" class="position-relative">
+    <div id="operationsFilter">
         <div v-if="fields" class="card container p-2 rounded-top mt-2">
             <form class="form-inline">
-                <div class="row justify-content-between w-100 pl-4">
-                    <div v-for="field in fields" :class="{'col-12 col-md-6': field.type=='period', 'col-6 col-md-3': field.type!='period'}">
+                <div class="row w-100 pl-4">
+                    <div v-for="field in fields">
                         <div v-if="field.type=='period'">
-                            <input type="date" v-model="filter[field.code].from" class="form-control">&nbsp;&mdash;&nbsp;<input type="date" v-model="filter[field.code].to" class="form-control mr-2">
+                            <input type="date" v-model="filter[field.code].from" class="form-control" @change="applyFilter()">&nbsp;&mdash;&nbsp;<input type="date" v-model="filter[field.code].to" class="form-control mr-2" @change="applyFilter()">
                         </div>
                         <div v-else-if="field.type=='list'">
-                            <dropdown-items v-model="filter[field.code]" :items="field.values" boundary="operationFilterDrop"/>
+                            <multi-select v-model="filter[field.code]" :items="field.values" @change="applyFilter()"/>
                         </div>
                         <div v-else>
-                            <input type="text" v-model="filter[field.code]" class="form-control mr-2">
+                            <input type="text" v-model="filter[field.code]" class="form-control mr-2" @change="applyFilter()">
                         </div>
-                    </div>
-                    <div class="col-6 col-md-3 text-right">
-                        <button type="button" class="btn btn-info" @click="applyFilter">
-                            <i class="fa fa-btn fa-filter"></i> {{ 'mkeep_tablegrid.filter' | trans }}
-                        </button>
                     </div>
                 </div>
             </form>
@@ -60,7 +55,6 @@
              *  Apply Filter
              */
             applyFilter: function () {
-				$('#operationsFilter .dropdown-toggle').dropdown('dispose');
                 axios
                     .post('/account/operations/filter', this.filter)
                     .then((response) => {
