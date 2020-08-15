@@ -3,15 +3,17 @@
         <div v-if="fields" class="card container p-2 rounded-top mt-2">
             <form class="form-inline">
                 <div class="row w-100 pl-4">
-                    <div v-for="field in fields">
-                        <div v-if="field.type=='period'">
-                            <input type="date" v-model="filter[field.code].from" class="form-control" @change="applyFilter()">&nbsp;&mdash;&nbsp;<input type="date" v-model="filter[field.code].to" class="form-control mr-2" @change="applyFilter()">
-                        </div>
-                        <div v-else-if="field.type=='list'">
-                            <multi-select v-model="filter[field.code]" :items="field.values" @change="applyFilter()" :code="field.code" :title="field.title"/>
-                        </div>
-                        <div v-else>
-                            <input type="text" v-model="filter[field.code]" class="form-control mr-2" @change="applyFilter()">
+                    <div class="col-6">
+                        <input type="date" v-model="filter['date']['from']" class="form-control" @change="applyFilter()">&nbsp;&mdash;&nbsp;<input type="date" v-model="filter['date']['to']" class="form-control mr-2" @change="applyFilter()">
+                    </div>
+                    <div class="col-6">
+                        <div class="row">
+                            <div class="col-md-6 col-sm-12">
+                                <multi-select v-model="filter['category_id']" :items="fields['category_id']['values']" :code="fields['category_id'].code" :title="fields['category_id'].title"  @change="applyFilter()"/>
+                            </div>
+                            <div class="col-md-6 col-sm-12">
+                                <multi-select v-model="filter['wallet_id']" :items="fields['wallet_id']['values']" @change="applyFilter()" :code="fields['wallet_id'].code" :title="fields['wallet_id'].title"/>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -25,8 +27,24 @@
         props: ['filters'],
         data: function () {
             return {
-                fields: {},
-                filter: {}
+                fields: {
+                    'date': {},
+                    'category_id': {
+                        'code': false,
+                        'title': false,
+                        'values': [],
+                    },
+                    'wallet_id': {
+                        'code': false,
+                        'title': false,
+                        'values': [],
+                    },
+                },
+                filter: {
+                    'date': {'from':false, 'to': false},
+                    'category_id': false,
+                    'wallet_id': false,
+                }
             };
         },
         watch: {
@@ -42,9 +60,9 @@
              *  Set filters
              */
             setFields: function (values) {
-                this.fields = values;
                 let x;
                 for (x in values) {
+                    this.fields[x] = values[x];
                     this.filter[values[x].code] = values[x].value;
                     if (!this.filter[values[x].code] && values[x].type=='period') {
                         this.filter[values[x].code] = {'from':false, 'to': false};

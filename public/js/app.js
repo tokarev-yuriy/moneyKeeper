@@ -2057,7 +2057,6 @@ __webpack_require__.r(__webpack_exports__);
   },
   mounted: function mounted() {
     this.setValue(this.value);
-    console.log(this.items);
   },
   methods: {
     /**
@@ -2369,12 +2368,33 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['filters'],
   data: function data() {
     return {
-      fields: {},
-      filter: {}
+      fields: {
+        'date': {},
+        'category_id': {
+          'code': false,
+          'title': false,
+          'values': []
+        },
+        'wallet_id': {
+          'code': false,
+          'title': false,
+          'values': []
+        }
+      },
+      filter: {
+        'date': {
+          'from': false,
+          'to': false
+        },
+        'category_id': false,
+        'wallet_id': false
+      }
     };
   },
   watch: {
@@ -2390,10 +2410,10 @@ __webpack_require__.r(__webpack_exports__);
      *  Set filters
      */
     setFields: function setFields(values) {
-      this.fields = values;
       var x;
 
       for (x in values) {
+        this.fields[x] = values[x];
         this.filter[values[x].code] = values[x].value;
 
         if (!this.filter[values[x].code] && values[x].type == 'period') {
@@ -2430,6 +2450,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
 //
 //
 //
@@ -14857,131 +14878,117 @@ var render = function() {
     _vm.fields
       ? _c("div", { staticClass: "card container p-2 rounded-top mt-2" }, [
           _c("form", { staticClass: "form-inline" }, [
-            _c(
-              "div",
-              { staticClass: "row w-100 pl-4" },
-              _vm._l(_vm.fields, function(field) {
-                return _c("div", [
-                  field.type == "period"
-                    ? _c("div", [
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.filter[field.code].from,
-                              expression: "filter[field.code].from"
-                            }
-                          ],
-                          staticClass: "form-control",
-                          attrs: { type: "date" },
-                          domProps: { value: _vm.filter[field.code].from },
-                          on: {
-                            change: function($event) {
-                              return _vm.applyFilter()
-                            },
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.$set(
-                                _vm.filter[field.code],
-                                "from",
-                                $event.target.value
-                              )
-                            }
+            _c("div", { staticClass: "row w-100 pl-4" }, [
+              _c("div", { staticClass: "col-6" }, [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.filter["date"]["from"],
+                      expression: "filter['date']['from']"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: { type: "date" },
+                  domProps: { value: _vm.filter["date"]["from"] },
+                  on: {
+                    change: function($event) {
+                      return _vm.applyFilter()
+                    },
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.filter["date"], "from", $event.target.value)
+                    }
+                  }
+                }),
+                _vm._v(" — "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.filter["date"]["to"],
+                      expression: "filter['date']['to']"
+                    }
+                  ],
+                  staticClass: "form-control mr-2",
+                  attrs: { type: "date" },
+                  domProps: { value: _vm.filter["date"]["to"] },
+                  on: {
+                    change: function($event) {
+                      return _vm.applyFilter()
+                    },
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.filter["date"], "to", $event.target.value)
+                    }
+                  }
+                })
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-6" }, [
+                _c("div", { staticClass: "row" }, [
+                  _c(
+                    "div",
+                    { staticClass: "col-md-6 col-sm-12" },
+                    [
+                      _c("multi-select", {
+                        attrs: {
+                          items: _vm.fields["category_id"]["values"],
+                          code: _vm.fields["category_id"].code,
+                          title: _vm.fields["category_id"].title
+                        },
+                        on: {
+                          change: function($event) {
+                            return _vm.applyFilter()
                           }
-                        }),
-                        _vm._v(" — "),
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.filter[field.code].to,
-                              expression: "filter[field.code].to"
-                            }
-                          ],
-                          staticClass: "form-control mr-2",
-                          attrs: { type: "date" },
-                          domProps: { value: _vm.filter[field.code].to },
-                          on: {
-                            change: function($event) {
-                              return _vm.applyFilter()
-                            },
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.$set(
-                                _vm.filter[field.code],
-                                "to",
-                                $event.target.value
-                              )
-                            }
+                        },
+                        model: {
+                          value: _vm.filter["category_id"],
+                          callback: function($$v) {
+                            _vm.$set(_vm.filter, "category_id", $$v)
+                          },
+                          expression: "filter['category_id']"
+                        }
+                      })
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    { staticClass: "col-md-6 col-sm-12" },
+                    [
+                      _c("multi-select", {
+                        attrs: {
+                          items: _vm.fields["wallet_id"]["values"],
+                          code: _vm.fields["wallet_id"].code,
+                          title: _vm.fields["wallet_id"].title
+                        },
+                        on: {
+                          change: function($event) {
+                            return _vm.applyFilter()
                           }
-                        })
-                      ])
-                    : field.type == "list"
-                    ? _c(
-                        "div",
-                        [
-                          _c("multi-select", {
-                            attrs: {
-                              items: field.values,
-                              code: field.code,
-                              title: field.title
-                            },
-                            on: {
-                              change: function($event) {
-                                return _vm.applyFilter()
-                              }
-                            },
-                            model: {
-                              value: _vm.filter[field.code],
-                              callback: function($$v) {
-                                _vm.$set(_vm.filter, field.code, $$v)
-                              },
-                              expression: "filter[field.code]"
-                            }
-                          })
-                        ],
-                        1
-                      )
-                    : _c("div", [
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.filter[field.code],
-                              expression: "filter[field.code]"
-                            }
-                          ],
-                          staticClass: "form-control mr-2",
-                          attrs: { type: "text" },
-                          domProps: { value: _vm.filter[field.code] },
-                          on: {
-                            change: function($event) {
-                              return _vm.applyFilter()
-                            },
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.$set(
-                                _vm.filter,
-                                field.code,
-                                $event.target.value
-                              )
-                            }
-                          }
-                        })
-                      ])
+                        },
+                        model: {
+                          value: _vm.filter["wallet_id"],
+                          callback: function($$v) {
+                            _vm.$set(_vm.filter, "wallet_id", $$v)
+                          },
+                          expression: "filter['wallet_id']"
+                        }
+                      })
+                    ],
+                    1
+                  )
                 ])
-              }),
-              0
-            )
+              ])
+            ])
           ])
         ])
       : _vm._e()
@@ -15020,9 +15027,11 @@ var render = function() {
         }
       }),
       _vm._v(" "),
+      _c("div", { staticClass: "clearfix" }),
+      _vm._v(" "),
       _c("operation-filter", { attrs: { filters: _vm.filters } }),
       _vm._v(" "),
-      _c("div", { staticClass: "clearfix" }),
+      _c("div", { staticClass: "clearfix mb-2" }),
       _vm._v(" "),
       !_vm.operations
         ? _c(
@@ -15219,7 +15228,7 @@ var render = function() {
       _vm._v(" "),
       _c("operation-edit", { ref: "operationEdit" }),
       _vm._v(" "),
-      _c("div", { staticClass: "clearfix" }),
+      _c("div", { staticClass: "clearfix mb-2" }),
       _vm._v(" "),
       _c("operation-btns", {
         on: {

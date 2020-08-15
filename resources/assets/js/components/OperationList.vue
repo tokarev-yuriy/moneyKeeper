@@ -1,8 +1,9 @@
 <template>
     <div>
         <operation-btns v-on:addbtnclick="add($event)"></operation-btns>
-        <operation-filter :filters="filters"></operation-filter>
         <div class="clearfix"></div>
+        <operation-filter :filters="filters"></operation-filter>
+        <div class="clearfix mb-2"></div>
         <div class="card" style="border-radius: 0;" v-if="!operations">
             <div class="card-header" v-if="operations===false"><h3>{{ 'mkeep.loading' | trans }}</h3></div>
             <div class="card-header" v-else=""><h3>{{ 'mkeep.no_data' | trans }}</h3></div>
@@ -42,7 +43,7 @@
           </div>
         </div>
         <operation-edit ref="operationEdit"></operation-edit>
-        <div class="clearfix"></div>
+        <div class="clearfix mb-2"></div>
         <operation-btns v-on:addbtnclick="add($event)"></operation-btns>
         
         <div class="modal fade" id="deleteModalBlock" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">

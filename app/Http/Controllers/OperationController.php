@@ -274,8 +274,13 @@ class OperationController extends CrudListController {
     {
         $filterDate = [];
         $date = Input::get('date');
+        
         if (isset($date['from']) && strlen($date['from'])>0) $filterDate['from'] = $date['from'];
+        else $filterDate['from'] = date('Y-m-01');
+        
         if (isset($date['to']) && strlen($date['to'])>0) $filterDate['to'] = $date['to'];
+        else $filterDate['to'] = date('Y-m-d');
+        
         Session::put('operation_filter_date', $filterDate);
 
         if (is_array(Input::get('category_id'))) {
@@ -314,11 +319,17 @@ class OperationController extends CrudListController {
         if (!$this->arDictionaries) {
           $this->__loadDictionaries();
         }
+        
+        $filterDate = Session::get('operation_filter_date');
+        if (!is_array($filterDate)) $filterDate = [];
+        if (!isset($filterDate['from']) || !$filterDate['from']) $filterDate['from'] = date('Y-m-01');
+        if (!isset($filterDate['to']) || !$filterDate['to']) $filterDate['to'] = date('Y-m-d');
+        
         return array(
             'date'=>array(
                 'title' => trans('mkeep.date'), 
                 'code'  => 'date',
-                'value' => Session::get('operation_filter_date'),
+                'value' => $filterDate,
                 'type'  => 'period',
             ), 
             'category_id'=>array(

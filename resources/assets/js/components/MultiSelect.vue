@@ -54,7 +54,6 @@
         },
         mounted() {
             this.setValue(this.value);
-            console.log(this.items);
 		},
         methods: {
             /**
