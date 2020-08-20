@@ -1,6 +1,6 @@
 <template>
     <div class="row  justify-content-center" id="progressWidget">
-      <div 
+      <div
         v-for="category in categories" 
         class="categories-widget card" 
         @click="addSpend(category.id)">
@@ -27,6 +27,7 @@
             };
         },
         mounted() {
+            this.categories = [];
             this.load();
             this.$root.$on('operationchanged', data => {
                 this.load();

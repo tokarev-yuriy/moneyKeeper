@@ -288,11 +288,17 @@
     <script type="text/javascript" src="/js/lib/control/iconselect.js?v=<?=time()?>"></script>
     <script type="text/javascript" src="/js/lib/iscroll.js?v=<?=time()?>"></script>
     <script type="text/javascript" src="/js/lib/fontawesome-iconpicker.min.js?v=<?=time()?>"></script>
-	<script src="//cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     @yield('appjsfile')
     
     <script>
         window.translations = {!! Cache::get('translations') !!};
+    </script>
+    <script>
+        window.dictionary = {
+            categories: <?=json_encode(\App\MoneyKeeper\Helpers\Dictionary::getCategories())?>,
+            wallets: <?=json_encode(\App\MoneyKeeper\Helpers\Dictionary::getWallets())?>,
+            walletGroups: <?=json_encode(\App\MoneyKeeper\Helpers\Dictionary::getWalletGroups())?>,
+        };
     </script>
     
 </body>

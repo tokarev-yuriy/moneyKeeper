@@ -18,7 +18,6 @@ class OperationController extends CrudListController {
 
     
     public $type='';
-    public $arDictionaries;
     public $modelName = 'App\MoneyKeeper\Models\Operation';
     public $sort = array(
         'by' => 'date',
@@ -64,64 +63,6 @@ class OperationController extends CrudListController {
             'index' => 'account.operations.index',
         ];
     }
-    
-        
-    /**
-     * Select all dictionaries for iperation fields
-     * 
-     * 
-     * @return array
-     */
-    protected function __loadDictionaries () {
-        $this->arDictionaries = array(
-            'walletsList' => array(),
-            'wallets' => array(),
-            'wallet_from_id' => array(),
-            'wallet_to_id' => array(),
-            'categories' => array(),
-            'category_id' => array(),
-            'category_id_icons' => array(),
-            'category_icon' => array(),
-            'type' => Category::getTypeVisualList(),
-        );
-        
-        
-        $arCategories = Category::user()->select('id', 'name', 'icon')->orderBy('sort')->get();
-        $arIcons = Category::getCategoryIcons();
-        foreach($arCategories as $arCategory) {
-            $this->arDictionaries['categories'][$arCategory->id] = $arCategory;
-            $this->arDictionaries['category_id'][$arCategory->id] = $arCategory->name;
-            $this->arDictionaries['category_icon'][$arCategory->id] = '';
-            if ($arCategory->icon && isset($arIcons[$arCategory->icon])) {
-                $this->arDictionaries['category_icon'][$arCategory->id] = $arIcons[$arCategory->icon];
-            }
-            
-            $this->arDictionaries['category_id_icons'][$arCategory->id] = (isset($arIcons[$arCategory->icon])?'<img src="'.$arIcons[$arCategory->icon].'" style="height: 20px; padding-right: 10px; margin-left: -5px;">':'').$arCategory->name;
-        }
-        
-        $arWallets = Wallet::user()->select('id', 'name', 'icon')->orderBy('sort')->get();
-        foreach($arWallets as $arWallet) {
-            $this->arDictionaries['walletsList'][$arWallet->id] = $arWallet;
-            $this->arDictionaries['wallets'][$arWallet->id] = $arWallet->name;
-            $this->arDictionaries['wallet_to_id'][$arWallet->id] = $arWallet->name;
-            $this->arDictionaries['wallet_from_id'][$arWallet->id] = $arWallet->name;
-        }
-        
-        return $this->arDictionaries;
-    }
-    
-    /**
-     * Returns dictionaries for enum type fields
-     * 
-     * 
-     * @return array (field=>array(code=>title))
-     */   
-    protected function __getDictionary () {
-        if (!$this->arDictionaries) {
-          $this->__loadDictionaries();
-        }
-        return $this->arDictionaries;
-    }
 
     /**
      * List of items
@@ -140,64 +81,24 @@ class OperationController extends CrudListController {
      */    
     public function getIndex($type = false)
     {
-        $dbItems = Operation::user();
-        if ($type) {
-            $dbItems->where('type', '=', $type);
-        }
-        $dbItems = $this->__processFilter($dbItems);
-        $arItems = $dbItems->
-                orderBy($this->sort['by'],$this->sort['order'])->
-                orderBy('id','desc')->
-                paginate(Config::get('view.itemsPerPage'));
-				
-		$arDicts = $this->__getDictionary();
-        
         if(Request::wantsJson()){
-			
-			
-			foreach($arItems as $k=>$obItem) {
-				$wallet = '';
-				if ($obItem->type=='transfer') {
-					$wallet = '';
-					if (isset($arDicts['wallets'][$obItem->wallet_from_id])) {
-						$wallet .= '<span class="text-secondary">'.$arDicts['wallets'][$obItem->wallet_from_id].'</span>';
-					}
-					$wallet .= '&nbsp;<i class="fa fa-arrow-right" aria-hidden="true"></i>&nbsp;';
-					if (isset($arDicts['wallets'][$obItem->wallet_to_id])) {
-						$wallet .= '<span class="text-success">'.$arDicts['wallets'][$obItem->wallet_to_id].'</span>';
-					}
-					$wallet .= '';
-				} else {
-					if (isset($arDicts['wallets'][$obItem->wallet_from_id])) {
-						$wallet .= $arDicts['wallets'][$obItem->wallet_from_id];
-					} elseif (isset($arDicts['wallets'][$obItem->wallet_to_id])) {
-						$wallet .= $arDicts['wallets'][$obItem->wallet_to_id];
-					}
-				}
-				
-				$arItems[$k]->wallet = $wallet;
-			}
-            
+            $dbItems = Operation::user();
+            if ($type) {
+                $dbItems->where('type', '=', $type);
+            }
+            $dbItems = $this->__processFilter($dbItems);
+            $arItems = $dbItems->
+                    orderBy($this->sort['by'],$this->sort['order'])->
+                    orderBy('id','desc')->
+                    paginate(Config::get('view.itemsPerPage'));
+
             return [
                 'operations' => $arItems,
-                'header' => $this->__getHeads(),
-                'actions' => $this->__getActions(),
                 'filters' => $this->__getFilters(),
-                'dicts' => $arDicts,
             ];
         }
-        
-        $arTable = array(
-            'type' => $type,
-            'items' => $arItems,
-            'arItems' => $arItems,
-            'arHeads' => $this->__getHeads(),
-            'arActions' => $this->__getActions(),
-            'arFilters' => $this->__getFilters(),
-            'arDictionaries' => $arDicts
-        );
-        
-        return view($this->__getView('index'), $arTable);
+
+        return view($this->__getView('index'), ['type'=>$type]);
     }
     
     /**
@@ -209,11 +110,6 @@ class OperationController extends CrudListController {
      */    
     public function getEdit($id)
     {
-        
-        $categories = [];
-        $categories['spend'] = \App\MoneyKeeper\Models\Operation::getTypeCategories('spend', false);
-        $categories['income'] = \App\MoneyKeeper\Models\Operation::getTypeCategories('income', false);
-        $categories['transfer'] = \App\MoneyKeeper\Models\Operation::getTypeCategories('transfer', false);
 		
 		$wallets = [];
 		$arWallets = [];
@@ -250,21 +146,62 @@ class OperationController extends CrudListController {
                 'wallet_to_id' => Session::get('wallet_to_id'),
             ];
             if (!in_array($obItem['type'], ['spend', 'income', 'transfer'])) $obItem['type'] = 'spend';
-            
-            $cat = current($categories[$obItem['type']]);
-            $obItem['category_id'] = $cat->id;
-            if (Input::get('category_id') && $categories[$obItem['type']][Input::get('category_id')]) {
-                $obItem['category_id'] = $categories[$obItem['type']][Input::get('category_id')]->id;
-            }
-            
-            $wallet = current($arWallets);
-            if (!$obItem['wallet_from_id']) $obItem['wallet_from_id'] = $wallet->id;
-            if (!$obItem['wallet_to_id']) $obItem['wallet_to_id'] = $wallet->id;
         }
         
-        return ['operation'=>$obItem, 'categories'=>$categories, 'wallets'=>$wallets];
+        return ['operation'=>$obItem, 'wallets'=>$wallets];
+    }   
+   
+    /**
+     * Returns validators for add and edit operation
+     * 
+     * 
+     * @return array
+     */    
+    protected function __getValidators () {
+        return array(
+              'value'=>'required|numeric',
+              'type'=>'required|in:spend,transfer,income',
+              //'comment'=>'required|max:255',
+              'date'=>'required|date',
+            );
     }
-
+    
+    /**
+     * Populate object with user's input
+     * 
+     * 
+     * @return object
+     */    
+    protected function __populateItem ($obItem) {
+        $obItem->comment = Input::get('comment');
+        $obItem->date = date('Y-m-d', strtotime(Input::get('date')));
+        $obItem->year = date('Y', strtotime(Input::get('date')));
+        $obItem->month = date('n', strtotime(Input::get('date')));
+        $obItem->user_id = Auth::id();
+        $obItem->type = Input::get('type');
+        $obItem->value = floatval(Input::get('value'));
+        $obItem->category_id = intval(Input::get('category_id'));
+        if ($obItem->type=='income') {
+            $obItem->wallet_from_id = 0;
+        } else {
+            $obItem->wallet_from_id = intval(Input::get('wallet_from_id'));
+        }
+        if ($obItem->type=='spend') {
+            $obItem->wallet_to_id = 0;
+        } else {
+            $obItem->wallet_to_id = intval(Input::get('wallet_to_id'));
+        }
+        
+        if (Input::get('wallet_from_id')) {
+           Session::put('wallet_from_id', Input::get('wallet_from_id')); 
+        }
+        if (Input::get('wallet_to_id')) {
+           Session::put('wallet_to_id', Input::get('wallet_to_id')); 
+        }
+        
+        return $obItem;
+    }
+    
     /**
      * Process post
      * 
@@ -290,108 +227,6 @@ class OperationController extends CrudListController {
         if (is_array(Input::get('wallet_id'))) {
             Session::put('operation_filter_wallet_id', Input::get('wallet_id'));
         }
-    }
-    
-   
-    /**
-     * Returns validators for add and edit operation
-     * 
-     * 
-     * @return array
-     */    
-    protected function __getValidators () {
-        return array(
-              'value'=>'required|numeric',
-              'type'=>'required|in:spend,transfer,income',
-              //'comment'=>'required|max:255',
-              'date'=>'required|date',
-            );
-    }     
-    
-    
-    /**
-     * Returns Filters for operations table
-     * 
-     * 
-     * @return array
-     */    
-    protected function __getFilters () {
-        if (!$this->arDictionaries) {
-          $this->__loadDictionaries();
-        }
-        
-        $filterDate = Session::get('operation_filter_date');
-        if (!is_array($filterDate)) $filterDate = [];
-        if (!isset($filterDate['from']) || !$filterDate['from']) $filterDate['from'] = date('Y-m-01');
-        if (!isset($filterDate['to']) || !$filterDate['to']) $filterDate['to'] = date('Y-m-d');
-        
-        return array(
-            'date'=>array(
-                'title' => trans('mkeep.date'), 
-                'code'  => 'date',
-                'value' => $filterDate,
-                'type'  => 'period',
-            ), 
-            'category_id'=>array(
-                'title' => trans('mkeep.categories'), 
-                'code'  => 'category_id',
-                'value' => (Session::get('operation_filter_category_id'))?Session::get('operation_filter_category_id'):0,
-                'type'  => 'list',
-                'values'=> $this->arDictionaries['categories']
-            ),
-            'wallet_id'=>array(
-                'title' => trans('mkeep.wallets'), 
-                'code'  => 'wallet_id',
-                'value' => (Session::get('operation_filter_wallet_id'))?Session::get('operation_filter_wallet_id'):0,
-                'type'  => 'list',
-                'values'=> $this->arDictionaries['walletsList']
-            )
-        );
-    } 
-    
-    /**
-     * Populate object with user's input
-     * 
-     * 
-     * @return object
-     */    
-    protected function __populateItem ($obItem) {
-        $obItem->comment = Input::get('comment');
-        $obItem->date = date('Y-m-d', strtotime(Input::get('date')));
-        $obItem->year = date('Y', strtotime(Input::get('date')));
-        $obItem->month = date('n', strtotime(Input::get('date')));
-        $obItem->user_id = Auth::id();
-        $obItem->type = Input::get('type');
-        $obItem->value = floatval(Input::get('value'));
-        $obItem->category_id = intval(Input::get('category_id'));
-        $obItem->wallet_from_id = intval(Input::get('wallet_from_id'));
-        $obItem->wallet_to_id = intval(Input::get('wallet_to_id'));
-        
-        if (Input::get('wallet_from_id')) {
-           Session::put('wallet_from_id', Input::get('wallet_from_id')); 
-        }
-        if (Input::get('wallet_to_id')) {
-           Session::put('wallet_to_id', Input::get('wallet_to_id')); 
-        }
-        
-        return $obItem;
-    }
-    
-    /**
-     * Returns column titles of the list table
-     * 
-     * 
-     * @return array (field=>title)
-     */    
-    protected function __getHeads () {
-        return array(
-                'date' => array('title'=>trans('mkeep.date')),
-                'type' => array('title'=>trans('mkeep.type')),
-                'wallet' => array('title'=>trans('mkeep.wallet')),
-                'value' => array('title'=>trans('mkeep.summ')),
-                'category_id' => array('title'=>trans('mkeep.category')),
-                'comment' => array('title'=>trans('mkeep.comment')),
-            );
     }
     
     /**
@@ -431,5 +266,42 @@ class OperationController extends CrudListController {
         
         return $dbRes;
     }
+    
+        
+    /**
+     * Returns Filters for operations table
+     * 
+     * 
+     * @return array
+     */    
+    protected function __getFilters () {
+        $filterDate = Session::get('operation_filter_date');
+        if (!is_array($filterDate)) $filterDate = [];
+        if (!isset($filterDate['from']) || !$filterDate['from']) $filterDate['from'] = date('Y-m-01');
+        if (!isset($filterDate['to']) || !$filterDate['to']) $filterDate['to'] = date('Y-m-d');
+        
+        return array(
+            'date'=>array(
+                'title' => trans('mkeep.date'), 
+                'code'  => 'date',
+                'value' => $filterDate,
+                'type'  => 'period',
+            ), 
+            'category_id'=>array(
+                'title' => trans('mkeep.categories'), 
+                'code'  => 'category_id',
+                'value' => (Session::get('operation_filter_category_id'))?Session::get('operation_filter_category_id'):0,
+                'type'  => 'list',
+                'values'=> \App\MoneyKeeper\Helpers\Dictionary::getCategories()
+            ),
+            'wallet_id'=>array(
+                'title' => trans('mkeep.wallets'), 
+                'code'  => 'wallet_id',
+                'value' => (Session::get('operation_filter_wallet_id'))?Session::get('operation_filter_wallet_id'):0,
+                'type'  => 'list',
+                'values'=> \App\MoneyKeeper\Helpers\Dictionary::getWallets()
+            )
+        );
+    } 
 
 }

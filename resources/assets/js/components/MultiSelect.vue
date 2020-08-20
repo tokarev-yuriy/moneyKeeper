@@ -1,8 +1,8 @@
 <template>
     <div>
-      <a class="btn btn-secondary" href="javascipt:void(0);" role="button" @click="select()">
+      <a class="btn btn-secondary" href="javascript:void(0);" role="button" @click="select()">
         {{ this.title }}
-        <span class="badge badge-light">{{ this.selected.length }}</span>
+        <span class="badge badge-info">{{ this.selected.length }}</span>
       </a>
       
       <div class="modal fade" :id="'multiSelectModalBlock-'+code" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">

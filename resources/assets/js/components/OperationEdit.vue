@@ -26,7 +26,7 @@
                   <div class="form-row">
                     <div class="col-6 form-group">
                         <label for="category_id" class="mb-0">{{ 'mkeep.category' | trans }}</label>
-                        <dropdown-items v-model="operation.category_id" :items="categories"/>
+                        <dropdown-items v-model="operation.category_id" :items="categories" :type="operation.type"/>
                         <span class="invalid-feedback" v-if="errors && errors.category_id"><strong>{{ errors.category_id }}</strong></span>
                     </div>
                     <div class="col-6 form-group" v-if="operation.type=='spend'">
@@ -60,7 +60,10 @@
 
                      <div class="row form-group">
                         <div class="col-6 pl-0">
-                            <button type="button" class="btn btn-success" @click="save()">
+                            <button v-if="mode=='transaction'" type="button" class="btn btn-success" @click="saveTransaction()">
+                                <i class="fa fa-btn fa-save"></i> {{ 'mkeep.save' | trans }}
+                            </button>
+                            <button v-else="" type="button" class="btn btn-success" @click="save()">
                                 <i class="fa fa-btn fa-save"></i> {{ 'mkeep.save' | trans }}
                             </button>
                         </div>
@@ -88,6 +91,7 @@
 <script>
 
     export default {
+        props: ['mode'],
         data: function () {
             return {
                 operation: [],
@@ -98,6 +102,20 @@
         },
         mounted() {
             //this.load()
+            this.categories = window.dictionary['categories'];
+            let x, k;
+            for (x in window.dictionary['walletGroups']) {
+                let group = window.dictionary['walletGroups'][x];
+                this.wallets.push({'is_group':true, 'name': group.name});
+                for (k in window.dictionary['wallets']) {
+                    let wallet = window.dictionary['wallets'][k];
+                    if (wallet.group_id==group.id || (!group['id'] && !wallet.group_id)) {
+                        this.wallets.push(wallet);
+                    }
+                }
+            }
+            
+            
             var self = this;
             this.$root.$on('categoryclick', function($categoryId) {
                 self.add('spend', $categoryId);
@@ -113,8 +131,6 @@
                     .get('/account/operations/edit/'+id)
                     .then((response) => {
                         this.operation = response.data['operation'];
-                        this.categories = response.data['categories'][this.operation.type];
-                        this.wallets = response.data['wallets'];
                         $('#editModalBlock').modal();
                     })
             },
@@ -131,9 +147,6 @@
                     .get(url)
                     .then((response) => {
                         this.operation = response.data['operation'];
-                        this.categories = response.data['categories'][this.operation.type];
-                        this.wallets = response.data['wallets'];
-                        
                         $('#editModalBlock').modal();
                     })
             },
@@ -157,6 +170,20 @@
                             $('#editModalBlock').modal('hide');
                         }
                     })
+            },
+            /**
+             * Load the transaction and prepare the edit form
+             */
+            editTransaction: function (transaction) {
+                this.errors = false;
+                this.operation = transaction;
+                $('#editModalBlock').modal();
+            },
+            /**
+             * Save transaction
+             */
+            saveTransaction: function() {
+                this.$emit('savetransaction', this.operation);
             }
         }
     }
