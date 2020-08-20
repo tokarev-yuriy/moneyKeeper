@@ -2299,19 +2299,31 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['mode'],
+  props: ['mode', 'walletid'],
   data: function data() {
     return {
       operation: [],
       categories: [],
       wallets: [],
+      walletsList: [],
       errors: false
     };
   },
   mounted: function mounted() {
     //this.load()
     this.categories = window.dictionary['categories'];
+    this.walletsList = window.dictionary['wallets'];
     var x, k;
 
     for (x in window.dictionary['walletGroups']) {
@@ -2407,6 +2419,7 @@ __webpack_require__.r(__webpack_exports__);
      */
     saveTransaction: function saveTransaction() {
       this.$emit('savetransaction', this.operation);
+      $('#editModalBlock').modal('hide');
     }
   }
 });
@@ -2768,6 +2781,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['id', 'wallet'],
   data: function data() {
@@ -2819,7 +2836,38 @@ __webpack_require__.r(__webpack_exports__);
      * open the edit form
      */
     edit: function edit(transaction) {
-      this.$refs.transactionEdit.editTransaction(transaction, []);
+      this.$refs.transactionEdit.editTransaction(transaction);
+    },
+
+    /**
+     * update transaction
+     */
+    update: function update(transaction) {
+      var x;
+
+      for (x in this.transactions) {
+        if (this.transactions[x].ext_id == transaction.ext_id) {
+          this.transactions[x] = transaction;
+        }
+      }
+    },
+
+    /**
+     *  Сохраняем транзакции
+     */
+    save: function save() {
+      var url = '/account/import/integration/sync';
+
+      if (this.id) {
+        url = url + "/" + this.id;
+      }
+
+      axios.post(url, {
+        'walletId': this.wallet,
+        'importTransaction': this.transactions
+      }).then(function (response) {
+        document.location = '/';
+      });
     },
 
     /**
@@ -14985,7 +15033,7 @@ var render = function() {
                       1
                     ),
                     _vm._v(" "),
-                    _vm.operation.type == "spend"
+                    _vm.operation.type == "spend" && _vm.mode != "transaction"
                       ? _c(
                           "div",
                           { staticClass: "col-6 form-group" },
@@ -15026,7 +15074,7 @@ var render = function() {
                         )
                       : _vm._e(),
                     _vm._v(" "),
-                    _vm.operation.type == "income"
+                    _vm.operation.type == "income" && _vm.mode != "transaction"
                       ? _c(
                           "div",
                           { staticClass: "col-6 form-group" },
@@ -15065,10 +15113,59 @@ var render = function() {
                           ],
                           1
                         )
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _vm.mode == "transaction"
+                      ? _c("div", { staticClass: "col-6 form-group" }, [
+                          _c(
+                            "label",
+                            {
+                              staticClass: "mb-0",
+                              attrs: { for: "wallet_to_id" }
+                            },
+                            [_vm._v(_vm._s(_vm._f("trans")("mkeep.wallet")))]
+                          ),
+                          _vm._v(" "),
+                          _c("div", [
+                            _c(
+                              "a",
+                              {
+                                staticClass: "btn btn-secondary disabled",
+                                attrs: { href: "javascipt:void(0);" }
+                              },
+                              [
+                                _vm.walletid && _vm.walletsList[_vm.walletid]
+                                  ? _c("span", [
+                                      _vm.walletsList[_vm.walletid].icon
+                                        ? _c("i", {
+                                            class:
+                                              "fas fa-" +
+                                              _vm.walletsList[_vm.walletid]
+                                                .icon,
+                                            attrs: {
+                                              alt:
+                                                _vm.walletsList[_vm.walletid]
+                                                  .name
+                                            }
+                                          })
+                                        : _vm._e(),
+                                      _vm._v(
+                                        " " +
+                                          _vm._s(
+                                            _vm.walletsList[_vm.walletid].name
+                                          ) +
+                                          "\n                            "
+                                      )
+                                    ])
+                                  : _vm._e()
+                              ]
+                            )
+                          ])
+                        ])
                       : _vm._e()
                   ]),
                   _vm._v(" "),
-                  _vm.operation.type == "transfer"
+                  _vm.operation.type == "transfer" && _vm.mode != "transaction"
                     ? _c("div", { staticClass: "form-row" }, [
                         _c(
                           "div",
@@ -15347,7 +15444,8 @@ var render = function() {
                               )
                             : _vm._e(),
                           _vm._v(" "),
-                          _vm.operation.type != "transfer"
+                          _vm.operation.type != "transfer" &&
+                          this.mode != "transaction"
                             ? _c(
                                 "a",
                                 {
@@ -16060,15 +16158,34 @@ var render = function() {
       _vm._v(" "),
       _c("operation-edit", {
         ref: "transactionEdit",
-        attrs: { mode: "transaction" },
+        attrs: { mode: "transaction", walletid: _vm.wallet },
         on: {
           savetransaction: function($event) {
-            return _vm.add($event)
+            return _vm.update($event)
           }
         }
       }),
       _vm._v(" "),
       _c("div", { staticClass: "clearfix mb-2" }),
+      _vm._v(" "),
+      _c("div", { staticClass: "float-right" }, [
+        _c(
+          "a",
+          {
+            staticClass: "btn btn-success",
+            attrs: { href: "javascript: void(0);" },
+            on: {
+              click: function($event) {
+                return _vm.save()
+              }
+            }
+          },
+          [
+            _c("i", { staticClass: "fa fa-save fa-lg" }),
+            _vm._v("  " + _vm._s(_vm._f("trans")("mkeep.save")))
+          ]
+        )
+      ]),
       _vm._v(" "),
       _c(
         "div",

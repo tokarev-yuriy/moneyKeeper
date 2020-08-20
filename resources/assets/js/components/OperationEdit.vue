@@ -29,18 +29,28 @@
                         <dropdown-items v-model="operation.category_id" :items="categories" :type="operation.type"/>
                         <span class="invalid-feedback" v-if="errors && errors.category_id"><strong>{{ errors.category_id }}</strong></span>
                     </div>
-                    <div class="col-6 form-group" v-if="operation.type=='spend'">
+                    <div class="col-6 form-group" v-if="operation.type=='spend' && mode!='transaction'">
                         <label for="wallet_from_id" class="mb-0">{{ 'mkeep.wallet' | trans }}</label>
                         <dropdown-items v-model="operation.wallet_from_id" :items="wallets"/>
                         <span class="invalid-feedback" v-if="errors && errors.wallet_from_id"><strong>{{ errors.wallet_from_id }}</strong></span>
                     </div>
-                    <div class="col-6 form-group" v-if="operation.type=='income'">
+                    <div class="col-6 form-group" v-if="operation.type=='income' && mode!='transaction'">
                         <label for="wallet_to_id" class="mb-0">{{ 'mkeep.wallet' | trans }}</label>
                         <dropdown-items v-model="operation.wallet_to_id" :items="wallets"/>
                         <span class="invalid-feedback" v-if="errors && errors.wallet_to_id"><strong>{{ errors.wallet_to_id }}</strong></span>
                     </div>
+                    <div class="col-6 form-group" v-if="mode=='transaction'">
+                        <label for="wallet_to_id" class="mb-0">{{ 'mkeep.wallet' | trans }}</label>
+                        <div>
+                            <a class="btn btn-secondary disabled" href="javascipt:void(0);">
+                                <span v-if="walletid && walletsList[walletid]">
+                                    <i v-if="walletsList[walletid].icon" :class="'fas fa-'+walletsList[walletid].icon" :alt="walletsList[walletid].name"></i> {{ walletsList[walletid].name }}
+                                </span>
+                            </a>
+                        </div>
+                    </div>
                   </div>
-                  <div class="form-row" v-if="operation.type=='transfer'">
+                  <div class="form-row" v-if="operation.type=='transfer' && mode!='transaction'">
                     <div class="col-6 form-group">
                         <label for="wallet_from_id" class="mb-0">{{ 'mkeep.src_wallet' | trans }}</label>
                         <dropdown-items v-model="operation.wallet_from_id" :items="wallets"/>
@@ -76,7 +86,7 @@
                             <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">              
                               <a v-if="operation.type!='spend'" class="dropdown-item text-danger" @click="operation.type='spend'"><i class="fa fa-long-arrow-left"></i>&nbsp;&nbsp;{{ 'mkeep.add_spend' | trans }}</a>
                               <a v-if="operation.type!='income'" class="dropdown-item text-success" @click="operation.type='income'"><i class="fa fa-long-arrow-right"></i>&nbsp;&nbsp;{{ 'mkeep.add_income' | trans }}</a>
-                              <a v-if="operation.type!='transfer'" class="dropdown-item" @click="operation.type='transfer'"><i class="fa fa-exchange"></i>&nbsp;&nbsp;{{ 'mkeep.add_transfer' | trans }}</a>
+                              <a v-if="operation.type!='transfer' && this.mode!='transaction'" class="dropdown-item" @click="operation.type='transfer'"><i class="fa fa-exchange"></i>&nbsp;&nbsp;{{ 'mkeep.add_transfer' | trans }}</a>
                             </div>
                         </div>
                      </div>
@@ -91,18 +101,21 @@
 <script>
 
     export default {
-        props: ['mode'],
+        props: ['mode', 'walletid'],
         data: function () {
             return {
                 operation: [],
                 categories: [],
                 wallets: [],
+                walletsList: [],
                 errors: false
             };
         },
         mounted() {
             //this.load()
             this.categories = window.dictionary['categories'];
+            this.walletsList = window.dictionary['wallets'];
+            
             let x, k;
             for (x in window.dictionary['walletGroups']) {
                 let group = window.dictionary['walletGroups'][x];
@@ -184,6 +197,7 @@
              */
             saveTransaction: function() {
                 this.$emit('savetransaction', this.operation);
+                $('#editModalBlock').modal('hide');
             }
         }
     }

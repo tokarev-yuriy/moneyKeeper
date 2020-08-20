@@ -36,14 +36,14 @@ class IntegrationController extends CrudListController {
 			$obSync = new \App\MoneyKeeper\Integration\Tinkoff($obItem);
 		}
 		if ($obSync) {
-			$arTransactions = $obSync->getTransactions();
-			$arDicts = $obSync->getDictionaries();
-			foreach($arTransactions as $k => $arTransaction) {
-				$arTransactions[$k]['wallet'] = $arDicts['wallets'][$obItem->wallet_id];
-			}
-			$messages = [];
-			
-			return view('account.import.integration.sync', ['errors'=>$messages, 'arTransactions'=>$arTransactions, 'arDictionaries'=>$arDicts, 'walletId'=>$obItem->wallet_id, 'syncId'=>$obItem->id]);
+            if(Request::wantsJson()){
+                $arTransactions = $obSync->getTransactions();
+                $messages = [];
+                
+                return ['errors'=>$messages, 'transactions'=>$arTransactions, 'walletId'=>$obItem->wallet_id, 'syncId'=>$obItem->id];
+            }
+            
+            return view('account.import.integration.sync', ['walletId'=>$obItem->wallet_id, 'syncId'=>$obItem->id]);
 		}
         
 		return Redirect::to($this->__getPath('index'));

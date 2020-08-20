@@ -168,40 +168,6 @@ class Integration {
         
         return false;
 	}
-	
-	/**
-     * Get Dictionaries
-     * 
-     * 
-     * @return <type>
-     */    
-    public function getDictionaries() {
-        
-        $arDicts = array(
-            'wallets' => array(),
-            'category_id' => array(),
-            'category_icon' => array(),
-            'type' => Category::getTypeVisualList(),
-        );
-        
-        
-        $arCategories = Category::user()->select('id', 'name', 'icon')->orderBy('sort')->get();
-        $arIcons = Category::getCategoryIcons();
-        foreach($arCategories as $arCategory) {
-            $arDicts['category_id'][$arCategory->id] = $arCategory->name;
-            $arDicts['category_icon'][$arCategory->id] = '';
-            if ($arCategory->icon && isset($arIcons[$arCategory->icon])) {
-                $arDicts['category_icon'][$arCategory->id] = $arIcons[$arCategory->icon];
-            }
-        }
-        
-        $arWallets = Wallet::user()->select('id', 'name')->orderBy('sort')->get();
-        foreach($arWallets as $arWallet) {
-            $arDicts['wallets'][$arWallet->id] = $arWallet->name;
-        }
-        
-        return $arDicts;
-    }
     
     /**
      *  Check if transaction has been already added

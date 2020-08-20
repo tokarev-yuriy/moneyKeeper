@@ -39,8 +39,12 @@
             </div>
           </div>
         </div>
-        <operation-edit ref="transactionEdit" mode="transaction" v-on:savetransaction="add($event)"></operation-edit>
+        <operation-edit ref="transactionEdit" mode="transaction" :walletid="wallet" v-on:savetransaction="update($event)"></operation-edit>
         <div class="clearfix mb-2"></div>
+        
+        <div class="float-right">
+            <a href="javascript: void(0);" class="btn btn-success" @click="save()"><i class="fa fa-save fa-lg"></i>&nbsp; {{ 'mkeep.save' | trans }}</a>
+        </div>
         
         <div class="modal fade" id="deleteModalBlock" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
           <div class="modal-dialog" role="document">
@@ -108,7 +112,32 @@
              * open the edit form
              */
             edit: function (transaction) {
-                this.$refs.transactionEdit.editTransaction(transaction, []);
+                this.$refs.transactionEdit.editTransaction(transaction);
+            },
+            /**
+             * update transaction
+             */
+            update: function (transaction) {
+               let x;
+               for(x in this.transactions) {
+                    if (this.transactions[x].ext_id == transaction.ext_id) {
+                        this.transactions[x] = transaction;
+                    }
+               }
+            },
+            /**
+             *  Сохраняем транзакции
+             */
+            save: function() {
+                var url = '/account/import/integration/sync';
+                if (this.id) {
+                    url = url + "/" + this.id;
+                }
+                axios
+                    .post(url, {'walletId': this.wallet, 'importTransaction': this.transactions})
+                    .then((response) => {
+                        document.location = '/';
+                    })
             },
             /**
              *  open the delete dialog
