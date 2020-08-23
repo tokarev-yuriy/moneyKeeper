@@ -1,7 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
-use Validator, Input, Redirect, Auth;
+use Validator, Input, Redirect, Auth, Request;
 use MoneyKeeper\Models;
 
 /**
@@ -106,12 +106,19 @@ class AccountController extends Controller {
               'email'=>Input::get('email'),
               'password'=>Input::get('password')
             ));
-            if($auth) {
-                return Redirect::to('/');
-            } else {
+            
+            if(!$auth) {
                 $messages = $validator->messages();
                 $messages->add('password', trans('mkeep.wrong_pass'));
             }
+            
+            if($auth) {
+                if(Request::wantsJson()) return [];
+                return Redirect::to('/');
+            }
+        }
+        if(Request::wantsJson()){
+            return ['errors' => $messages];
         }
         
         return view('account.login', array(

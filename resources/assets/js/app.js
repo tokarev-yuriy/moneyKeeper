@@ -69,6 +69,7 @@ Vue.component('operation-edit', require('./components/OperationEdit.vue').defaul
 Vue.component('operation-filter', require('./components/OperationFilter.vue').default);
 Vue.component('dropdown-items', require('./components/DropdownItems.vue').default);
 Vue.component('multi-select', require('./components/MultiSelect.vue').default);
+Vue.component('login-form', require('./components/LoginForm.vue').default);
 
 
 const app = new Vue({
