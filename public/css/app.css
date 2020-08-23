@@ -69,6 +69,20 @@ input.form-control[type=date] {
   max-width: 125px;
 }
 
+.form-label.is-invalid ~ .invalid-feedback,
+.form-label.is-invalid ~ .invalid-tooltip {
+  display: block;
+}
+
+.nav .dropdown-menu {
+  background-color: transparent !important;
+}
+
+.nav .dropdown:not(.show) .dropdown-menu.hiding,
+.nav .dropdown:not(.show) .dropdown-menu.show {
+  display: none !important;
+}
+
 .sidebar .sidebar-background:after {
   background-color: rgba(27, 27, 27, 0.87);
   opacity: 0.85;

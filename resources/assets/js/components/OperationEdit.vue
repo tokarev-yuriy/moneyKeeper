@@ -10,7 +10,7 @@
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
-              <div class="modal-body">                
+              <div class="modal-body">
                 <form method="post">
                   <div class="form-row">
                     <div class="form-group col-6">
@@ -25,17 +25,17 @@
                   </div>
                   <div class="form-row">
                     <div class="col-6 form-group">
-                        <label for="category_id" class="mb-0">{{ 'mkeep.category' | trans }}</label>
+                        <label for="category_id" class="mb-0 form-label" :class="{'is-invalid': errors && errors.category_id}">{{ 'mkeep.category' | trans }}</label>
                         <dropdown-items v-model="operation.category_id" :items="categories" :type="operation.type"/>
                         <span class="invalid-feedback" v-if="errors && errors.category_id"><strong>{{ errors.category_id }}</strong></span>
                     </div>
                     <div class="col-6 form-group" v-if="operation.type=='spend' && mode!='transaction'">
-                        <label for="wallet_from_id" class="mb-0">{{ 'mkeep.wallet' | trans }}</label>
+                        <label for="wallet_from_id" class="mb-0 form-label" :class="{'is-invalid': errors && errors.wallet_from_id}">{{ 'mkeep.wallet' | trans }}</label>
                         <dropdown-items v-model="operation.wallet_from_id" :items="wallets"/>
                         <span class="invalid-feedback" v-if="errors && errors.wallet_from_id"><strong>{{ errors.wallet_from_id }}</strong></span>
                     </div>
                     <div class="col-6 form-group" v-if="operation.type=='income' && mode!='transaction'">
-                        <label for="wallet_to_id" class="mb-0">{{ 'mkeep.wallet' | trans }}</label>
+                        <label for="wallet_to_id" class="mb-0 form-label" :class="{'is-invalid': errors && errors.wallet_to_id}">{{ 'mkeep.wallet' | trans }}</label>
                         <dropdown-items v-model="operation.wallet_to_id" :items="wallets"/>
                         <span class="invalid-feedback" v-if="errors && errors.wallet_to_id"><strong>{{ errors.wallet_to_id }}</strong></span>
                     </div>
@@ -52,12 +52,12 @@
                   </div>
                   <div class="form-row" v-if="operation.type=='transfer' && mode!='transaction'">
                     <div class="col-6 form-group">
-                        <label for="wallet_from_id" class="mb-0">{{ 'mkeep.src_wallet' | trans }}</label>
+                        <label for="wallet_from_id" class="mb-0 form-label" :class="{'is-invalid': errors && errors.wallet_from_id}">{{ 'mkeep.src_wallet' | trans }}</label>
                         <dropdown-items v-model="operation.wallet_from_id" :items="wallets"/>
                         <span class="invalid-feedback" v-if="errors && errors.wallet_from_id"><strong>{{ errors.wallet_from_id }}</strong></span>
                     </div>
                     <div class="col-6 form-group">
-                        <label for="wallet_to_id" class="mb-0">{{ 'mkeep.dest_wallet' | trans }}</label>
+                        <label for="wallet_to_id" class="mb-0 form-label" :class="{'is-invalid': errors && errors.wallet_to_id}">{{ 'mkeep.dest_wallet' | trans }}</label>
                         <dropdown-items v-model="operation.wallet_to_id" :items="wallets"/>
                         <span class="invalid-feedback" v-if="errors && errors.wallet_to_id"><strong>{{ errors.wallet_to_id }}</strong></span>
                     </div>

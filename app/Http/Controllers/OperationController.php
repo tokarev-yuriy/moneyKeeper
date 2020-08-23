@@ -146,6 +146,7 @@ class OperationController extends CrudListController {
                 'wallet_to_id' => Session::get('wallet_to_id'),
             ];
             if (!in_array($obItem['type'], ['spend', 'income', 'transfer'])) $obItem['type'] = 'spend';
+            if (Input::get('category_id')) $obItem['category_id'] = Input::get('category_id');
         }
         
         return ['operation'=>$obItem, 'wallets'=>$wallets];
@@ -160,6 +161,9 @@ class OperationController extends CrudListController {
     protected function __getValidators () {
         return array(
               'value'=>'required|numeric',
+              'category_id'=>'required|numeric',
+              'wallet_from_id' => 'required_if:type,spend,transfer',
+              'wallet_to_id' => 'required_if:type,income,transfer',
               'type'=>'required|in:spend,transfer,income',
               //'comment'=>'required|max:255',
               'date'=>'required|date',

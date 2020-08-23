@@ -41,7 +41,7 @@
         mounted() {
             this.setValue(this.value);
             this.setType(this.type);
-		},
+        },
         methods: {
             /**
              *  Set value
@@ -57,7 +57,7 @@
                 }
                 
                 if (!this.item) this.setDefault();
-			},
+            },
             /**
              *  Set Type
              */
@@ -68,7 +68,7 @@
                         this.setValue(false);
                     }
                 }
-			},
+            },
             /**
              *  Set default value
              */
@@ -83,14 +83,15 @@
                     this.item = _item;
                     break;
                 }
+                this.$emit('input', this.itemId);
             },
             /**
              *  Update value for "v-model" compability
              */
             updateValue: function (value) {
                 this.setValue(value);
-				this.$emit('input', value);
-			}
+                this.$emit('input', value);
+            }
         }
     }
 </script>

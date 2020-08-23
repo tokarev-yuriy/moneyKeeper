@@ -67,7 +67,7 @@
              *  Редактирование записи
              */
             editItem: function (id) {
-                document.location='/wallet/'+id;
+                
             }
         }
     }
