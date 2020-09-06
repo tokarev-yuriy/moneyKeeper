@@ -487,44 +487,9 @@ class StatisticsController extends Controller {
         return response()->json(['categories'=>$this->_getPlanStatistics($type, $period)]);
     }
     
-    public function getMonthplan ($period = false)
+    public function getPlan ($type = false, $period = false)
     {
-        if (!$period) {
-            $period = date('Y-m-01');
-        }
-        $period = date('Y-m-01', strtotime($period));
-        
-        $prevMonth = date('n', strtotime($period)) - 1;
-        $prevYear = date('Y', strtotime($period));
-        if ($prevMonth<1) {
-            $prevMonth = 12;
-            $prevYear -= 1;
-        }
-        $prevPeriod = date('Y-m-01', mktime(0,0,0,$prevMonth, 1, $prevYear));
-        
-        $nextMonth = date('n', strtotime($period)) + 1;
-        $nextYear = date('Y', strtotime($period));
-        if ($nextMonth>12) {
-            $nextMonth = 1;
-            $nextYear += 1;
-        }
-        $nextPeriod = date('Y-m-01', mktime(0,0,0,$nextMonth, 1, $nextYear));
-        
-        return view('account.stats.monthplan', array('prevPeriod'=>$prevPeriod, 'nextPeriod'=> $nextPeriod, 'period'=>$period));
-    }
-    
-    public function getYearplan ($period = false)
-    {
-        if (!$period) {
-            $period = date('Y-01-01');
-        }
-        $period = date('Y-01-01', strtotime($period));
-        
-        $prevPeriod = date('Y-01-01', mktime(0,0,0,1, 1, date("Y", strtotime($period)) - 1));
-        
-        $nextPeriod = date('Y-01-01', mktime(0,0,0,1, 1, date("Y", strtotime($period)) + 1));
-        
-        return view('account.stats.yearplan', array('prevPeriod'=>$prevPeriod, 'nextPeriod'=> $nextPeriod, 'period'=>$period));
+        return view('account.stats.plan', array());
     }
 	
     /**

@@ -2997,6 +2997,119 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/assets/js/components/PlanStat.vue?vue&type=script&lang=js&":
+/*!**************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/assets/js/components/PlanStat.vue?vue&type=script&lang=js& ***!
+  \**************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      type: false,
+      period: false
+    };
+  },
+  computed: {
+    // геттер вычисляемого значения
+    periodLbl: function periodLbl() {
+      if (this.period) {
+        if (this.type == 'month') {
+          return this.period.toLocaleString('ru', {
+            month: 'long',
+            year: 'numeric'
+          });
+        } else {
+          return this.period.getFullYear();
+        }
+      }
+    }
+  },
+  mounted: function mounted() {
+    this.type = 'month';
+    var d = new Date();
+    d.setDate(1);
+    this.period = d;
+  },
+  methods: {
+    /**
+     *  Change stat type
+     */
+    setType: function setType(type) {
+      if (type != this.type) {
+        this.type = type;
+        var d = new Date();
+        d.setTime(this.period.getTime());
+        this.period = d;
+      }
+    },
+
+    /**
+     *  Prev Period
+     */
+    prevPeriod: function prevPeriod() {
+      var d = new Date();
+      d.setTime(this.period.getTime());
+
+      if (this.type == 'month') {
+        d.setMonth(d.getMonth() - 1);
+      } else {
+        d.setFullYear(d.getFullYear() - 1);
+      }
+
+      this.period = d;
+    },
+
+    /**
+     *  Next Period
+     */
+    nextPeriod: function nextPeriod() {
+      var d = new Date();
+      d.setTime(this.period.getTime());
+
+      if (this.type == 'month') {
+        d.setMonth(d.getMonth() + 1);
+      } else {
+        d.setFullYear(d.getFullYear() + 1);
+      }
+
+      this.period = d;
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/assets/js/components/PlancategoriesComponent.vue?vue&type=script&lang=js&":
 /*!*****************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/assets/js/components/PlancategoriesComponent.vue?vue&type=script&lang=js& ***!
@@ -3028,10 +3141,22 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['period', 'type'],
   data: function data() {
     return {
-      categories: []
+      categories: [],
+      statType: false,
+      statPeriod: false
     };
+  },
+  watch: {
+    type: function type() {
+      this.statType = this.type;
+    },
+    period: function period() {
+      this.statPeriod = this.period;
+      this.load();
+    }
   },
   mounted: function mounted() {
     var _this = this;
@@ -3049,7 +3174,16 @@ __webpack_require__.r(__webpack_exports__);
     load: function load() {
       var _this2 = this;
 
-      axios.get('/account/stat/progress').then(function (response) {
+      var url = '/account/stat/progress';
+      if (this.statType) url = url + '/' + this.statType;
+
+      if (this.statPeriod) {
+        var m = this.statPeriod.getMonth() + 1;
+        m = (m < 10 ? "0" : "") + m;
+        url = url + '/' + this.statPeriod.getFullYear() + "-" + m + "-" + this.statPeriod.getDate();
+      }
+
+      axios.get(url).then(function (response) {
         _this2.categories = response.data['categories'];
       });
     },
@@ -3092,6 +3226,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['period', 'type'],
   data: function data() {
     return {
       plan: 0,
@@ -3100,8 +3235,19 @@ __webpack_require__.r(__webpack_exports__);
       max: 0,
       plan_percent: 0,
       spend_percent: 0,
-      income_percent: 0
+      income_percent: 0,
+      statType: false,
+      statPeriod: false
     };
+  },
+  watch: {
+    type: function type() {
+      this.statType = this.type;
+    },
+    period: function period() {
+      this.statPeriod = this.period;
+      this.load();
+    }
   },
   mounted: function mounted() {
     var _this = this;
@@ -3118,7 +3264,16 @@ __webpack_require__.r(__webpack_exports__);
     load: function load() {
       var _this2 = this;
 
-      axios.get('/account/stat/totals').then(function (response) {
+      var url = '/account/stat/totals';
+      if (this.statType) url = url + '/' + this.statType;
+
+      if (this.statPeriod) {
+        var m = this.statPeriod.getMonth() + 1;
+        m = (m < 10 ? "0" : "") + m;
+        url = url + '/' + this.statPeriod.getFullYear() + "-" + m + "-" + this.statPeriod.getDate();
+      }
+
+      axios.get(url).then(function (response) {
         _this2.plan = response.data['plan'];
         _this2.spend = response.data['spend'];
         _this2.income = response.data['income'];
@@ -3126,6 +3281,9 @@ __webpack_require__.r(__webpack_exports__);
         _this2.plan_percent = response.data['plan_percent'];
         _this2.spend_percent = response.data['spend_percent'];
         _this2.income_percent = response.data['income_percent'];
+        if (!_this2.plan_percent) _this2.plan_percent = 0;
+        if (!_this2.spend_percent) _this2.spend_percent = 0;
+        if (!_this2.income_percent) _this2.income_percent = 0;
       });
     }
   }
@@ -16572,6 +16730,133 @@ var render = function() {
       )
     ],
     2
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/assets/js/components/PlanStat.vue?vue&type=template&id=a14e2858&":
+/*!******************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/assets/js/components/PlanStat.vue?vue&type=template&id=a14e2858& ***!
+  \******************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    [
+      _c("div", { staticClass: "d-flex justify-content-center" }, [
+        _c("div", { staticClass: "btn-group", attrs: { role: "group" } }, [
+          _c(
+            "a",
+            {
+              class: {
+                btn: true,
+                "btn-dark": _vm.type == "month",
+                "btn-secondary": _vm.type != "month"
+              },
+              attrs: { href: "javascript: void(0);" },
+              on: {
+                click: function($event) {
+                  return _vm.setType("month")
+                }
+              }
+            },
+            [_vm._v(_vm._s(_vm._f("trans")("mkeep.per_month")))]
+          ),
+          _vm._v(" "),
+          _c(
+            "a",
+            {
+              class: {
+                btn: true,
+                "btn-dark": _vm.type == "year",
+                "btn-secondary": _vm.type != "year"
+              },
+              attrs: { href: "javascript: void(0);" },
+              on: {
+                click: function($event) {
+                  return _vm.setType("year")
+                }
+              }
+            },
+            [_vm._v(_vm._s(_vm._f("trans")("mkeep.per_year")))]
+          )
+        ])
+      ]),
+      _vm._v(" "),
+      _c(
+        "ul",
+        { staticClass: "nav nav-pills justify-content-center mt-3 mb-3" },
+        [
+          _c("li", { staticClass: "nav-item" }, [
+            _c(
+              "a",
+              {
+                staticClass: "nav-link text-secondary",
+                attrs: { href: "javascript: void(0);" },
+                on: { click: _vm.prevPeriod }
+              },
+              [
+                _c("i", {
+                  staticClass: "fa fa-arrow-left fa-lg",
+                  attrs: { "aria-hidden": "true" }
+                })
+              ]
+            )
+          ]),
+          _vm._v(" "),
+          _c("li", { staticClass: "nav-item" }, [
+            _c(
+              "a",
+              {
+                staticClass: "nav-link active",
+                attrs: { href: "javascript: void(0);" }
+              },
+              [_vm._v(_vm._s(_vm.periodLbl))]
+            )
+          ]),
+          _vm._v(" "),
+          _c("li", { staticClass: "nav-item" }, [
+            _c(
+              "a",
+              {
+                staticClass: "nav-link text-secondary",
+                attrs: { href: "javascript: void(0);" },
+                on: { click: _vm.nextPeriod }
+              },
+              [
+                _c("i", {
+                  staticClass: "fa fa-arrow-right fa-lg",
+                  attrs: { "aria-hidden": "true" }
+                })
+              ]
+            )
+          ])
+        ]
+      ),
+      _vm._v(" "),
+      _c("plancategories-component", {
+        attrs: { period: _vm.period, type: _vm.type }
+      }),
+      _vm._v(" "),
+      _c("planstat-component", {
+        attrs: { period: _vm.period, type: _vm.type }
+      })
+    ],
+    1
   )
 }
 var staticRenderFns = []
@@ -32321,6 +32606,7 @@ Vue.component('operation-filter', __webpack_require__(/*! ./components/Operation
 Vue.component('dropdown-items', __webpack_require__(/*! ./components/DropdownItems.vue */ "./resources/assets/js/components/DropdownItems.vue")["default"]);
 Vue.component('multi-select', __webpack_require__(/*! ./components/MultiSelect.vue */ "./resources/assets/js/components/MultiSelect.vue")["default"]);
 Vue.component('login-form', __webpack_require__(/*! ./components/LoginForm.vue */ "./resources/assets/js/components/LoginForm.vue")["default"]);
+Vue.component('plan-stat', __webpack_require__(/*! ./components/PlanStat.vue */ "./resources/assets/js/components/PlanStat.vue")["default"]);
 var app = new Vue({
   el: '#app'
 });
@@ -32874,6 +33160,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_OperationSyncList_vue_vue_type_template_id_c5d3c98e___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_OperationSyncList_vue_vue_type_template_id_c5d3c98e___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/assets/js/components/PlanStat.vue":
+/*!*****************************************************!*\
+  !*** ./resources/assets/js/components/PlanStat.vue ***!
+  \*****************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _PlanStat_vue_vue_type_template_id_a14e2858___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./PlanStat.vue?vue&type=template&id=a14e2858& */ "./resources/assets/js/components/PlanStat.vue?vue&type=template&id=a14e2858&");
+/* harmony import */ var _PlanStat_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./PlanStat.vue?vue&type=script&lang=js& */ "./resources/assets/js/components/PlanStat.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _PlanStat_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _PlanStat_vue_vue_type_template_id_a14e2858___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _PlanStat_vue_vue_type_template_id_a14e2858___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/assets/js/components/PlanStat.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/assets/js/components/PlanStat.vue?vue&type=script&lang=js&":
+/*!******************************************************************************!*\
+  !*** ./resources/assets/js/components/PlanStat.vue?vue&type=script&lang=js& ***!
+  \******************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_PlanStat_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./PlanStat.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/assets/js/components/PlanStat.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_PlanStat_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/assets/js/components/PlanStat.vue?vue&type=template&id=a14e2858&":
+/*!************************************************************************************!*\
+  !*** ./resources/assets/js/components/PlanStat.vue?vue&type=template&id=a14e2858& ***!
+  \************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PlanStat_vue_vue_type_template_id_a14e2858___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./PlanStat.vue?vue&type=template&id=a14e2858& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/assets/js/components/PlanStat.vue?vue&type=template&id=a14e2858&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PlanStat_vue_vue_type_template_id_a14e2858___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PlanStat_vue_vue_type_template_id_a14e2858___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

@@ -76,8 +76,7 @@ Route::get('/account/stat/yearincome', 'StatisticsController@getYearincome');
 Route::get('/account/stat/yearavgtotal', 'StatisticsController@getYearavgtotal');
 Route::get('/account/stat/yearavgspend', 'StatisticsController@getYearavgspend');
 Route::get('/account/stat/yearavgincome', 'StatisticsController@getYearavgincome');
-Route::get('/account/stat/monthplan/{period?}', 'StatisticsController@getMonthplan');
-Route::get('/account/stat/yearplan/{period?}', 'StatisticsController@getYearplan');
+Route::get('/account/stat/plan/{type?}/{period?}', 'StatisticsController@getPlan');
 Route::get('/account/stat/totals/{type?}/{period?}', 'StatisticsController@getTotals');
 
 Route::get('/account/import', 'ImportController@getIndex');

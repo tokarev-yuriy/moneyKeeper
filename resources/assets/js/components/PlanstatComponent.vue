@@ -17,6 +17,10 @@
 
 <script>
     export default {
+        props: [
+            'period', 
+            'type'
+        ],
         data: function () {
             return {
                 plan: 0,
@@ -26,7 +30,18 @@
                 plan_percent: 0,
                 spend_percent: 0,
                 income_percent: 0,
+                statType: false,
+                statPeriod: false
             };
+        },
+        watch: {
+            type: function () {
+              this.statType = this.type;
+            },
+            period: function () {
+              this.statPeriod = this.period;
+              this.load();
+            }
         },
         mounted() {
             this.load();
@@ -39,8 +54,15 @@
              *  Загрузка зон
              */
             load: function () {
+                let url = '/account/stat/totals';
+                if (this.statType) url = url + '/'+this.statType;
+                if (this.statPeriod) {
+                    let m = this.statPeriod.getMonth() + 1;
+                    m = (m<10?"0":"") + m;
+                    url = url + '/'+this.statPeriod.getFullYear()+"-"+m+"-"+this.statPeriod.getDate();
+                }
                 axios
-                    .get('/account/stat/totals')
+                    .get(url)
                     .then((response) => {
                         this.plan = response.data['plan'];
                         this.spend = response.data['spend'];
@@ -49,7 +71,9 @@
                         this.plan_percent = response.data['plan_percent'];
                         this.spend_percent = response.data['spend_percent'];
                         this.income_percent = response.data['income_percent'];
-                        
+                        if (!this.plan_percent) this.plan_percent = 0;
+                        if (!this.spend_percent) this.spend_percent = 0;
+                        if (!this.income_percent) this.income_percent = 0;
                     })
             }
         }

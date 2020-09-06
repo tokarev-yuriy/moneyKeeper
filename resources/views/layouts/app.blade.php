@@ -176,7 +176,7 @@
                    <i class="material-icons">pie_chart</i>
                    <p><?=trans('mkeep.stat_monthly_avg')?></p>
                  </a>
-                 <a href="{{ url('/account/stat/monthplan') }}" class="dropdown-item">
+                 <a href="{{ url('/account/stat/plan') }}" class="dropdown-item">
                    <i class="material-icons">done_all</i>
                    <p><?=trans('mkeep.stat_monthly_plan')?></p>
                  </a>

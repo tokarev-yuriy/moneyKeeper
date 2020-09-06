@@ -70,6 +70,7 @@ Vue.component('operation-filter', require('./components/OperationFilter.vue').de
 Vue.component('dropdown-items', require('./components/DropdownItems.vue').default);
 Vue.component('multi-select', require('./components/MultiSelect.vue').default);
 Vue.component('login-form', require('./components/LoginForm.vue').default);
+Vue.component('plan-stat', require('./components/PlanStat.vue').default);
 
 
 const app = new Vue({

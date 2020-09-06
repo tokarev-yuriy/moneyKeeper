@@ -21,10 +21,25 @@
 
 <script>
     export default {
+        props: [
+            'period', 
+            'type'
+        ],
         data: function () {
             return {
-                categories: []
+                categories: [],
+                statType: false,
+                statPeriod: false
             };
+        },
+        watch: {
+            type: function () {
+              this.statType = this.type;
+            },
+            period: function () {
+              this.statPeriod = this.period;
+              this.load();
+            }
         },
         mounted() {
             this.categories = [];
@@ -38,8 +53,15 @@
              *  Загрузка зон
              */
             load: function () {
+                let url = '/account/stat/progress';
+                if (this.statType) url = url + '/'+this.statType;
+                if (this.statPeriod) {
+                    let m = this.statPeriod.getMonth() + 1;
+                    m = (m<10?"0":"") + m;
+                    url = url + '/'+this.statPeriod.getFullYear()+"-"+m+"-"+this.statPeriod.getDate();
+                }
                 axios
-                    .get('/account/stat/progress')
+                    .get(url)
                     .then((response) => {
                         this.categories = response.data['categories'];
                     })
