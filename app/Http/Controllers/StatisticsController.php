@@ -36,7 +36,7 @@ class StatisticsController extends Controller {
 	public function getWallets()
 	{
         
-        $arWallets = Wallet::user()->orderBy('sort','asc')->get();
+        $arWallets = Wallet::user()->where('active', 1)->orderBy('sort','asc')->get();
        
         $arDbIncomes = Operation::select(DB::raw('sum(value) as sum, wallet_to_id'))->
                 user()->

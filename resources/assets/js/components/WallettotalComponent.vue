@@ -8,7 +8,7 @@
             </h3>
             <div class="wallet" v-for="item in group.items" @click="editItem(item.id)">
               <div class="wallet-img" v-if="item.icon">
-                  <i :class="item.icon" :alt="item.name"></i>
+                  <i :class="item.icon" :alt="item.name" :style="'color: #'+item.color"></i>
               </div>
               <span class="wallet-title text-nowrap">{{item.name}}</span>
               <span class="wallet-summ" :class="{'text-info': (item.value==0), 'text-success': (item.value>0), 'text-danger': (item.value<0)}">{{item.value | numberf}}</span>

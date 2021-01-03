@@ -1951,6 +1951,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['items', 'value', 'size', 'boundary', 'type'],
   data: function data() {
@@ -3285,6 +3291,326 @@ __webpack_require__.r(__webpack_exports__);
         if (!_this2.plan_percent) _this2.plan_percent = 0;
         if (!_this2.spend_percent) _this2.spend_percent = 0;
         if (!_this2.income_percent) _this2.income_percent = 0;
+      });
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/assets/js/components/WalletsEdit.vue?vue&type=script&lang=js&":
+/*!*****************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/assets/js/components/WalletsEdit.vue?vue&type=script&lang=js& ***!
+  \*****************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: [],
+  data: function data() {
+    return {
+      wallet: [],
+      groups: [],
+      icons: [],
+      colors: [],
+      errors: false
+    };
+  },
+  mounted: function mounted() {},
+  methods: {
+    /**
+     * Load the wallet and prepare the edit form
+     */
+    edit: function edit(id) {
+      var _this = this;
+
+      this.errors = false;
+      axios.get('/account/wallets/edit/' + id).then(function (response) {
+        _this.wallet = response.data['wallet'];
+        _this.groups = response.data['groups'];
+        _this.icons = response.data['icons'];
+        _this.colors = response.data['colors'];
+        $('#editModalBlock').modal();
+      });
+    },
+
+    /**
+     * prepare the add form
+     */
+    add: function add() {
+      var _this2 = this;
+
+      this.errors = false;
+      var url = '/account/wallets/edit/0';
+      axios.get(url).then(function (response) {
+        _this2.wallet = response.data['wallet'];
+        _this2.groups = response.data['groups'];
+        _this2.icons = response.data['icons'];
+        _this2.colors = response.data['colors'];
+        $('#editModalBlock').modal();
+      });
+    },
+
+    /**
+     * Save wallet
+     */
+    save: function save() {
+      var _this3 = this;
+
+      var url = '/account/wallets/';
+
+      if (this.wallet.id) {
+        url = url + 'update/' + this.wallet.id;
+      } else {
+        url = url + 'add';
+      }
+
+      axios.post(url, this.wallet).then(function (response) {
+        if (response.data['errors']) {
+          _this3.errors = response.data['errors'];
+        } else {
+          _this3.$root.$emit('wallet.changed');
+
+          $('#editModalBlock').modal('hide');
+        }
+      });
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/assets/js/components/WalletsList.vue?vue&type=script&lang=js&":
+/*!*****************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/assets/js/components/WalletsList.vue?vue&type=script&lang=js& ***!
+  \*****************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      wallets: false,
+      walletGroups: false,
+      delItemId: false
+    };
+  },
+  mounted: function mounted() {
+    var _this = this;
+
+    this.load();
+    this.$root.$on('wallet.changed', function (data) {
+      _this.load();
+    });
+  },
+  methods: {
+    /**
+     *  Load wallets
+     */
+    load: function load() {
+      var _this2 = this;
+
+      var url = '/account/wallets';
+      axios.get(url).then(function (response) {
+        _this2.wallets = response.data['wallets'];
+        _this2.walletGroups = response.data['groups'];
+      });
+    },
+
+    /**
+     * open the edit form
+     */
+    edit: function edit(id) {
+      this.$refs.walletsEdit.edit(id);
+    },
+
+    /**
+     *  open the add form
+     */
+    add: function add() {
+      this.$refs.walletsEdit.add();
+    },
+
+    /**
+     *  open the delete dialog
+     */
+    delDialog: function delDialog(id) {
+      this.delItemId = id;
+      $('#deleteModalBlock').modal('show');
+    },
+
+    /**
+     *  execute the delete action
+     */
+    del: function del() {
+      var _this3 = this;
+
+      $('#deleteModalBlock').modal('hide');
+      if (!this.delItemId) return false;
+      var url = '/account/wallets/delete/' + this.delItemId;
+      axios.get(url).then(function (response) {
+        if (!response.data['errors']) {
+          _this3.$root.$emit('wallet.changed');
+        }
       });
     }
   }
@@ -14790,13 +15116,25 @@ var render = function() {
         [
           _vm.item
             ? _c("span", [
-                _vm.item.icon
+                _vm.item.icon && _vm.item.color
+                  ? _c("i", {
+                      class: "fas fa-" + _vm.item.icon,
+                      style: "color: #" + _vm.item.color + ";",
+                      attrs: { alt: _vm.item.name }
+                    })
+                  : _vm.item.icon && !_vm.item.color
                   ? _c("i", {
                       class: "fas fa-" + _vm.item.icon,
                       attrs: { alt: _vm.item.name }
                     })
+                  : _vm.item.color
+                  ? _c("i", {
+                      staticClass: "fas fa-circle fa-lg",
+                      style: "color: #" + _vm.item.color + ";",
+                      attrs: { alt: _vm.item.name }
+                    })
                   : _vm._e(),
-                _vm._v(" " + _vm._s(_vm.item.name) + "\n\t\t")
+                _vm._v("\n        " + _vm._s(_vm.item.name) + "\n    ")
               ])
             : _vm._e()
         ]
@@ -14830,13 +15168,27 @@ var render = function() {
                     }
                   },
                   [
-                    dropItem.icon
+                    dropItem.icon && dropItem.color
+                      ? _c("i", {
+                          class: "fas fa-" + dropItem.icon,
+                          style: "color: #" + dropItem.color + ";",
+                          attrs: { alt: dropItem.name }
+                        })
+                      : dropItem.icon && !dropItem.color
                       ? _c("i", {
                           class: "fas fa-" + dropItem.icon,
                           attrs: { alt: dropItem.name }
                         })
+                      : dropItem.color
+                      ? _c("i", {
+                          staticClass: "fas fa-circle fa-lg",
+                          style: "color: #" + dropItem.color + ";",
+                          attrs: { alt: dropItem.name }
+                        })
                       : _vm._e(),
-                    _vm._v(" " + _vm._s(dropItem.name) + "\n            ")
+                    _vm._v(
+                      "\n            " + _vm._s(dropItem.name) + "\n        "
+                    )
                   ]
                 )
               : _vm._e()
@@ -16759,7 +17111,7 @@ var render = function() {
     "div",
     [
       !_vm.hideyear
-        ? _c("div", { staticClass: "d-flex justify-content-center" }, [
+        ? _c("div", { staticClass: "d-flex justify-content-center mb-3" }, [
             _c("div", { staticClass: "btn-group", attrs: { role: "group" } }, [
               _c(
                 "a",
@@ -16802,7 +17154,7 @@ var render = function() {
       _vm._v(" "),
       _c(
         "ul",
-        { staticClass: "nav nav-pills justify-content-center mt-3 mb-3" },
+        { staticClass: "nav nav-pills justify-content-center mt-0 mb-3" },
         [
           _c("li", { staticClass: "nav-item" }, [
             _c(
@@ -17054,6 +17406,755 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/assets/js/components/WalletsEdit.vue?vue&type=template&id=325b225d&":
+/*!*********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/assets/js/components/WalletsEdit.vue?vue&type=template&id=325b225d& ***!
+  \*********************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _c(
+      "div",
+      {
+        staticClass: "modal fade",
+        staticStyle: { display: "none" },
+        attrs: {
+          id: "editModalBlock",
+          tabindex: "-1",
+          role: "dialog",
+          "aria-hidden": "true"
+        }
+      },
+      [
+        _c(
+          "div",
+          { staticClass: "modal-dialog", attrs: { role: "document" } },
+          [
+            _c("div", { staticClass: "modal-content" }, [
+              _c("div", { staticClass: "modal-header" }, [
+                _vm.wallet.id
+                  ? _c("h4", { staticClass: "modal-title" }, [
+                      _vm._v(_vm._s(_vm._f("trans")("mkeep_tablegrid.edit")))
+                    ])
+                  : _c("h4", { staticClass: "modal-title" }, [
+                      _vm._v(_vm._s(_vm._f("trans")("mkeep_tablegrid.add")))
+                    ]),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "close",
+                    attrs: {
+                      type: "button",
+                      "data-dismiss": "modal",
+                      "aria-label": _vm._f("trans")("mkeep_tablegrid.close")
+                    }
+                  },
+                  [
+                    _c("span", { attrs: { "aria-hidden": "true" } }, [
+                      _vm._v("×")
+                    ])
+                  ]
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "modal-body" }, [
+                _c("form", { attrs: { method: "post" } }, [
+                  _c("div", { staticClass: "row" }, [
+                    _c("div", { staticClass: "col-md-6" }, [
+                      _c(
+                        "label",
+                        {
+                          staticClass: "mb-0 form-label",
+                          class: {
+                            "is-invalid": _vm.errors && _vm.errors.name
+                          },
+                          attrs: { for: "name" }
+                        },
+                        [_vm._v(_vm._s(_vm._f("trans")("mkeep.name")))]
+                      ),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.wallet.name,
+                            expression: "wallet.name"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        class: { "is-invalid": _vm.errors && _vm.errors.name },
+                        attrs: {
+                          type: "text",
+                          placeholder: _vm._f("trans")("mkeep.name")
+                        },
+                        domProps: { value: _vm.wallet.name },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(_vm.wallet, "name", $event.target.value)
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _vm.errors && _vm.errors.name
+                        ? _c("span", { staticClass: "invalid-feedback" }, [
+                            _c("strong", [_vm._v(_vm._s(_vm.errors.name))])
+                          ])
+                        : _vm._e()
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "col-md-6" },
+                      [
+                        _c(
+                          "label",
+                          {
+                            staticClass: "mb-0 form-label",
+                            class: {
+                              "is-invalid": _vm.errors && _vm.errors.group_id
+                            },
+                            attrs: { for: "group_id" }
+                          },
+                          [
+                            _vm._v(
+                              _vm._s(_vm._f("trans")("mkeep.wallet_group"))
+                            )
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c("dropdown-items", {
+                          attrs: { items: _vm.groups },
+                          model: {
+                            value: _vm.wallet.group_id,
+                            callback: function($$v) {
+                              _vm.$set(_vm.wallet, "group_id", $$v)
+                            },
+                            expression: "wallet.group_id"
+                          }
+                        }),
+                        _vm._v(" "),
+                        _vm.errors && _vm.errors.group_id
+                          ? _c("span", { staticClass: "invalid-feedback" }, [
+                              _c("strong", [
+                                _vm._v(_vm._s(_vm.errors.group_id))
+                              ])
+                            ])
+                          : _vm._e()
+                      ],
+                      1
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "row" }, [
+                    _c(
+                      "div",
+                      { staticClass: "col-md-6" },
+                      [
+                        _c(
+                          "label",
+                          {
+                            staticClass: "mb-0 form-label",
+                            class: {
+                              "is-invalid": _vm.errors && _vm.errors.icon
+                            },
+                            attrs: { for: "icon" }
+                          },
+                          [_vm._v(_vm._s(_vm._f("trans")("mkeep.icon")))]
+                        ),
+                        _vm._v(" "),
+                        _c("dropdown-items", {
+                          attrs: { items: _vm.icons },
+                          model: {
+                            value: _vm.wallet.icon,
+                            callback: function($$v) {
+                              _vm.$set(_vm.wallet, "icon", $$v)
+                            },
+                            expression: "wallet.icon"
+                          }
+                        }),
+                        _vm._v(" "),
+                        _vm.errors && _vm.errors.icon
+                          ? _c("span", { staticClass: "invalid-feedback" }, [
+                              _c("strong", [_vm._v(_vm._s(_vm.errors.icon))])
+                            ])
+                          : _vm._e()
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "col-md-6" },
+                      [
+                        _c(
+                          "label",
+                          {
+                            staticClass: "mb-0 form-label",
+                            class: {
+                              "is-invalid": _vm.errors && _vm.errors.color
+                            },
+                            attrs: { for: "color" }
+                          },
+                          [_vm._v(_vm._s(_vm._f("trans")("mkeep.color")))]
+                        ),
+                        _vm._v(" "),
+                        _c("dropdown-items", {
+                          attrs: { items: _vm.colors },
+                          model: {
+                            value: _vm.wallet.color,
+                            callback: function($$v) {
+                              _vm.$set(_vm.wallet, "color", $$v)
+                            },
+                            expression: "wallet.color"
+                          }
+                        }),
+                        _vm._v(" "),
+                        _vm.errors && _vm.errors.color
+                          ? _c("span", { staticClass: "invalid-feedback" }, [
+                              _c("strong", [_vm._v(_vm._s(_vm.errors.color))])
+                            ])
+                          : _vm._e()
+                      ],
+                      1
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "row" }, [
+                    _c("div", { staticClass: "col-md-6" }, [
+                      _c(
+                        "label",
+                        {
+                          staticClass: "mb-0 form-label",
+                          class: {
+                            "is-invalid": _vm.errors && _vm.errors.sort
+                          },
+                          attrs: { for: "sort" }
+                        },
+                        [_vm._v(_vm._s(_vm._f("trans")("mkeep.sort")))]
+                      ),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.wallet.sort,
+                            expression: "wallet.sort"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        class: { "is-invalid": _vm.errors && _vm.errors.sort },
+                        attrs: {
+                          type: "text",
+                          placeholder: _vm._f("trans")("mkeep.sort")
+                        },
+                        domProps: { value: _vm.wallet.sort },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(_vm.wallet, "sort", $event.target.value)
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _vm.errors && _vm.errors.sort
+                        ? _c("span", { staticClass: "invalid-feedback" }, [
+                            _c("strong", [_vm._v(_vm._s(_vm.errors.sort))])
+                          ])
+                        : _vm._e()
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-md-6" }, [
+                      _c(
+                        "label",
+                        {
+                          staticClass: "mb-0 form-label",
+                          class: {
+                            "is-invalid": _vm.errors && _vm.errors.start
+                          },
+                          attrs: { for: "start" }
+                        },
+                        [_vm._v(_vm._s(_vm._f("trans")("mkeep.start")))]
+                      ),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.wallet.start,
+                            expression: "wallet.start"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        class: { "is-invalid": _vm.errors && _vm.errors.start },
+                        attrs: {
+                          type: "text",
+                          placeholder: _vm._f("trans")("mkeep.start")
+                        },
+                        domProps: { value: _vm.wallet.start },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(_vm.wallet, "start", $event.target.value)
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _vm.errors && _vm.errors.start
+                        ? _c("span", { staticClass: "invalid-feedback" }, [
+                            _c("strong", [_vm._v(_vm._s(_vm.errors.start))])
+                          ])
+                        : _vm._e()
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "row" }, [
+                    _c("div", { staticClass: "col-md-6 pt-3" }, [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.wallet.active,
+                            expression: "wallet.active"
+                          }
+                        ],
+                        attrs: { type: "checkbox", id: "walletActive" },
+                        domProps: {
+                          checked: Array.isArray(_vm.wallet.active)
+                            ? _vm._i(_vm.wallet.active, null) > -1
+                            : _vm.wallet.active
+                        },
+                        on: {
+                          change: function($event) {
+                            var $$a = _vm.wallet.active,
+                              $$el = $event.target,
+                              $$c = $$el.checked ? true : false
+                            if (Array.isArray($$a)) {
+                              var $$v = null,
+                                $$i = _vm._i($$a, $$v)
+                              if ($$el.checked) {
+                                $$i < 0 &&
+                                  _vm.$set(
+                                    _vm.wallet,
+                                    "active",
+                                    $$a.concat([$$v])
+                                  )
+                              } else {
+                                $$i > -1 &&
+                                  _vm.$set(
+                                    _vm.wallet,
+                                    "active",
+                                    $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                                  )
+                              }
+                            } else {
+                              _vm.$set(_vm.wallet, "active", $$c)
+                            }
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c(
+                        "label",
+                        {
+                          staticClass: "mb-0 form-label",
+                          attrs: { for: "walletActive" }
+                        },
+                        [
+                          _vm._v(
+                            "\n                            " +
+                              _vm._s(_vm._f("trans")("mkeep.active")) +
+                              "\n                        "
+                          )
+                        ]
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-md-6" }, [
+                      _c("div", { staticClass: "pull-right" }, [
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-success",
+                            attrs: { type: "button" },
+                            on: {
+                              click: function($event) {
+                                return _vm.save()
+                              }
+                            }
+                          },
+                          [
+                            _c("i", { staticClass: "fa fa-btn fa-save" }),
+                            _vm._v(
+                              " " +
+                                _vm._s(_vm._f("trans")("mkeep.save")) +
+                                "\n                            "
+                            )
+                          ]
+                        )
+                      ])
+                    ])
+                  ])
+                ])
+              ])
+            ])
+          ]
+        )
+      ]
+    )
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/assets/js/components/WalletsList.vue?vue&type=template&id=2312faf1&":
+/*!*********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/assets/js/components/WalletsList.vue?vue&type=template&id=2312faf1& ***!
+  \*********************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    [
+      _c(
+        "a",
+        {
+          staticClass: "btn btn-success pull-right",
+          attrs: { href: "javascript: void(0);" },
+          on: {
+            click: function($event) {
+              return _vm.add()
+            }
+          }
+        },
+        [
+          _c("i", { staticClass: "fa fa-plus-square fa-lg" }),
+          _vm._v(" " + _vm._s(_vm._f("trans")("mkeep.add_wallet")))
+        ]
+      ),
+      _vm._v(" "),
+      _c("div", { staticClass: "clearfix" }),
+      _vm._v(" "),
+      _c("div", { staticClass: "clearfix mb-2" }),
+      _vm._v(" "),
+      !_vm.wallets
+        ? _c(
+            "div",
+            { staticClass: "card", staticStyle: { "border-radius": "0" } },
+            [
+              _vm.wallets === false
+                ? _c("div", { staticClass: "card-header" }, [
+                    _c("h3", [_vm._v(_vm._s(_vm._f("trans")("mkeep.loading")))])
+                  ])
+                : _c("div", { staticClass: "card-header" }, [
+                    _c("h3", [_vm._v(_vm._s(_vm._f("trans")("mkeep.no_data")))])
+                  ])
+            ]
+          )
+        : _vm._e(),
+      _vm._v(" "),
+      _c("table", { staticClass: "table mt-3 table-striped table-sm" }, [
+        _c("thead", [
+          _c("tr", [
+            _c("th", [_vm._v(_vm._s(_vm._f("trans")("mkeep.name")))]),
+            _vm._v(" "),
+            _c("th", [_vm._v(_vm._s(_vm._f("trans")("mkeep.sort")))]),
+            _vm._v(" "),
+            _c("th", [_vm._v(_vm._s(_vm._f("trans")("mkeep.start")))]),
+            _vm._v(" "),
+            _c("th", [_vm._v(_vm._s(_vm._f("trans")("mkeep.color")))]),
+            _vm._v(" "),
+            _c("th", [_vm._v(_vm._s(_vm._f("trans")("mkeep.icon")))]),
+            _vm._v(" "),
+            _c("th", [_vm._v(_vm._s(_vm._f("trans")("mkeep.group")))]),
+            _vm._v(" "),
+            _c("th", [_vm._v(_vm._s(_vm._f("trans")("mkeep.active")))]),
+            _vm._v(" "),
+            _c("th", { attrs: { colspan: "2", width: "1%" } }, [
+              _vm._v(_vm._s(_vm._f("trans")("mkeep_tablegrid.actions")))
+            ])
+          ])
+        ]),
+        _vm._v(" "),
+        _c(
+          "tbody",
+          _vm._l(_vm.wallets, function(wallet) {
+            return _c("tr", [
+              _c("td", [_vm._v(_vm._s(wallet.name))]),
+              _vm._v(" "),
+              _c("td", [_vm._v(_vm._s(wallet.sort))]),
+              _vm._v(" "),
+              _c("td", [_vm._v(_vm._s(_vm._f("numberf")(wallet.start)))]),
+              _vm._v(" "),
+              _c("td", [
+                _c("i", {
+                  staticClass: "fas fa-circle fa-lg",
+                  style: "color: #" + wallet.color + ";"
+                })
+              ]),
+              _vm._v(" "),
+              _c("td", [
+                _c("i", {
+                  class: "fas fa-" + wallet.icon,
+                  attrs: { "aria-hidden": "true" }
+                })
+              ]),
+              _vm._v(" "),
+              _c("td", [_vm._v(_vm._s(_vm.walletGroups[wallet.group_id]))]),
+              _vm._v(" "),
+              _c("td", [
+                wallet.active
+                  ? _c("span", [_vm._v("Да")])
+                  : _c("span", [_vm._v("Нет")])
+              ]),
+              _vm._v(" "),
+              _c("td", [
+                _c(
+                  "a",
+                  {
+                    staticClass: "btn btn-info d-none d-md-block",
+                    attrs: {
+                      "data-btn-type": "edit",
+                      href: "javascript: void(0);",
+                      "data-title": _vm._f("trans")("mkeep.edit_wallet")
+                    },
+                    on: {
+                      click: function($event) {
+                        return _vm.edit(wallet.id)
+                      }
+                    }
+                  },
+                  [
+                    _c("i", {
+                      staticClass: "fa fa-pencil fa-lg",
+                      attrs: { "aria-hidden": "true" }
+                    }),
+                    _vm._v(
+                      " " +
+                        _vm._s(_vm._f("trans")("mkeep_tablegrid.edit")) +
+                        "\n                    "
+                    )
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "a",
+                  {
+                    staticClass: "btn btn-info d-md-none",
+                    attrs: {
+                      "data-btn-type": "edit",
+                      href: "javascript: void(0);",
+                      "data-title": _vm._f("trans")("mkeep.edit_wallet")
+                    },
+                    on: {
+                      click: function($event) {
+                        return _vm.edit(wallet.id)
+                      }
+                    }
+                  },
+                  [
+                    _c("i", {
+                      staticClass: "fa fa-pencil fa-lg",
+                      attrs: { "aria-hidden": "true" }
+                    })
+                  ]
+                )
+              ]),
+              _vm._v(" "),
+              _c("td", [
+                _c(
+                  "a",
+                  {
+                    staticClass: "btn btn-dark d-none d-md-block",
+                    attrs: {
+                      "data-btn-type": "delete",
+                      href: "javascript: void(0);",
+                      "data-title": _vm._f("trans")("mkeep.delete_wallet")
+                    },
+                    on: {
+                      click: function($event) {
+                        return _vm.delDialog(wallet.id)
+                      }
+                    }
+                  },
+                  [
+                    _c("i", {
+                      staticClass: "fa fa-remove fa-lg",
+                      attrs: { "aria-hidden": "true" }
+                    }),
+                    _vm._v(
+                      " " +
+                        _vm._s(_vm._f("trans")("mkeep_tablegrid.delete")) +
+                        "\n                    "
+                    )
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "a",
+                  {
+                    staticClass: "btn btn-dark d-md-none",
+                    attrs: {
+                      "data-btn-type": "delete",
+                      href: "javascript: void(0);",
+                      "data-title": _vm._f("trans")("mkeep.delete_wallet")
+                    },
+                    on: {
+                      click: function($event) {
+                        return _vm.delDialog(wallet.id)
+                      }
+                    }
+                  },
+                  [
+                    _c("i", {
+                      staticClass: "fa fa-remove fa-lg",
+                      attrs: { "aria-hidden": "true" }
+                    })
+                  ]
+                )
+              ])
+            ])
+          }),
+          0
+        )
+      ]),
+      _vm._v(" "),
+      _c("wallets-edit", { ref: "walletsEdit" }),
+      _vm._v(" "),
+      _c("div", { staticClass: "clearfix mb-2" }),
+      _vm._v(" "),
+      _c(
+        "a",
+        {
+          staticClass: "btn btn-success pull-right",
+          attrs: { href: "javascript: void(0);" },
+          on: {
+            click: function($event) {
+              return _vm.add()
+            }
+          }
+        },
+        [
+          _c("i", { staticClass: "fa fa-plus-square fa-lg" }),
+          _vm._v(" " + _vm._s(_vm._f("trans")("mkeep.add_wallet")))
+        ]
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          staticClass: "modal fade",
+          staticStyle: { display: "none" },
+          attrs: {
+            id: "deleteModalBlock",
+            tabindex: "-1",
+            role: "dialog",
+            "aria-hidden": "true"
+          }
+        },
+        [
+          _c(
+            "div",
+            { staticClass: "modal-dialog", attrs: { role: "document" } },
+            [
+              _c("div", { staticClass: "modal-content" }, [
+                _c("div", { staticClass: "modal-header" }, [
+                  _c("h4", { staticClass: "modal-title" }, [
+                    _vm._v(
+                      _vm._s(_vm._f("trans")("mkeep_tablegrid.delete_item"))
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "close",
+                      attrs: {
+                        type: "button",
+                        "data-dismiss": "modal",
+                        "aria-label": _vm._f("trans")("mkeep_tablegrid.close")
+                      }
+                    },
+                    [
+                      _c("span", { attrs: { "aria-hidden": "true" } }, [
+                        _vm._v("×")
+                      ])
+                    ]
+                  )
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "modal-body" }, [
+                  _vm._v(_vm._s(_vm._f("trans")("mkeep_tablegrid.sure")))
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "modal-footer" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-secondary",
+                      attrs: { type: "button", "data-dismiss": "modal" }
+                    },
+                    [_vm._v(_vm._s(_vm._f("trans")("mkeep_tablegrid.no")))]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-danger delete-btn",
+                      on: { click: _vm.del }
+                    },
+                    [_vm._v(_vm._s(_vm._f("trans")("mkeep_tablegrid.delete")))]
+                  )
+                ])
+              ])
+            ]
+          )
+        ]
+      )
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/assets/js/components/WallettotalComponent.vue?vue&type=template&id=805577ee&":
 /*!******************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/assets/js/components/WallettotalComponent.vue?vue&type=template&id=805577ee& ***!
@@ -17115,6 +18216,7 @@ var render = function() {
                       ? _c("div", { staticClass: "wallet-img" }, [
                           _c("i", {
                             class: item.icon,
+                            style: "color: #" + item.color,
                             attrs: { alt: item.name }
                           })
                         ])
@@ -32603,6 +33705,8 @@ Vue.component('dropdown-items', __webpack_require__(/*! ./components/DropdownIte
 Vue.component('multi-select', __webpack_require__(/*! ./components/MultiSelect.vue */ "./resources/assets/js/components/MultiSelect.vue")["default"]);
 Vue.component('login-form', __webpack_require__(/*! ./components/LoginForm.vue */ "./resources/assets/js/components/LoginForm.vue")["default"]);
 Vue.component('plan-stat', __webpack_require__(/*! ./components/PlanStat.vue */ "./resources/assets/js/components/PlanStat.vue")["default"]);
+Vue.component('wallets-list', __webpack_require__(/*! ./components/WalletsList.vue */ "./resources/assets/js/components/WalletsList.vue")["default"]);
+Vue.component('wallets-edit', __webpack_require__(/*! ./components/WalletsEdit.vue */ "./resources/assets/js/components/WalletsEdit.vue")["default"]);
 var app = new Vue({
   el: '#app'
 });
@@ -33363,6 +34467,144 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PlanstatComponent_vue_vue_type_template_id_be37394e___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PlanstatComponent_vue_vue_type_template_id_be37394e___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/assets/js/components/WalletsEdit.vue":
+/*!********************************************************!*\
+  !*** ./resources/assets/js/components/WalletsEdit.vue ***!
+  \********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _WalletsEdit_vue_vue_type_template_id_325b225d___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./WalletsEdit.vue?vue&type=template&id=325b225d& */ "./resources/assets/js/components/WalletsEdit.vue?vue&type=template&id=325b225d&");
+/* harmony import */ var _WalletsEdit_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./WalletsEdit.vue?vue&type=script&lang=js& */ "./resources/assets/js/components/WalletsEdit.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _WalletsEdit_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _WalletsEdit_vue_vue_type_template_id_325b225d___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _WalletsEdit_vue_vue_type_template_id_325b225d___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/assets/js/components/WalletsEdit.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/assets/js/components/WalletsEdit.vue?vue&type=script&lang=js&":
+/*!*********************************************************************************!*\
+  !*** ./resources/assets/js/components/WalletsEdit.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_WalletsEdit_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./WalletsEdit.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/assets/js/components/WalletsEdit.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_WalletsEdit_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/assets/js/components/WalletsEdit.vue?vue&type=template&id=325b225d&":
+/*!***************************************************************************************!*\
+  !*** ./resources/assets/js/components/WalletsEdit.vue?vue&type=template&id=325b225d& ***!
+  \***************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_WalletsEdit_vue_vue_type_template_id_325b225d___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./WalletsEdit.vue?vue&type=template&id=325b225d& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/assets/js/components/WalletsEdit.vue?vue&type=template&id=325b225d&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_WalletsEdit_vue_vue_type_template_id_325b225d___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_WalletsEdit_vue_vue_type_template_id_325b225d___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/assets/js/components/WalletsList.vue":
+/*!********************************************************!*\
+  !*** ./resources/assets/js/components/WalletsList.vue ***!
+  \********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _WalletsList_vue_vue_type_template_id_2312faf1___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./WalletsList.vue?vue&type=template&id=2312faf1& */ "./resources/assets/js/components/WalletsList.vue?vue&type=template&id=2312faf1&");
+/* harmony import */ var _WalletsList_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./WalletsList.vue?vue&type=script&lang=js& */ "./resources/assets/js/components/WalletsList.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _WalletsList_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _WalletsList_vue_vue_type_template_id_2312faf1___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _WalletsList_vue_vue_type_template_id_2312faf1___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/assets/js/components/WalletsList.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/assets/js/components/WalletsList.vue?vue&type=script&lang=js&":
+/*!*********************************************************************************!*\
+  !*** ./resources/assets/js/components/WalletsList.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_WalletsList_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./WalletsList.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/assets/js/components/WalletsList.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_WalletsList_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/assets/js/components/WalletsList.vue?vue&type=template&id=2312faf1&":
+/*!***************************************************************************************!*\
+  !*** ./resources/assets/js/components/WalletsList.vue?vue&type=template&id=2312faf1& ***!
+  \***************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_WalletsList_vue_vue_type_template_id_2312faf1___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./WalletsList.vue?vue&type=template&id=2312faf1& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/assets/js/components/WalletsList.vue?vue&type=template&id=2312faf1&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_WalletsList_vue_vue_type_template_id_2312faf1___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_WalletsList_vue_vue_type_template_id_2312faf1___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

@@ -32,6 +32,7 @@ Route::get('/account/wallets', 'WalletController@getIndex');
 Route::get('/account/wallets/delete/{id}', 'WalletController@getDelete');
 Route::get('/account/wallets/add', 'WalletController@getAdd');
 Route::post('/account/wallets/add', 'WalletController@postAdd');
+Route::any('/account/wallets/edit/{id}', 'WalletController@getEdit');
 Route::get('/account/wallets/update/{id}', 'WalletController@getUpdate');
 Route::post('/account/wallets/update/{id}', 'WalletController@postUpdate');
 

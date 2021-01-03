@@ -1,18 +1,24 @@
 <template>
     <div class="dropdown show dropdown-with-icons" id="operationFilterDrop">
       <a class="btn btn-secondary dropdown-toggle" href="javascipt:void(0);" role="button" data-toggle="dropdown" :data-boundary="boundary" aria-haspopup="true" aria-expanded="false">
-		<span v-if="item">
-			<i v-if="item.icon" :class="'fas fa-'+item.icon" :alt="item.name"></i> {{ item.name }}
-		</span>
+        <span v-if="item">
+            <i v-if="item.icon && item.color" :class="'fas fa-'+item.icon" :alt="item.name" :style="'color: #'+item.color+';'"></i>
+            <i v-else-if="item.icon && !item.color" :class="'fas fa-'+item.icon" :alt="item.name"></i>
+            <i v-else-if="item.color" class="fas fa-circle fa-lg" :alt="item.name" :style="'color: #'+item.color+';'"></i>
+            {{ item.name }}
+        </span>
       </a>
 
       <div class="dropdown-menu">
         <span v-for="dropItem in items">
             <h6 v-if="dropItem.is_group" class="dropdown-header">{{dropItem.name}}</h6>
             <a v-if="!dropItem.is_group && (!typeFilter || !dropItem['type'] || dropItem.type=='any' || typeFilter==dropItem.type)" class="dropdown-item" href="javascript: void(0);" @click="updateValue(dropItem.id)">
-                <i v-if="dropItem.icon" :class="'fas fa-'+dropItem.icon" :alt="dropItem.name"></i> {{ dropItem.name }}
+                <i v-if="dropItem.icon && dropItem.color" :class="'fas fa-'+dropItem.icon" :alt="dropItem.name" :style="'color: #'+dropItem.color+';'"></i>
+                <i v-else-if="dropItem.icon && !dropItem.color" :class="'fas fa-'+dropItem.icon" :alt="dropItem.name"></i>
+                <i v-else-if="dropItem.color" class="fas fa-circle fa-lg" :alt="dropItem.name" :style="'color: #'+dropItem.color+';'"></i>
+                {{ dropItem.name }}
             </a>
-		</span>
+        </span>
       </div>
     </div>
 </template>

@@ -72,6 +72,9 @@ Vue.component('multi-select', require('./components/MultiSelect.vue').default);
 Vue.component('login-form', require('./components/LoginForm.vue').default);
 Vue.component('plan-stat', require('./components/PlanStat.vue').default);
 
+Vue.component('wallets-list', require('./components/WalletsList.vue').default);
+Vue.component('wallets-edit', require('./components/WalletsEdit.vue').default);
+
 
 const app = new Vue({
     el: '#app'

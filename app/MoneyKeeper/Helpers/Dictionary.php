@@ -39,7 +39,7 @@ class Dictionary {
 	 */
 	public static function getWallets () {
         $arItems = [];
-	    $arWallets = Wallet::user()->select('id', 'name', 'icon', 'group_id')->orderBy('sort')->get();
+        $arWallets = Wallet::user()->select('id', 'name', 'icon', 'color', 'group_id')->orderBy('sort')->get();
         foreach($arWallets as $k=>$obWallet) {
             $arItems[$obWallet->id] = $obWallet;
         }

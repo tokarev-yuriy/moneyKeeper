@@ -1,13 +1,13 @@
 <template>
     <div>
-        <div class="d-flex justify-content-center" v-if="!hideyear">
+        <div class="d-flex justify-content-center mb-3" v-if="!hideyear">
             <div class="btn-group" role="group">
               <a :class="{'btn': true, 'btn-dark': type=='month', 'btn-secondary': type!='month'}" href="javascript: void(0);" @click="setType('month')">{{ 'mkeep.per_month' | trans }}</a>
               <a :class="{'btn': true, 'btn-dark': type=='year', 'btn-secondary': type!='year'}" href="javascript: void(0);" @click="setType('year')">{{ 'mkeep.per_year' | trans }}</a>
             </div>
         </div>
 
-        <ul class="nav nav-pills justify-content-center mt-3 mb-3">
+        <ul class="nav nav-pills justify-content-center mt-0 mb-3">
           <li class="nav-item">
             <a class="nav-link text-secondary" href="javascript: void(0);" @click="prevPeriod"><i class="fa fa-arrow-left fa-lg" aria-hidden="true"></i></a>
           </li>

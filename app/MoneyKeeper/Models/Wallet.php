@@ -40,23 +40,46 @@ class Wallet extends UserRelative {
             $arIcons['pound-sign'] = 'fas fa-pound-sign';
             $arIcons['euro-sign'] = 'fas fa-euro-sign';
             $arIcons['dollar-sign'] = 'fas fa-dollar-sign';
+            $arIcons['briefcase'] = 'fas fa-briefcase';
+            $arIcons['gem'] = 'fas fa-gem';
+            $arIcons['home'] = 'fas fa-home';
+            $arIcons['landmark'] = 'fas fa-landmark';
+            $arIcons['money-bill'] = 'fas fa-money-bill';
+            $arIcons['money-check'] = 'fas fa-money-check';
+            $arIcons['store-alt'] = 'fas fa-store-alt';
             return $arIcons;
-	}
-	
-	/**
-	 * Returns possible wallet colors
-	 * 
-	 * 
-	 * @return <type>
-	 */    
-	public static function getColorList () {
-		return array(
-			'fff' => '&nbsp;',
-			'f1ece9' => '&nbsp;',
-			'f9e3be' => '&nbsp;',
-			'b8ccc6' => '&nbsp;',
-		);
-	}
+    }
+
+    /**
+     * Returns possible wallet colors
+     * 
+     * 
+     * @return <type>
+     */    
+    public static function getColorList () {
+        return array(
+            'fff' => '&nbsp;',
+            'f1ece9' => '&nbsp;',
+            'f9e3be' => '&nbsp;',
+            'b8ccc6' => '&nbsp;',
+            '001f3f' => '&nbsp;',
+            '0074d9' => '&nbsp;',
+            '7fdbff' => '&nbsp;',
+            '39cccc' => '&nbsp;',
+            '3d9970' => '&nbsp;',
+            '2ecc40' => '&nbsp;',
+            '01ff70' => '&nbsp;',
+            'ffdc00' => '&nbsp;',
+            'ff851b' => '&nbsp;',
+            'ff4136' => '&nbsp;',
+            '85144b' => '&nbsp;',
+            'f012be' => '&nbsp;',
+            'b10dc9' => '&nbsp;',
+            '111111' => '&nbsp;',
+            'aaaaaa' => '&nbsp;',
+            'dddddd' => '&nbsp;',
+        );
+    }
     
     /**
      * Returns available user's Wallet groups

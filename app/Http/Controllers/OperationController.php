@@ -150,7 +150,7 @@ class OperationController extends CrudListController {
         }
         
         return ['operation'=>$obItem, 'wallets'=>$wallets];
-    }   
+    }
    
     /**
      * Returns validators for add and edit operation
