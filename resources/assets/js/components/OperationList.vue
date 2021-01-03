@@ -38,7 +38,7 @@
                       <span class="h3"
                         :class="{'text-danger': operation.type=='spend', 'text-success': operation.type=='income', 'text-secondary': operation.type=='transfer'}">
                           <span v-if="operation.type=='spend'">-</span>
-                          <span v-else-if="operation.type=='income'">-</span>
+                          <span v-else-if="operation.type=='income'">+</span>
                           {{operation.value | numberf}}
                       </span>
                       <div class="text-secondary card-comment">{{ operation.comment }}</div>

@@ -11,7 +11,7 @@
             <span :class="{'text-success': (category.sum <= category.plan),'text-danger': (category.sum > category.plan)}">{{ category.sum }} / <span class="text-secondary">{{ category.plan }}</span></span>
           </div>
           
-          <div class="progress total mb-2 mt-2" style="height: 2px;">
+          <div class="progress total">
             <div class="progress-bar" :class="{'bg-success': (category.sum <= category.plan),'bg-danger': (category.sum > category.plan)}" role="progressbar" :aria-valuenow="category.sum" aria-valuemin="0" :aria-valuemax="category.plan"   :style="{width: category.progress + '%'}">                                
             </div>                
           </div>

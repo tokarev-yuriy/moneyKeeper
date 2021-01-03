@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="d-flex justify-content-center">
+        <div class="d-flex justify-content-center" v-if="!hideyear">
             <div class="btn-group" role="group">
               <a :class="{'btn': true, 'btn-dark': type=='month', 'btn-secondary': type!='month'}" href="javascript: void(0);" @click="setType('month')">{{ 'mkeep.per_month' | trans }}</a>
               <a :class="{'btn': true, 'btn-dark': type=='year', 'btn-secondary': type!='year'}" href="javascript: void(0);" @click="setType('year')">{{ 'mkeep.per_year' | trans }}</a>
@@ -27,6 +27,7 @@
 
 <script>
     export default {
+        props: ['hideyear'],
         data: function () {
             return {
                 type: false,

@@ -3034,6 +3034,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['hideyear'],
   data: function data() {
     return {
       type: false,
@@ -16314,7 +16315,7 @@ var render = function() {
                           operation.type == "spend"
                             ? _c("span", [_vm._v("-")])
                             : operation.type == "income"
-                            ? _c("span", [_vm._v("-")])
+                            ? _c("span", [_vm._v("+")])
                             : _vm._e(),
                           _vm._v(
                             "\n                      " +
@@ -16757,45 +16758,47 @@ var render = function() {
   return _c(
     "div",
     [
-      _c("div", { staticClass: "d-flex justify-content-center" }, [
-        _c("div", { staticClass: "btn-group", attrs: { role: "group" } }, [
-          _c(
-            "a",
-            {
-              class: {
-                btn: true,
-                "btn-dark": _vm.type == "month",
-                "btn-secondary": _vm.type != "month"
-              },
-              attrs: { href: "javascript: void(0);" },
-              on: {
-                click: function($event) {
-                  return _vm.setType("month")
-                }
-              }
-            },
-            [_vm._v(_vm._s(_vm._f("trans")("mkeep.per_month")))]
-          ),
-          _vm._v(" "),
-          _c(
-            "a",
-            {
-              class: {
-                btn: true,
-                "btn-dark": _vm.type == "year",
-                "btn-secondary": _vm.type != "year"
-              },
-              attrs: { href: "javascript: void(0);" },
-              on: {
-                click: function($event) {
-                  return _vm.setType("year")
-                }
-              }
-            },
-            [_vm._v(_vm._s(_vm._f("trans")("mkeep.per_year")))]
-          )
-        ])
-      ]),
+      !_vm.hideyear
+        ? _c("div", { staticClass: "d-flex justify-content-center" }, [
+            _c("div", { staticClass: "btn-group", attrs: { role: "group" } }, [
+              _c(
+                "a",
+                {
+                  class: {
+                    btn: true,
+                    "btn-dark": _vm.type == "month",
+                    "btn-secondary": _vm.type != "month"
+                  },
+                  attrs: { href: "javascript: void(0);" },
+                  on: {
+                    click: function($event) {
+                      return _vm.setType("month")
+                    }
+                  }
+                },
+                [_vm._v(_vm._s(_vm._f("trans")("mkeep.per_month")))]
+              ),
+              _vm._v(" "),
+              _c(
+                "a",
+                {
+                  class: {
+                    btn: true,
+                    "btn-dark": _vm.type == "year",
+                    "btn-secondary": _vm.type != "year"
+                  },
+                  attrs: { href: "javascript: void(0);" },
+                  on: {
+                    click: function($event) {
+                      return _vm.setType("year")
+                    }
+                  }
+                },
+                [_vm._v(_vm._s(_vm._f("trans")("mkeep.per_year")))]
+              )
+            ])
+          ])
+        : _vm._e(),
       _vm._v(" "),
       _c(
         "ul",
@@ -16929,29 +16932,22 @@ var render = function() {
             )
           ]),
           _vm._v(" "),
-          _c(
-            "div",
-            {
-              staticClass: "progress total mb-2 mt-2",
-              staticStyle: { height: "2px" }
-            },
-            [
-              _c("div", {
-                staticClass: "progress-bar",
-                class: {
-                  "bg-success": category.sum <= category.plan,
-                  "bg-danger": category.sum > category.plan
-                },
-                style: { width: category.progress + "%" },
-                attrs: {
-                  role: "progressbar",
-                  "aria-valuenow": category.sum,
-                  "aria-valuemin": "0",
-                  "aria-valuemax": category.plan
-                }
-              })
-            ]
-          )
+          _c("div", { staticClass: "progress total" }, [
+            _c("div", {
+              staticClass: "progress-bar",
+              class: {
+                "bg-success": category.sum <= category.plan,
+                "bg-danger": category.sum > category.plan
+              },
+              style: { width: category.progress + "%" },
+              attrs: {
+                role: "progressbar",
+                "aria-valuenow": category.sum,
+                "aria-valuemin": "0",
+                "aria-valuemax": category.plan
+              }
+            })
+          ])
         ]
       )
     }),

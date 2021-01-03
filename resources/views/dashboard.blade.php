@@ -2,9 +2,7 @@
 
 @section('content')
     
-    <planstat-component></planstat-component>
-    
-    <plancategories-component></plancategories-component>
+    <plan-stat :hideyear="true"></plan-stat>
     
     <div id="operationsList">
         <operation-list></operation-list>
