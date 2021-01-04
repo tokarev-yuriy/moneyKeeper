@@ -1,6 +1,6 @@
 <template>
     <div class="container-fluid" id="wallets-sum">
-    <slick ref="slick" :options="slickOptions">
+    <slick ref="slick" :options="slickOptions" @setPosition="setPosition">
         <div class="card" v-for="group in groups">
             <h3 class="group-title text-nowrap">
                 {{group.name}} 
@@ -32,16 +32,16 @@
                   arrows: false,
                   infinite: false,
                   slidesToShow: 1,
-                  variableWidth: true
+                  variableWidth: true,
+                  
                 },
                 groups:[]
             };
         },
         mounted() {
             this.load();
-            this.$root.$on('operationchanged', data => {
-                this.load();
-            });
+            this.$root.$on('operation.changed', data => {this.load();});
+            this.$root.$on('wallet.changed', data => {this.load();});
         },
         methods: {
             /**
@@ -59,6 +59,7 @@
                         this.$nextTick(function () {
                             if (this.$refs.slick) {
                                 this.$refs.slick.create(this.slickOptions);
+                                this.$refs.slick
                             }
                         });
                     })
@@ -68,6 +69,20 @@
              */
             editItem: function (id) {
                 
+            },
+            /**
+             *  SetPosition handle
+             */
+            setPosition: function(event, slick) {
+                var slickTrack = $(slick.$slideTrack);
+                var slickTrackHeight = 0;
+                $(slickTrack).find('.slick-slide .card').each(function(){
+                    if ($(this).height()>slickTrackHeight) {
+                        slickTrackHeight = $(this).height();
+                    }
+                });
+                
+                $(slickTrack).find('.slick-slide .card').css('height', slickTrackHeight + 'px');
             }
         }
     }

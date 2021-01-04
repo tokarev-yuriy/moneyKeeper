@@ -76,7 +76,7 @@
                 axios
                     .post('/account/operations/filter', this.filter)
                     .then((response) => {
-                        this.$root.$emit('operationchanged');
+                        this.$root.$emit('operation.changed');
                     })
                 return false;
             },

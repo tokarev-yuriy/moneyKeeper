@@ -44,9 +44,8 @@
         mounted() {
             this.categories = [];
             this.load();
-            this.$root.$on('operationchanged', data => {
-                this.load();
-            });
+            this.$root.$on('operation.changed', data => {this.load();});
+            this.$root.$on('category.changed', data => {this.load();});
         },
         methods: {
             /**

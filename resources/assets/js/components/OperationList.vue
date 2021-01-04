@@ -87,9 +87,9 @@
             this.wallets = window.dictionary['wallets'];
             this.categories = window.dictionary['categories'];
             this.load();
-            this.$root.$on('operationchanged', data => {
-                this.load();
-            });
+            this.$root.$on('operation.changed', data => {this.load();});
+            this.$root.$on('wallet.changed', data => {this.load();});
+            this.$root.$on('category.changed', data => {this.load();});
         },
         methods: {
             /**
@@ -149,7 +149,7 @@
                     .get(url)
                     .then((response) => {
                         if (!response.data['errors']) {
-                            this.$root.$emit('operationchanged');
+                            this.$root.$emit('operation.changed');
                         }
                     })
             },

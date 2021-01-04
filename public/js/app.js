@@ -2803,7 +2803,7 @@ __webpack_require__.r(__webpack_exports__);
         if (response.data['errors']) {
           _this3.errors = response.data['errors'];
         } else {
-          _this3.$root.$emit('operationchanged');
+          _this3.$root.$emit('operation.changed');
 
           $('#editModalBlock').modal('hide');
         }
@@ -2926,7 +2926,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       axios.post('/account/operations/filter', this.filter).then(function (response) {
-        _this.$root.$emit('operationchanged');
+        _this.$root.$emit('operation.changed');
       });
       return false;
     }
@@ -3034,7 +3034,13 @@ __webpack_require__.r(__webpack_exports__);
     this.wallets = window.dictionary['wallets'];
     this.categories = window.dictionary['categories'];
     this.load();
-    this.$root.$on('operationchanged', function (data) {
+    this.$root.$on('operation.changed', function (data) {
+      _this.load();
+    });
+    this.$root.$on('wallet.changed', function (data) {
+      _this.load();
+    });
+    this.$root.$on('category.changed', function (data) {
       _this.load();
     });
   },
@@ -3104,7 +3110,7 @@ __webpack_require__.r(__webpack_exports__);
       var url = '/account/operations/delete/' + this.delOperationId;
       axios.get(url).then(function (response) {
         if (!response.data['errors']) {
-          _this3.$root.$emit('operationchanged');
+          _this3.$root.$emit('operation.changed');
         }
       });
     }
@@ -3470,7 +3476,10 @@ __webpack_require__.r(__webpack_exports__);
 
     this.categories = [];
     this.load();
-    this.$root.$on('operationchanged', function (data) {
+    this.$root.$on('operation.changed', function (data) {
+      _this.load();
+    });
+    this.$root.$on('category.changed', function (data) {
       _this.load();
     });
   },
@@ -3560,7 +3569,10 @@ __webpack_require__.r(__webpack_exports__);
     var _this = this;
 
     this.load();
-    this.$root.$on('operationchanged', function (data) {
+    this.$root.$on('operation.changed', function (data) {
+      _this.load();
+    });
+    this.$root.$on('category.changed', function (data) {
       _this.load();
     });
   },
@@ -3969,7 +3981,10 @@ __webpack_require__.r(__webpack_exports__);
     var _this = this;
 
     this.load();
-    this.$root.$on('operationchanged', function (data) {
+    this.$root.$on('operation.changed', function (data) {
+      _this.load();
+    });
+    this.$root.$on('wallet.changed', function (data) {
       _this.load();
     });
   },
@@ -3990,6 +4005,7 @@ __webpack_require__.r(__webpack_exports__);
         _this2.$nextTick(function () {
           if (this.$refs.slick) {
             this.$refs.slick.create(this.slickOptions);
+            this.$refs.slick;
           }
         });
       });
@@ -3998,7 +4014,21 @@ __webpack_require__.r(__webpack_exports__);
     /**
      *  Редактирование записи
      */
-    editItem: function editItem(id) {}
+    editItem: function editItem(id) {},
+
+    /**
+     *  SetPosition handle
+     */
+    setPosition: function setPosition(event, slick) {
+      var slickTrack = $(slick.$slideTrack);
+      var slickTrackHeight = 0;
+      $(slickTrack).find('.slick-slide .card').each(function () {
+        if ($(this).height() > slickTrackHeight) {
+          slickTrackHeight = $(this).height();
+        }
+      });
+      $(slickTrack).find('.slick-slide .card').css('height', slickTrackHeight + 'px');
+    }
   }
 });
 
@@ -19132,7 +19162,11 @@ var render = function() {
     [
       _c(
         "slick",
-        { ref: "slick", attrs: { options: _vm.slickOptions } },
+        {
+          ref: "slick",
+          attrs: { options: _vm.slickOptions },
+          on: { setPosition: _vm.setPosition }
+        },
         _vm._l(_vm.groups, function(group) {
           return _c(
             "div",

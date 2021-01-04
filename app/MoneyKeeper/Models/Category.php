@@ -88,6 +88,9 @@ class Category extends UserRelative {
         $arIcons['hands'] = 'fas fa-hands';
         $arIcons['wrench'] = 'fas fa-wrench';
         $arIcons['weight-hanging'] = 'fas fa-weight-hanging';
+        $arIcons['certificate'] = 'fas certificate';
+        $arIcons['magic'] = 'fas magic';
+        $arIcons['female'] = 'fas female';
         return $arIcons;
     }
 

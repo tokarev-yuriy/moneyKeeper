@@ -179,7 +179,7 @@
                         if (response.data['errors']) {
                             this.errors = response.data['errors'];
                         } else {
-                            this.$root.$emit('operationchanged');
+                            this.$root.$emit('operation.changed');
                             $('#editModalBlock').modal('hide');
                         }
                     })

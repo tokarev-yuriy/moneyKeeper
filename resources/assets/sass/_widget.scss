@@ -42,7 +42,7 @@
     text-align: center;
 
     i {
-        font-size: 3rem;
+        font-size: 1.5rem;
         line-height: 4rem;
     }
 }
@@ -53,7 +53,7 @@
         height: 3rem;
         margin-right: 0.2rem;
         i {
-            font-size: 2rem;
+            font-size: 1.5rem;
             line-height: 3rem;
         }
     }
@@ -108,19 +108,19 @@
 #categories-plan {
     margin-top: 20px;
 }
-.categories-widget.card {
-    position: relative;
-    width: auto;
-    text-align: left;
-    margin-right: 1rem;
-    padding: 0.5rem 1rem 1rem;
-    margin-top: 0;
-    cursor: pointer;
-    min-width: 10rem;
-    margin-bottom: 1rem;
-    border-radius:0!important;
-}
 .categories-widget {
+    &.card {
+        position: relative;
+        width: auto;
+        text-align: left;
+        margin-right: 1rem;
+        padding: 0.5rem 1rem 1rem;
+        margin-top: 0;
+        cursor: pointer;
+        min-width: 10rem;
+        margin-bottom: 1rem;
+        border-radius:0!important;
+    }
     .categories-icon {
         width: 3rem;
         position: absolute;
@@ -145,6 +145,17 @@
       font-weight: bold;
       white-space: nowrap;
       margin-left: 2rem;
+    }
+}
+
+@media (max-width: 412px) {
+    .categories-widget {
+        &.card {
+            margin-right: 0.5rem;
+            &:nth-child(even) {
+                margin-right: 0rem;
+            }
+        }
     }
 }
 
