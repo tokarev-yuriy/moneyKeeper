@@ -87,6 +87,7 @@
             this.wallets = window.dictionary['wallets'];
             this.categories = window.dictionary['categories'];
             this.load();
+            this.$root.$on('filter.changed', data => {this.load();});
             this.$root.$on('operation.changed', data => {this.load();});
             this.$root.$on('wallet.changed', data => {this.load();});
             this.$root.$on('category.changed', data => {this.load();});

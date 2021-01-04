@@ -231,6 +231,9 @@ class OperationController extends CrudListController {
         if (is_array(Input::get('wallet_id'))) {
             Session::put('operation_filter_wallet_id', Input::get('wallet_id'));
         }
+        return [
+            'filters' => $this->__getFilters(),
+        ];
     }
     
     /**

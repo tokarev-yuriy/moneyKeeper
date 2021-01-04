@@ -44,7 +44,8 @@
                     'date': {'from':false, 'to': false},
                     'category_id': false,
                     'wallet_id': false,
-                }
+                },
+                periodTimeout: false
             };
         },
         watch: {
@@ -53,7 +54,21 @@
             }
         },
         mounted() {
+            var self = this;
             this.setFields(this.filters);
+            this.$root.$on('period.changed', data => {
+                clearTimeout(self.periodTimeout);
+                self.periodTimeout = setTimeout(function() {
+                    let filter = self.filter;
+                    filter.date.from = data.getFullYear()+'-'+(data.getMonth()<9?'0':'')+(data.getMonth()+1)+'-01';
+                    let lastDay = new Date(data.getFullYear(), data.getMonth()+1, 0);
+                    filter.date.to = lastDay.getFullYear()+'-'+(lastDay.getMonth()<9?'0':'')+(lastDay.getMonth()+1)+'-'+lastDay.getDate();
+                    self.filter = filter;
+                    self.setFields(self.filters);
+                    self.applyFilter();
+                }
+                , 500);
+            });
         },
         methods: {
             /**
@@ -76,7 +91,7 @@
                 axios
                     .post('/account/operations/filter', this.filter)
                     .then((response) => {
-                        this.$root.$emit('operation.changed');
+                        this.$root.$emit('filter.changed');
                     })
                 return false;
             },

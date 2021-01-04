@@ -76,6 +76,7 @@
                     d.setFullYear(d.getFullYear()-1);
                 }
                 this.period = d;
+                this.$root.$emit('period.changed', this.period);
             },
             /**
              *  Next Period
@@ -89,6 +90,7 @@
                     d.setFullYear(d.getFullYear()+1);
                 }
                 this.period = d;
+                this.$root.$emit('period.changed', this.period);
             }
         }
     }

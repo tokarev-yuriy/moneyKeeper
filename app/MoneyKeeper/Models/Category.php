@@ -91,6 +91,8 @@ class Category extends UserRelative {
         $arIcons['certificate'] = 'fas certificate';
         $arIcons['magic'] = 'fas magic';
         $arIcons['female'] = 'fas female';
+        $arIcons['taxi'] = 'fas taxi';
+        $arIcons['apple'] = 'fas apple';
         return $arIcons;
     }
 

@@ -7,7 +7,7 @@ use App\MoneyKeeper\Models\Wallet;
 use App\MoneyKeeper\Models\WalletGroup;
 use App\MoneyKeeper\Models\Operation;
 use App\MoneyKeeper\Models\Plan;
-use View, Input, Session, Config, Request, Auth, Validator, Redirect, DB;
+use View, Input, Config, Request, Auth, Validator, Redirect, DB;
 
 /**
  *  Statistics controller
