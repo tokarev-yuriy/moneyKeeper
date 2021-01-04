@@ -520,7 +520,7 @@ class StatisticsController extends Controller {
             $periodTo = date('Y-12-31', strtotime($period));
         }
         
-        $arCategories = Category::user()->whereIn('type', array('any', 'spend'))->orderBy('sort','asc')->get();
+        $arCategories = Category::user()->whereIn('type', array('any', 'spend'))->where('active', 1)->orderBy('sort','asc')->get();
         $dbOperations = Operation::select(DB::raw('sum(value) as sum, category_id'))->
                 user();
                 
@@ -559,10 +559,7 @@ class StatisticsController extends Controller {
                 $arCategoriesSum[$obCategory->id] = array('sum'=>0, 'plan'=>0, 'id'=>$obCategory->id);
             }
             $arCategoriesSum[$obCategory->id]['name'] = $obCategory->name;
-            $arCategoriesSum[$obCategory->id]['icon'] = false;
-            if ($obCategory->icon && isset($arIcons[$obCategory->icon])) {
-                $arCategoriesSum[$obCategory->id]['icon'] = $arIcons[$obCategory->icon];
-            }
+            $arCategoriesSum[$obCategory->id]['icon'] = $obCategory->icon;
             $arCategoriesSum[$obCategory->id]['progress'] = 100;
             if ($arCategoriesSum[$obCategory->id]['plan']>0) {
                 $arCategoriesSum[$obCategory->id]['progress'] = 100*$arCategoriesSum[$obCategory->id]['sum'] / $arCategoriesSum[$obCategory->id]['plan'];

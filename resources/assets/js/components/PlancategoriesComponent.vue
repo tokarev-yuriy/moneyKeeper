@@ -4,7 +4,7 @@
         v-for="category in categories" 
         class="categories-widget card" 
         @click="addSpend(category.id)">
-          <div class="categories-icon" v-if="category.icon"><img :src="category.icon"></div>
+          <div class="categories-icon" v-if="category.icon"><i :class="'fas fa-'+category.icon"></i></div>
           <div class="categories-info">
             <span class="text-dark">{{ category.name | cuttext}}</span>
             <br/>

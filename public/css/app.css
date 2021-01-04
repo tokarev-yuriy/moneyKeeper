@@ -157,27 +157,30 @@ input.form-control[type=date] {
 }
 
 .category-icon {
-  width: 60px;
-  height: 60px;
+  width: 4rem;
+  height: 4rem;
   display: inline-block;
   margin: auto;
   float: left;
-  margin-right: 10px;
+  margin-right: 0.4rem;
+  text-align: center;
 }
 
-.category-icon img {
-  filter: invert(100%);
-  -webkit-filter: invert(100%);
-  width: 70%;
-  height: 100%;
-  margin-left: 15%;
+.category-icon i {
+  font-size: 3rem;
+  line-height: 4rem;
 }
 
 @media (max-width: 576px) {
   .category-icon {
-    width: 45px;
-    height: 45px;
-    margin-right: 5px;
+    width: 3rem;
+    height: 3rem;
+    margin-right: 0.2rem;
+  }
+
+  .category-icon i {
+    font-size: 2rem;
+    line-height: 3rem;
   }
 
   #operationsList {
@@ -191,15 +194,15 @@ input.form-control[type=date] {
 
 .wallet {
   position: relative;
-  padding-left: 50px;
-  line-height: 40px;
+  padding-left: 3rem;
+  line-height: 2rem;
 }
 
 .wallet .wallet-img {
-  width: 40px;
+  width: 3rem;
   position: absolute;
-  left: 5px;
-  font-size: 25px;
+  left: 0.2rem;
+  font-size: 1.3rem;
   text-align: center;
 }
 
@@ -229,6 +232,7 @@ input.form-control[type=date] {
   padding-right: 1rem;
   min-width: 15rem;
   border-radius: 0 !important;
+  margin-bottom: 1rem;
 }
 
 #wallets-sum .slick-slide {
@@ -247,19 +251,21 @@ input.form-control[type=date] {
   padding: 0.5rem 1rem 1rem;
   margin-top: 0;
   cursor: pointer;
-  min-width: 9rem;
+  min-width: 10rem;
   margin-bottom: 1rem;
   border-radius: 0 !important;
 }
 
 .categories-widget .categories-icon {
-  width: 2.5rem;
+  width: 3rem;
   position: absolute;
-  left: 0.3rem;
+  left: 0;
+  text-align: center;
 }
 
-.categories-widget .categories-icon img {
-  width: 100%;
+.categories-widget .categories-icon i {
+  font-size: 1.5rem !important;
+  line-height: 3rem;
 }
 
 .categories-widget .progress {
@@ -277,7 +283,7 @@ input.form-control[type=date] {
 .categories-widget .categories-info {
   font-weight: bold;
   white-space: nowrap;
-  margin-left: 2.7rem;
+  margin-left: 2rem;
 }
 
 #categories-plan .row {

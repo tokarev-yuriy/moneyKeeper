@@ -75,6 +75,9 @@ Vue.component('plan-stat', require('./components/PlanStat.vue').default);
 Vue.component('wallets-list', require('./components/WalletsList.vue').default);
 Vue.component('wallets-edit', require('./components/WalletsEdit.vue').default);
 
+Vue.component('categories-list', require('./components/CategoriesList.vue').default);
+Vue.component('categories-edit', require('./components/CategoriesEdit.vue').default);
+
 
 const app = new Vue({
     el: '#app'

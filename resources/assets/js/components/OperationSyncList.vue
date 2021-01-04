@@ -16,19 +16,19 @@
                         <button  class="btn btn-dark" @click="delDialog(operation.ext_id)"><i class="material-icons">close</i></button>
                 </div>
                 <div class="row">
-                  <div class="col-8">
+                  <div class="col-7">
                         <div v-if="categories[operation.category_id]" class="category-icon"
                             :class="{'bg-danger': operation.type=='spend', 'bg-success': operation.type=='income', 'bg-secondary': operation.type=='transfer'}">
-                            <img v-if="categories[operation.category_id].icon_src" :src="categories[operation.category_id].icon_src" :alt="categories[operation.category_id].name">
+                            <i v-if="categories[operation.category_id].icon" :class="'fas fa-'+categories[operation.category_id].icon" :alt="categories[operation.category_id].name" style="color: #fff;"></i>
                         </div>
                         <h4 v-if="categories[operation.category_id]">{{ categories[operation.category_id].name }}</h4>
                         
                         <span v-if="operation.type=='spend'">{{ wallets[wallet].name }}</span>
                         <span v-else-if="operation.type=='income'">{{ wallets[wallet].name }}</span>
                     </div>                    
-                    <div class="col-4  text-right">
+                    <div class="col-5 text-right">
                       <span class="h3"
-                        :class="{'text-danger': operation.type=='spend', 'text-success': operation.type=='income', 'text-secondary': operation.type=='transfer'}">
+                        :class="{'text-danger': operation.type=='spend', 'text-success': operation.type=='income', 'text-secondary': operation.type=='transfer', 'text-nowrap': true}">
                           <span v-if="operation.type=='spend'">-</span>
                           <span v-else-if="operation.type=='income'">-</span>
                           {{operation.value | numberf}}

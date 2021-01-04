@@ -55,6 +55,7 @@ Route::get('/account/categories', 'CategoryController@getIndex');
 Route::get('/account/categories/delete/{id}', 'CategoryController@getDelete');
 Route::get('/account/categories/add', 'CategoryController@getAdd');
 Route::post('/account/categories/add', 'CategoryController@postAdd');
+Route::any('/account/categories/edit/{id}', 'CategoryController@getEdit');
 Route::get('/account/categories/update/{id}', 'CategoryController@getUpdate');
 Route::post('/account/categories/update/{id}', 'CategoryController@postUpdate');
 
