@@ -33,8 +33,11 @@ WidgetManager.prototype = {
                 self.widgets[id] = new WidgetChart(id, url);
             } else {
                 self.widgets[id] = new Widget(id, url);
-            }            
-            self.widgets[id].load();
+            }
+            
+            if (!self.widgets[id]['lazyLoad']) {
+                self.widgets[id].load();
+            }
             
         });
     },

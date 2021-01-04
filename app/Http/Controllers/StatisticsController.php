@@ -376,6 +376,19 @@ class StatisticsController extends Controller {
             $arCategories[$fieldName] = $fieldName;
         }
         
+        
+        if ($field=='type') {
+            $balance = 0;
+            $arWallets = Wallet::user()->orderBy('sort','asc')->get();
+            foreach($arWallets as $obWallet) {
+                $balance += $obWallet->start;
+            }            
+            foreach ($arOperationsSum as $date=>$arGroups) {
+                if (isset($arOperationsSum[$date]['type_income'])) $balance += $arOperationsSum[$date]['type_income'];
+                if (isset($arOperationsSum[$date]['type_spend'])) $balance -= $arOperationsSum[$date]['type_spend'];
+                $arOperationsSum[$date]['type_balance'] = $balance;
+            }
+        }
 
         foreach ($arOperationsSum as $date=>$arGroups) {
             foreach ($arCategories as $fieldName) {
