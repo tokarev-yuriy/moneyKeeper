@@ -101,6 +101,11 @@ class StatisticsController extends Controller {
                 $arWalletGroups['others']['summ'] += $obWallet->value;
             }
         }
+        foreach($arWalletGroups as $k=>$arGroup) {
+            if (count($arGroup['items'])==0) {
+                unset($arWalletGroups[$k]);
+            }
+        }
         
         return response()->json(['groups' => array_values($arWalletGroups)]);
 	}

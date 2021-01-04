@@ -58,26 +58,26 @@ class Wallet extends UserRelative {
      */    
     public static function getColorList () {
         return array(
-            'fff' => '&nbsp;',
-            'f1ece9' => '&nbsp;',
-            'f9e3be' => '&nbsp;',
-            'b8ccc6' => '&nbsp;',
-            '001f3f' => '&nbsp;',
-            '0074d9' => '&nbsp;',
-            '7fdbff' => '&nbsp;',
-            '39cccc' => '&nbsp;',
-            '3d9970' => '&nbsp;',
-            '2ecc40' => '&nbsp;',
-            '01ff70' => '&nbsp;',
-            'ffdc00' => '&nbsp;',
-            'ff851b' => '&nbsp;',
-            'ff4136' => '&nbsp;',
-            '85144b' => '&nbsp;',
-            'f012be' => '&nbsp;',
-            'b10dc9' => '&nbsp;',
-            '111111' => '&nbsp;',
-            'aaaaaa' => '&nbsp;',
-            'dddddd' => '&nbsp;',
+            'fff' => '&nbsp;', // white
+            'b71c1c' => '&nbsp;', // red
+            '880e4f' => '&nbsp;', // pink
+            '4a148c' => '&nbsp;', // purple
+            '311b92' => '&nbsp;', // deeppurple
+            '1a237e' => '&nbsp;', // indigo
+            '0d47a1' => '&nbsp;', // blue
+            '01579b' => '&nbsp;', // lightBlue
+            '006064' => '&nbsp;', // cyan
+            '004d40' => '&nbsp;', // teal
+            '1b5e20' => '&nbsp;', // green
+            '33691e' => '&nbsp;', // lightGreen
+            '827717' => '&nbsp;', // lime
+            'f57f17' => '&nbsp;', // yellow
+            'e65100' => '&nbsp;', // orange
+            '3e2723' => '&nbsp;', // brown
+            '212121' => '&nbsp;', // grey
+            '263238' => '&nbsp;', // blueGrey
+            '607d8b' => '&nbsp;', // blueGrey2
+            '111111' => '&nbsp;', // black
         );
     }
     
