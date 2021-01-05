@@ -36,6 +36,8 @@ return array(
     "summ" => "Сумма",
     "icon" => "Иконка",
     "active" => "Активность",
+    "active_from" => "Действует с",
+    "active_to" => "Действует до",
     "group" => "Группа",
     "color" => "Цвет",  
     "category" => "Категория",

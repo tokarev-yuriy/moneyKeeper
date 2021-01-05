@@ -152,22 +152,45 @@ class PlanController extends CrudListController {
      */    
     public function getIndex()
     {
-        $arItems = Plan::user()->
-                orderBy($this->sort['by'],$this->sort['order'])->
-                orderBy('id','desc')->
-                paginate(Config::get('view.itemsPerPage'));
+        if(Request::wantsJson()){
+            $arItems = Plan::user()->
+                    orderBy($this->sort['by'],$this->sort['order'])->
+                    orderBy('id','desc')->
+                    paginate(Config::get('view.itemsPerPage'));
+            
+            $arItems = $this->__prepareItems($arItems);
+            $arCategories = [];
+            $categories = Category::user()->select('id', 'name', 'icon')->orderBy('sort')->get();
+            foreach($categories as $obCategory) {
+                $arCategories[$obCategory->id] = $obCategory;
+            }
+            
+            return [
+                'plans' => $arItems,
+                'categories' => $arCategories
+            ];
+        }
         
-        $arItems = $this->__prepareItems($arItems);
-        
-        $arTable = array(
-            'items' => $arItems,
-            'arItems' => $arItems,
-            'arHeads' => $this->__getHeads(),
-            'arActions' => $this->__getActions(),
-            'arDictionaries' => $this->__getDictionary()
-        );
-        
-        return view($this->__getView('index'), $arTable);
+        return view($this->__getView('index'), []);
+    }
+    
+    /**
+     * Edit item
+     * 
+     * @param int $id 
+     * 
+     * @return <type>
+     */    
+    public function getEdit($id)
+    {
+        $model = $this->modelName;
+        $obItem = $model::user()->find($id);
+
+        if (!$obItem) {
+            $obItem = ['value'=>0];
+        }
+
+        return ['plan'=>$obItem, 'categories' => Category::user()->select('id', 'name', 'icon')->orderBy('sort')->get()];
     }
     
    
@@ -180,6 +203,8 @@ class PlanController extends CrudListController {
     protected function __getValidators () {
         return array(
               'value'=>'required|numeric',
+              'active_from'=>'date|nullable',
+              'active_to'=>'date|nullable',
             );
     }
     
@@ -194,6 +219,14 @@ class PlanController extends CrudListController {
         $obItem->user_id = Auth::id();
         $obItem->value = floatval(Input::get('value'));
         $obItem->category_id = intval(Input::get('category_id'));
+        $obItem->active_from = null;
+        $obItem->active_to = null;
+        if (Input::get('active_from') && strtotime(Input::get('active_from'))>0) {
+            $obItem->active_from = date('Y-m-d', strtotime(Input::get('active_from')));
+        }
+        if (Input::get('active_to') && strtotime(Input::get('active_to'))>0) {
+            $obItem->active_to = date('Y-m-d', strtotime(Input::get('active_to')));
+        }
         
         return $obItem;
     }

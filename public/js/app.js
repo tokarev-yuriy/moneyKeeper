@@ -3534,6 +3534,314 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/assets/js/components/PlansEdit.vue?vue&type=script&lang=js&":
+/*!***************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/assets/js/components/PlansEdit.vue?vue&type=script&lang=js& ***!
+  \***************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: [],
+  data: function data() {
+    return {
+      plan: [],
+      categories: [],
+      errors: false
+    };
+  },
+  mounted: function mounted() {},
+  methods: {
+    /**
+     * Load the plan and prepare the edit form
+     */
+    edit: function edit(id) {
+      var _this = this;
+
+      this.errors = false;
+      axios.get('/account/plans/edit/' + id).then(function (response) {
+        _this.plan = response.data['plan'];
+        _this.categories = response.data['categories'];
+        $('#editModalBlock').modal();
+      });
+    },
+
+    /**
+     * prepare the add form
+     */
+    add: function add() {
+      var _this2 = this;
+
+      this.errors = false;
+      var url = '/account/plans/edit/0';
+      axios.get(url).then(function (response) {
+        _this2.plan = response.data['plan'];
+        _this2.categories = response.data['categories'];
+        $('#editModalBlock').modal();
+      });
+    },
+
+    /**
+     * Save plan
+     */
+    save: function save() {
+      var _this3 = this;
+
+      var url = '/account/plans/';
+
+      if (this.plan.id) {
+        url = url + 'update/' + this.plan.id;
+      } else {
+        url = url + 'add';
+      }
+
+      axios.post(url, this.plan).then(function (response) {
+        if (response.data['errors']) {
+          _this3.errors = response.data['errors'];
+        } else {
+          _this3.$root.$emit('plan.changed');
+
+          $('#editModalBlock').modal('hide');
+        }
+      });
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/assets/js/components/PlansList.vue?vue&type=script&lang=js&":
+/*!***************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/assets/js/components/PlansList.vue?vue&type=script&lang=js& ***!
+  \***************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      plans: false,
+      categories: [],
+      delItemId: false
+    };
+  },
+  mounted: function mounted() {
+    var _this = this;
+
+    this.load();
+    this.$root.$on('plan.changed', function (data) {
+      _this.load();
+    });
+  },
+  methods: {
+    /**
+     *  Load plans
+     */
+    load: function load() {
+      var _this2 = this;
+
+      var url = '/account/plans';
+      axios.get(url).then(function (response) {
+        _this2.plans = response.data['plans']['data'];
+        _this2.categories = response.data['categories'];
+      });
+    },
+
+    /**
+     * open the edit form
+     */
+    edit: function edit(id) {
+      this.$refs.plansEdit.edit(id);
+    },
+
+    /**
+     *  open the add form
+     */
+    add: function add() {
+      this.$refs.plansEdit.add();
+    },
+
+    /**
+     *  open the delete dialog
+     */
+    delDialog: function delDialog(id) {
+      this.delItemId = id;
+      $('#deleteModalBlock').modal('show');
+    },
+
+    /**
+     *  execute the delete action
+     */
+    del: function del() {
+      var _this3 = this;
+
+      $('#deleteModalBlock').modal('hide');
+      if (!this.delItemId) return false;
+      var url = '/account/plans/delete/' + this.delItemId;
+      axios.get(url).then(function (response) {
+        if (!response.data['errors']) {
+          _this3.$root.$emit('plan.changed');
+        }
+      });
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/assets/js/components/PlanstatComponent.vue?vue&type=script&lang=js&":
 /*!***********************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/assets/js/components/PlanstatComponent.vue?vue&type=script&lang=js& ***!
@@ -18322,6 +18630,677 @@ var render = function() {
       )
     }),
     0
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/assets/js/components/PlansEdit.vue?vue&type=template&id=41a24d6d&":
+/*!*******************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/assets/js/components/PlansEdit.vue?vue&type=template&id=41a24d6d& ***!
+  \*******************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _c(
+      "div",
+      {
+        staticClass: "modal fade",
+        staticStyle: { display: "none" },
+        attrs: {
+          id: "editModalBlock",
+          tabindex: "-1",
+          role: "dialog",
+          "aria-hidden": "true"
+        }
+      },
+      [
+        _c(
+          "div",
+          { staticClass: "modal-dialog", attrs: { role: "document" } },
+          [
+            _c("div", { staticClass: "modal-content" }, [
+              _c("div", { staticClass: "modal-header" }, [
+                _vm.plan.id
+                  ? _c("h4", { staticClass: "modal-title" }, [
+                      _vm._v(_vm._s(_vm._f("trans")("mkeep_tablegrid.edit")))
+                    ])
+                  : _c("h4", { staticClass: "modal-title" }, [
+                      _vm._v(_vm._s(_vm._f("trans")("mkeep_tablegrid.add")))
+                    ]),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "close",
+                    attrs: {
+                      type: "button",
+                      "data-dismiss": "modal",
+                      "aria-label": _vm._f("trans")("mkeep_tablegrid.close")
+                    }
+                  },
+                  [
+                    _c("span", { attrs: { "aria-hidden": "true" } }, [
+                      _vm._v("×")
+                    ])
+                  ]
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "modal-body" }, [
+                _c("form", { attrs: { method: "post" } }, [
+                  _c("div", { staticClass: "row" }, [
+                    _c("div", { staticClass: "col-md-6" }, [
+                      _c(
+                        "label",
+                        {
+                          staticClass: "mb-0 form-label",
+                          class: {
+                            "is-invalid": _vm.errors && _vm.errors.value
+                          },
+                          attrs: { for: "value" }
+                        },
+                        [_vm._v(_vm._s(_vm._f("trans")("mkeep.summ")))]
+                      ),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.plan.value,
+                            expression: "plan.value"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        class: { "is-invalid": _vm.errors && _vm.errors.value },
+                        attrs: {
+                          type: "text",
+                          placeholder: _vm._f("trans")("mkeep.summ")
+                        },
+                        domProps: { value: _vm.plan.value },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(_vm.plan, "value", $event.target.value)
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _vm.errors && _vm.errors.value
+                        ? _c("span", { staticClass: "invalid-feedback" }, [
+                            _c("strong", [_vm._v(_vm._s(_vm.errors.value))])
+                          ])
+                        : _vm._e()
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "col-md-6" },
+                      [
+                        _c(
+                          "label",
+                          {
+                            staticClass: "mb-0 form-label",
+                            class: {
+                              "is-invalid": _vm.errors && _vm.errors.category_id
+                            },
+                            attrs: { for: "category_id" }
+                          },
+                          [_vm._v(_vm._s(_vm._f("trans")("mkeep.category")))]
+                        ),
+                        _vm._v(" "),
+                        _c("dropdown-items", {
+                          attrs: { items: _vm.categories },
+                          model: {
+                            value: _vm.plan.category_id,
+                            callback: function($$v) {
+                              _vm.$set(_vm.plan, "category_id", $$v)
+                            },
+                            expression: "plan.category_id"
+                          }
+                        }),
+                        _vm._v(" "),
+                        _vm.errors && _vm.errors.category_id
+                          ? _c("span", { staticClass: "invalid-feedback" }, [
+                              _c("strong", [
+                                _vm._v(_vm._s(_vm.errors.category_id))
+                              ])
+                            ])
+                          : _vm._e()
+                      ],
+                      1
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "row" }, [
+                    _c("div", { staticClass: "col-md-6" }, [
+                      _c(
+                        "label",
+                        {
+                          staticClass: "mb-0 form-label",
+                          class: {
+                            "is-invalid": _vm.errors && _vm.errors.active_from
+                          },
+                          attrs: { for: "active_from" }
+                        },
+                        [_vm._v(_vm._s(_vm._f("trans")("mkeep.active_from")))]
+                      ),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.plan.active_from,
+                            expression: "plan.active_from"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        class: {
+                          "is-invalid": _vm.errors && _vm.errors.active_from
+                        },
+                        attrs: {
+                          type: "date",
+                          placeholder: _vm._f("trans")("mkeep.active_from")
+                        },
+                        domProps: { value: _vm.plan.active_from },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(
+                              _vm.plan,
+                              "active_from",
+                              $event.target.value
+                            )
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _vm.errors && _vm.errors.active_from
+                        ? _c("span", { staticClass: "invalid-feedback" }, [
+                            _c("strong", [
+                              _vm._v(_vm._s(_vm.errors.active_from))
+                            ])
+                          ])
+                        : _vm._e()
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-md-6" }, [
+                      _c(
+                        "label",
+                        {
+                          staticClass: "mb-0 form-label",
+                          class: {
+                            "is-invalid": _vm.errors && _vm.errors.active_to
+                          },
+                          attrs: { for: "active_to" }
+                        },
+                        [_vm._v(_vm._s(_vm._f("trans")("mkeep.active_to")))]
+                      ),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.plan.active_to,
+                            expression: "plan.active_to"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        class: {
+                          "is-invalid": _vm.errors && _vm.errors.active_to
+                        },
+                        attrs: {
+                          type: "date",
+                          placeholder: _vm._f("trans")("mkeep.active_to")
+                        },
+                        domProps: { value: _vm.plan.active_to },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(_vm.plan, "active_to", $event.target.value)
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _vm.errors && _vm.errors.active_to
+                        ? _c("span", { staticClass: "invalid-feedback" }, [
+                            _c("strong", [_vm._v(_vm._s(_vm.errors.active_to))])
+                          ])
+                        : _vm._e()
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "row" }, [
+                    _c("div", { staticClass: "col-md-12" }, [
+                      _c(
+                        "label",
+                        {
+                          staticClass: "mb-0 form-label",
+                          class: {
+                            "is-invalid": _vm.errors && _vm.errors.comment
+                          },
+                          attrs: { for: "comment" }
+                        },
+                        [_vm._v(_vm._s(_vm._f("trans")("mkeep.comment")))]
+                      ),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.plan.comment,
+                            expression: "plan.comment"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        class: {
+                          "is-invalid": _vm.errors && _vm.errors.comment
+                        },
+                        attrs: {
+                          type: "text",
+                          placeholder: _vm._f("trans")("mkeep.comment")
+                        },
+                        domProps: { value: _vm.plan.comment },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(_vm.plan, "comment", $event.target.value)
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _vm.errors && _vm.errors.comment
+                        ? _c("span", { staticClass: "invalid-feedback" }, [
+                            _c("strong", [_vm._v(_vm._s(_vm.errors.comment))])
+                          ])
+                        : _vm._e()
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "row" }, [
+                    _c("div", { staticClass: "col-md-6 pt-3" }),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-md-6" }, [
+                      _c("div", { staticClass: "pull-right" }, [
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-success",
+                            attrs: { type: "button" },
+                            on: {
+                              click: function($event) {
+                                return _vm.save()
+                              }
+                            }
+                          },
+                          [
+                            _c("i", { staticClass: "fa fa-btn fa-save" }),
+                            _vm._v(
+                              " " +
+                                _vm._s(_vm._f("trans")("mkeep.save")) +
+                                "\n                            "
+                            )
+                          ]
+                        )
+                      ])
+                    ])
+                  ])
+                ])
+              ])
+            ])
+          ]
+        )
+      ]
+    )
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/assets/js/components/PlansList.vue?vue&type=template&id=325a2601&":
+/*!*******************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/assets/js/components/PlansList.vue?vue&type=template&id=325a2601& ***!
+  \*******************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    [
+      _c(
+        "a",
+        {
+          staticClass: "btn btn-success pull-right",
+          attrs: { href: "javascript: void(0);" },
+          on: {
+            click: function($event) {
+              return _vm.add()
+            }
+          }
+        },
+        [
+          _c("i", { staticClass: "fa fa-plus-square fa-lg" }),
+          _vm._v(" " + _vm._s(_vm._f("trans")("mkeep.add_plan")))
+        ]
+      ),
+      _vm._v(" "),
+      _c("div", { staticClass: "clearfix" }),
+      _vm._v(" "),
+      _c("div", { staticClass: "clearfix mb-2" }),
+      _vm._v(" "),
+      !_vm.plans
+        ? _c(
+            "div",
+            { staticClass: "card", staticStyle: { "border-radius": "0" } },
+            [
+              _vm.plans === false
+                ? _c("div", { staticClass: "card-header" }, [
+                    _c("h3", [_vm._v(_vm._s(_vm._f("trans")("mkeep.loading")))])
+                  ])
+                : _c("div", { staticClass: "card-header" }, [
+                    _c("h3", [_vm._v(_vm._s(_vm._f("trans")("mkeep.no_data")))])
+                  ])
+            ]
+          )
+        : _vm._e(),
+      _vm._v(" "),
+      _c("table", { staticClass: "table mt-3 table-striped table-sm" }, [
+        _c("thead", [
+          _c("tr", [
+            _c("th", [_vm._v(_vm._s(_vm._f("trans")("mkeep.category")))]),
+            _vm._v(" "),
+            _c("th", [_vm._v(_vm._s(_vm._f("trans")("mkeep.summ")))]),
+            _vm._v(" "),
+            _c("th", [_vm._v(_vm._s(_vm._f("trans")("mkeep.comment")))]),
+            _vm._v(" "),
+            _c("th", [_vm._v(_vm._s(_vm._f("trans")("mkeep.active_from")))]),
+            _vm._v(" "),
+            _c("th", [_vm._v(_vm._s(_vm._f("trans")("mkeep.active_to")))]),
+            _vm._v(" "),
+            _c("th", { attrs: { colspan: "2", width: "1%" } }, [
+              _vm._v(_vm._s(_vm._f("trans")("mkeep_tablegrid.actions")))
+            ])
+          ])
+        ]),
+        _vm._v(" "),
+        _c(
+          "tbody",
+          _vm._l(_vm.plans, function(plan) {
+            return _c("tr", [
+              _c("td", [
+                _vm.categories[plan.category_id]
+                  ? _c("div", { staticClass: "category-icon" }, [
+                      _vm.categories[plan.category_id].icon
+                        ? _c("i", {
+                            class:
+                              "fas fa-" + _vm.categories[plan.category_id].icon,
+                            attrs: {
+                              alt: _vm.categories[plan.category_id].name
+                            }
+                          })
+                        : _vm._e()
+                    ])
+                  : _vm._e()
+              ]),
+              _vm._v(" "),
+              _c("td", [_vm._v(_vm._s(plan.value))]),
+              _vm._v(" "),
+              _c("td", [_vm._v(_vm._s(plan.comment))]),
+              _vm._v(" "),
+              _c("td", [
+                plan.active_from
+                  ? _c("span", [_vm._v(_vm._s(plan.active_from))])
+                  : _c("span", [_vm._v("-")])
+              ]),
+              _vm._v(" "),
+              _c("td", [
+                plan.active_to
+                  ? _c("span", [_vm._v(_vm._s(plan.active_to))])
+                  : _c("span", [_vm._v("-")])
+              ]),
+              _vm._v(" "),
+              _c("td", [
+                _c(
+                  "a",
+                  {
+                    staticClass: "btn btn-info d-none d-md-block",
+                    attrs: {
+                      "data-btn-type": "edit",
+                      href: "javascript: void(0);",
+                      "data-title": _vm._f("trans")("mkeep.edit_plan")
+                    },
+                    on: {
+                      click: function($event) {
+                        return _vm.edit(plan.id)
+                      }
+                    }
+                  },
+                  [
+                    _c("i", {
+                      staticClass: "fa fa-pencil fa-lg",
+                      attrs: { "aria-hidden": "true" }
+                    }),
+                    _vm._v(
+                      " " +
+                        _vm._s(_vm._f("trans")("mkeep_tablegrid.edit")) +
+                        "\n                    "
+                    )
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "a",
+                  {
+                    staticClass: "btn btn-info d-md-none",
+                    attrs: {
+                      "data-btn-type": "edit",
+                      href: "javascript: void(0);",
+                      "data-title": _vm._f("trans")("mkeep.edit_plan")
+                    },
+                    on: {
+                      click: function($event) {
+                        return _vm.edit(plan.id)
+                      }
+                    }
+                  },
+                  [
+                    _c("i", {
+                      staticClass: "fa fa-pencil fa-lg",
+                      attrs: { "aria-hidden": "true" }
+                    })
+                  ]
+                )
+              ]),
+              _vm._v(" "),
+              _c("td", [
+                _c(
+                  "a",
+                  {
+                    staticClass: "btn btn-dark d-none d-md-block",
+                    attrs: {
+                      "data-btn-type": "delete",
+                      href: "javascript: void(0);",
+                      "data-title": _vm._f("trans")("mkeep.delete_plan")
+                    },
+                    on: {
+                      click: function($event) {
+                        return _vm.delDialog(plan.id)
+                      }
+                    }
+                  },
+                  [
+                    _c("i", {
+                      staticClass: "fa fa-remove fa-lg",
+                      attrs: { "aria-hidden": "true" }
+                    }),
+                    _vm._v(
+                      " " +
+                        _vm._s(_vm._f("trans")("mkeep_tablegrid.delete")) +
+                        "\n                    "
+                    )
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "a",
+                  {
+                    staticClass: "btn btn-dark d-md-none",
+                    attrs: {
+                      "data-btn-type": "delete",
+                      href: "javascript: void(0);",
+                      "data-title": _vm._f("trans")("mkeep.delete_plan")
+                    },
+                    on: {
+                      click: function($event) {
+                        return _vm.delDialog(plan.id)
+                      }
+                    }
+                  },
+                  [
+                    _c("i", {
+                      staticClass: "fa fa-remove fa-lg",
+                      attrs: { "aria-hidden": "true" }
+                    })
+                  ]
+                )
+              ])
+            ])
+          }),
+          0
+        )
+      ]),
+      _vm._v(" "),
+      _c("plans-edit", { ref: "plansEdit" }),
+      _vm._v(" "),
+      _c("div", { staticClass: "clearfix mb-2" }),
+      _vm._v(" "),
+      _c(
+        "a",
+        {
+          staticClass: "btn btn-success pull-right",
+          attrs: { href: "javascript: void(0);" },
+          on: {
+            click: function($event) {
+              return _vm.add()
+            }
+          }
+        },
+        [
+          _c("i", { staticClass: "fa fa-plus-square fa-lg" }),
+          _vm._v(" " + _vm._s(_vm._f("trans")("mkeep.add_plan")))
+        ]
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          staticClass: "modal fade",
+          staticStyle: { display: "none" },
+          attrs: {
+            id: "deleteModalBlock",
+            tabindex: "-1",
+            role: "dialog",
+            "aria-hidden": "true"
+          }
+        },
+        [
+          _c(
+            "div",
+            { staticClass: "modal-dialog", attrs: { role: "document" } },
+            [
+              _c("div", { staticClass: "modal-content" }, [
+                _c("div", { staticClass: "modal-header" }, [
+                  _c("h4", { staticClass: "modal-title" }, [
+                    _vm._v(
+                      _vm._s(_vm._f("trans")("mkeep_tablegrid.delete_item"))
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "close",
+                      attrs: {
+                        type: "button",
+                        "data-dismiss": "modal",
+                        "aria-label": _vm._f("trans")("mkeep_tablegrid.close")
+                      }
+                    },
+                    [
+                      _c("span", { attrs: { "aria-hidden": "true" } }, [
+                        _vm._v("×")
+                      ])
+                    ]
+                  )
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "modal-body" }, [
+                  _vm._v(_vm._s(_vm._f("trans")("mkeep_tablegrid.sure")))
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "modal-footer" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-secondary",
+                      attrs: { type: "button", "data-dismiss": "modal" }
+                    },
+                    [_vm._v(_vm._s(_vm._f("trans")("mkeep_tablegrid.no")))]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-danger delete-btn",
+                      on: { click: _vm.del }
+                    },
+                    [_vm._v(_vm._s(_vm._f("trans")("mkeep_tablegrid.delete")))]
+                  )
+                ])
+              ])
+            ]
+          )
+        ]
+      )
+    ],
+    1
   )
 }
 var staticRenderFns = []
@@ -34731,6 +35710,8 @@ Vue.component('wallets-list', __webpack_require__(/*! ./components/WalletsList.v
 Vue.component('wallets-edit', __webpack_require__(/*! ./components/WalletsEdit.vue */ "./resources/assets/js/components/WalletsEdit.vue")["default"]);
 Vue.component('categories-list', __webpack_require__(/*! ./components/CategoriesList.vue */ "./resources/assets/js/components/CategoriesList.vue")["default"]);
 Vue.component('categories-edit', __webpack_require__(/*! ./components/CategoriesEdit.vue */ "./resources/assets/js/components/CategoriesEdit.vue")["default"]);
+Vue.component('plans-list', __webpack_require__(/*! ./components/PlansList.vue */ "./resources/assets/js/components/PlansList.vue")["default"]);
+Vue.component('plans-edit', __webpack_require__(/*! ./components/PlansEdit.vue */ "./resources/assets/js/components/PlansEdit.vue")["default"]);
 var app = new Vue({
   el: '#app'
 });
@@ -35560,6 +36541,144 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PlancategoriesComponent_vue_vue_type_template_id_284402de___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PlancategoriesComponent_vue_vue_type_template_id_284402de___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/assets/js/components/PlansEdit.vue":
+/*!******************************************************!*\
+  !*** ./resources/assets/js/components/PlansEdit.vue ***!
+  \******************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _PlansEdit_vue_vue_type_template_id_41a24d6d___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./PlansEdit.vue?vue&type=template&id=41a24d6d& */ "./resources/assets/js/components/PlansEdit.vue?vue&type=template&id=41a24d6d&");
+/* harmony import */ var _PlansEdit_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./PlansEdit.vue?vue&type=script&lang=js& */ "./resources/assets/js/components/PlansEdit.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _PlansEdit_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _PlansEdit_vue_vue_type_template_id_41a24d6d___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _PlansEdit_vue_vue_type_template_id_41a24d6d___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/assets/js/components/PlansEdit.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/assets/js/components/PlansEdit.vue?vue&type=script&lang=js&":
+/*!*******************************************************************************!*\
+  !*** ./resources/assets/js/components/PlansEdit.vue?vue&type=script&lang=js& ***!
+  \*******************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_PlansEdit_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./PlansEdit.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/assets/js/components/PlansEdit.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_PlansEdit_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/assets/js/components/PlansEdit.vue?vue&type=template&id=41a24d6d&":
+/*!*************************************************************************************!*\
+  !*** ./resources/assets/js/components/PlansEdit.vue?vue&type=template&id=41a24d6d& ***!
+  \*************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PlansEdit_vue_vue_type_template_id_41a24d6d___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./PlansEdit.vue?vue&type=template&id=41a24d6d& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/assets/js/components/PlansEdit.vue?vue&type=template&id=41a24d6d&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PlansEdit_vue_vue_type_template_id_41a24d6d___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PlansEdit_vue_vue_type_template_id_41a24d6d___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/assets/js/components/PlansList.vue":
+/*!******************************************************!*\
+  !*** ./resources/assets/js/components/PlansList.vue ***!
+  \******************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _PlansList_vue_vue_type_template_id_325a2601___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./PlansList.vue?vue&type=template&id=325a2601& */ "./resources/assets/js/components/PlansList.vue?vue&type=template&id=325a2601&");
+/* harmony import */ var _PlansList_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./PlansList.vue?vue&type=script&lang=js& */ "./resources/assets/js/components/PlansList.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _PlansList_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _PlansList_vue_vue_type_template_id_325a2601___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _PlansList_vue_vue_type_template_id_325a2601___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/assets/js/components/PlansList.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/assets/js/components/PlansList.vue?vue&type=script&lang=js&":
+/*!*******************************************************************************!*\
+  !*** ./resources/assets/js/components/PlansList.vue?vue&type=script&lang=js& ***!
+  \*******************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_PlansList_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./PlansList.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/assets/js/components/PlansList.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_PlansList_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/assets/js/components/PlansList.vue?vue&type=template&id=325a2601&":
+/*!*************************************************************************************!*\
+  !*** ./resources/assets/js/components/PlansList.vue?vue&type=template&id=325a2601& ***!
+  \*************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PlansList_vue_vue_type_template_id_325a2601___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./PlansList.vue?vue&type=template&id=325a2601& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/assets/js/components/PlansList.vue?vue&type=template&id=325a2601&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PlansList_vue_vue_type_template_id_325a2601___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PlansList_vue_vue_type_template_id_325a2601___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

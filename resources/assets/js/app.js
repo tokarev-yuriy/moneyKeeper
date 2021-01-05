@@ -78,6 +78,9 @@ Vue.component('wallets-edit', require('./components/WalletsEdit.vue').default);
 Vue.component('categories-list', require('./components/CategoriesList.vue').default);
 Vue.component('categories-edit', require('./components/CategoriesEdit.vue').default);
 
+Vue.component('plans-list', require('./components/PlansList.vue').default);
+Vue.component('plans-edit', require('./components/PlansEdit.vue').default);
+
 
 const app = new Vue({
     el: '#app'

@@ -483,7 +483,7 @@ class StatisticsController extends Controller {
 		} else {
 			$period = time();
 		}
-		$arPlan = Plan::select(DB::raw('sum(value) as sum'))->user()->get();
+		$arPlan = Plan::select(DB::raw('sum(value) as sum'))->user()->activeDate(date("Y-m-d", $period))->get();
 		$totals = ['plan'=>$arPlan[0]['sum']];
 		
 		$dbOperations = Operation::select(DB::raw('sum(value) as sum, type'))->user()
@@ -567,7 +567,7 @@ class StatisticsController extends Controller {
         }
         
         $dbPlans = Plan::select(DB::raw('sum(value) as sum, category_id'))->
-                user();
+                user()->activeDate($periodFrom, $periodTo);
         $arPlans = $dbPlans->
                 groupBy('category_id')->
                 get();

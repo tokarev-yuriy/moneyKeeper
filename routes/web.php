@@ -48,6 +48,7 @@ Route::get('/account/plans', 'PlanController@getIndex');
 Route::get('/account/plans/delete/{id}', 'PlanController@getDelete');
 Route::get('/account/plans/add', 'PlanController@getAdd');
 Route::post('/account/plans/add', 'PlanController@postAdd');
+Route::any('/account/plans/edit/{id}', 'PlanController@getEdit');
 Route::get('/account/plans/update/{id}', 'PlanController@getUpdate');
 Route::post('/account/plans/update/{id}', 'PlanController@postUpdate');
 
