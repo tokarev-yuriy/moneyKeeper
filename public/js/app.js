@@ -2888,7 +2888,8 @@ __webpack_require__.r(__webpack_exports__);
         },
         'category_id': false,
         'wallet_id': false
-      }
+      },
+      periodTimeout: false
     };
   },
   watch: {
@@ -2897,7 +2898,20 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   mounted: function mounted() {
+    var self = this;
     this.setFields(this.filters);
+    this.$root.$on('period.changed', function (data) {
+      clearTimeout(self.periodTimeout);
+      self.periodTimeout = setTimeout(function () {
+        var filter = self.filter;
+        filter.date.from = data.getFullYear() + '-' + (data.getMonth() < 9 ? '0' : '') + (data.getMonth() + 1) + '-01';
+        var lastDay = new Date(data.getFullYear(), data.getMonth() + 1, 0);
+        filter.date.to = lastDay.getFullYear() + '-' + (lastDay.getMonth() < 9 ? '0' : '') + (lastDay.getMonth() + 1) + '-' + lastDay.getDate();
+        self.filter = filter;
+        self.setFields(self.filters);
+        self.applyFilter();
+      }, 500);
+    });
   },
   methods: {
     /**
@@ -2926,7 +2940,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       axios.post('/account/operations/filter', this.filter).then(function (response) {
-        _this.$root.$emit('operation.changed');
+        _this.$root.$emit('filter.changed');
       });
       return false;
     }
@@ -3034,6 +3048,12 @@ __webpack_require__.r(__webpack_exports__);
     this.wallets = window.dictionary['wallets'];
     this.categories = window.dictionary['categories'];
     this.load();
+    this.$root.$on('filter.changed', function (data) {
+      var self = _this;
+      setTimeout(function () {
+        self.load();
+      }, 10);
+    });
     this.$root.$on('operation.changed', function (data) {
       _this.load();
     });
@@ -3401,6 +3421,7 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       this.period = d;
+      this.$root.$emit('period.changed', this.period);
     },
 
     /**
@@ -3417,6 +3438,7 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       this.period = d;
+      this.$root.$emit('period.changed', this.period);
     }
   }
 });
