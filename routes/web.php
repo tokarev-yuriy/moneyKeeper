@@ -60,7 +60,7 @@ Route::get('/account/categories/update/{id}', 'CategoryController@getUpdate');
 Route::post('/account/categories/update/{id}', 'CategoryController@postUpdate');
 
 Route::get('/account/stat/progress/{type?}/{period?}', 'StatisticsController@getProgress');
-Route::get('/account/stat/wallets', 'StatisticsController@getWallets');
+Route::get('/account/stat/wallets/{period?}', 'StatisticsController@getWallets');
 Route::get('/account/stat/categories/{type?}', 'StatisticsController@getCategories');
 Route::get('/account/stat/month', 'StatisticsController@getMonth');
 Route::get('/account/stat/monthavg', 'StatisticsController@getMonthavg');

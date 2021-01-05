@@ -3049,10 +3049,7 @@ __webpack_require__.r(__webpack_exports__);
     this.categories = window.dictionary['categories'];
     this.load();
     this.$root.$on('filter.changed', function (data) {
-      var self = _this;
-      setTimeout(function () {
-        self.load();
-      }, 10);
+      _this.load();
     });
     this.$root.$on('operation.changed', function (data) {
       _this.load();
@@ -3996,18 +3993,25 @@ __webpack_require__.r(__webpack_exports__);
         slidesToShow: 1,
         variableWidth: true
       },
+      period: false,
       groups: []
     };
   },
   mounted: function mounted() {
     var _this = this;
 
+    var self = this;
     this.load();
     this.$root.$on('operation.changed', function (data) {
       _this.load();
     });
     this.$root.$on('wallet.changed', function (data) {
       _this.load();
+    });
+    this.$root.$on('period.changed', function (data) {
+      var lastDay = new Date(data.getFullYear(), data.getMonth() + 1, 0);
+      self.period = lastDay.getFullYear() + '-' + (lastDay.getMonth() < 9 ? '0' : '') + (lastDay.getMonth() + 1) + '-' + lastDay.getDate();
+      self.load();
     });
   },
   methods: {
@@ -4017,7 +4021,13 @@ __webpack_require__.r(__webpack_exports__);
     load: function load() {
       var _this2 = this;
 
-      axios.get('/account/stat/wallets').then(function (response) {
+      var url = '/account/stat/wallets';
+
+      if (this.period) {
+        url = url + '/' + this.period;
+      }
+
+      axios.get(url).then(function (response) {
         if (_this2.$refs.slick) {
           _this2.$refs.slick.destroy();
         }

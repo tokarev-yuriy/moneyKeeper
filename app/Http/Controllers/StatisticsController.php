@@ -33,15 +33,26 @@ class StatisticsController extends Controller {
      * 
      * @return <type>
      */	
-	public function getWallets()
+	public function getWallets($period = false)
 	{
+        
+        if ($period) {
+			$period = strtotime($period);
+		} else {
+			$period = time();
+		}
         
         $arWallets = Wallet::user()->where('active', 1)->orderBy('sort','asc')->get();
        
         $arDbIncomes = Operation::select(DB::raw('sum(value) as sum, wallet_to_id'))->
                 user()->
-                groupBy('wallet_to_id')->
-                get();
+                where('year','<',date('Y', $period))->
+                orWhere(function($query) use ($period) {
+                    $query->where('year', date('Y', $period))
+                          ->where('month', '<=', date('m', $period));
+                })->
+                groupBy('wallet_to_id')
+                ->get();
         $arIncomes = array();        
         foreach ($arDbIncomes as $obIncome) {
             $arIncomes[$obIncome->wallet_to_id] = $obIncome->sum;
@@ -49,8 +60,13 @@ class StatisticsController extends Controller {
                 
         $arDbSpends = Operation::select(DB::raw('sum(value) as sum, wallet_from_id'))->
                 user()->
-                groupBy('wallet_from_id')->
-                get();
+                where('year','<',date('Y', $period))->
+                orWhere(function($query) use ($period) {
+                    $query->where('year', date('Y', $period))
+                          ->where('month', '<=', date('m', $period));
+                })->
+                groupBy('wallet_from_id')
+                ->get();
         $arSpends = array();
         foreach ($arDbSpends as $obSpend) {
             $arSpends[$obSpend->wallet_from_id] = $obSpend->sum;

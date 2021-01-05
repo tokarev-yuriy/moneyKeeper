@@ -35,22 +35,32 @@
                   variableWidth: true,
                   
                 },
+                period: false,
                 groups:[]
             };
         },
         mounted() {
+            var self = this;
             this.load();
             this.$root.$on('operation.changed', data => {this.load();});
             this.$root.$on('wallet.changed', data => {this.load();});
+            this.$root.$on('period.changed', data => {
+                let lastDay = new Date(data.getFullYear(), data.getMonth()+1, 0);
+                self.period = lastDay.getFullYear()+'-'+(lastDay.getMonth()<9?'0':'')+(lastDay.getMonth()+1)+'-'+lastDay.getDate();
+                self.load();
+            });
         },
         methods: {
             /**
              *  Загрузка зон
              */
             load: function () {
-            
+                let url = '/account/stat/wallets';
+                if (this.period) {
+                    url = url+'/'+this.period;
+                }
                 axios
-                    .get('/account/stat/wallets')
+                    .get(url)
                     .then((response) => {
                         if (this.$refs.slick) {
                             this.$refs.slick.destroy();
