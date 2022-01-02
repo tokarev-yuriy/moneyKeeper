@@ -53,7 +53,6 @@ class ImportController extends Controller {
      */	
 	public function postIndex()
 	{
-        
         if (Input::get('mode')=='save')  {
             return $this->saveTransactions();
         } else {
@@ -82,7 +81,9 @@ class ImportController extends Controller {
         $validator = Validator::make(Input::all(), array(
               'walletId'=>'required|in:'.implode(',',array_keys(Operation::getWallets())),
               'importFile'=>'required|max:1048576',
-        ));		
+        ));
+        
+        
         if(!$validator->fails())
         {
             $profileId = Input::get('profileId');
@@ -149,8 +150,8 @@ class ImportController extends Controller {
         } else {
             $messages = $validator->messages();
         }
-        
-        return view('account.import.index', array('profileList'=>$arProfileList, 'errors'=>$messages, 'arTransactions'=>$arTransactions, 'arDictionaries'=>$arDicts));
+
+        return ['errors'=>$messages, 'transactions'=>$arTransactions];
 	}
     
     /**

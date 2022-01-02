@@ -65,6 +65,7 @@ Vue.component('plancategories-component', require('./components/PlancategoriesCo
 Vue.component('operation-btns', require('./components/OperationBtns.vue').default);
 Vue.component('operation-list', require('./components/OperationList.vue').default);
 Vue.component('operation-sync-list', require('./components/OperationSyncList.vue').default);
+Vue.component('operation-import-list', require('./components/OperationImportList.vue').default);
 Vue.component('operation-edit', require('./components/OperationEdit.vue').default);
 Vue.component('operation-filter', require('./components/OperationFilter.vue').default);
 Vue.component('dropdown-items', require('./components/DropdownItems.vue').default);
