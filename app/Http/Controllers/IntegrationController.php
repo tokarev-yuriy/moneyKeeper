@@ -37,8 +37,14 @@ class IntegrationController extends CrudListController {
 		}
 		if ($obSync) {
             if(Request::wantsJson()){
-                $arTransactions = $obSync->getTransactions();
                 $messages = [];
+                $arTransactions = [];
+                try {
+                    $arTransactions = $obSync->getTransactions();               
+                } catch(\Exception $e) {
+                    $messages[] = $e->getMessage();
+                }
+                
                 
                 return ['errors'=>$messages, 'transactions'=>$arTransactions, 'walletId'=>$obItem->wallet_id, 'syncId'=>$obItem->id];
             }

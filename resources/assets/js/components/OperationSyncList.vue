@@ -5,15 +5,15 @@
             <div class="card-header" v-if="transactions===false"><h3>{{ 'mkeep.loading' | trans }}</h3></div>
             <div class="card-header" v-else=""><h3>{{ 'mkeep.no_data' | trans }}</h3></div>
         </div>
-        <div v-for="operation in transactions" :class="{'mt-0': !operation.unique_date}" class="card mb-0" style="border-radius: 0;">
-          <div class="card-header card-header-info" style="width: auto;" v-if="operation.unique_date">
+        <div v-for="operation in transactions" :class="{'mt-0': !showOperationDate(operation)}" class="card mb-0" style="border-radius: 0;">
+          <div class="card-header card-header-info" style="width: auto;" v-if="showOperationDate(operation)">
             <h4 class="card-title" style="width: auto;">{{ operation.date }}</h4>
           </div>
             <div class="card-body p-2" :class="'bg-'+operation.type">
               <div class="col-12">
                 <div class="card-btns pl-2">
                         <button  class="btn btn-info" @click="edit(operation)"><i class="material-icons">edit</i></button>
-                        <button  class="btn btn-dark" @click="delDialog(operation.ext_id)"><i class="material-icons">close</i></button>
+                        <button  class="btn btn-dark" @click="del(operation.ext_id)"><i class="material-icons">close</i></button>
                 </div>
                 <div class="row">
                   <div class="col-7">
@@ -45,24 +45,6 @@
         <div class="float-right">
             <a href="javascript: void(0);" class="btn btn-success" @click="save()"><i class="fa fa-save fa-lg"></i>&nbsp; {{ 'mkeep.save' | trans }}</a>
         </div>
-        
-        <div class="modal fade" id="deleteModalBlock" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
-          <div class="modal-dialog" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h4 class="modal-title">{{ 'mkeep_tablegrid.delete_item' | trans }}</h4>
-                <button type="button" class="close" data-dismiss="modal" :aria-label="'mkeep_tablegrid.close' | trans">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body">{{ 'mkeep_tablegrid.sure' | trans }}</div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ 'mkeep_tablegrid.no' | trans }}</button>
-                <button class="btn btn-danger delete-btn" @click="del">{{ 'mkeep_tablegrid.delete' | trans }}</button>
-              </div>
-            </div>
-          </div>
-        </div>
     </div>
 </template>
 
@@ -72,7 +54,6 @@
         data: function () {
             return {
                 transactions: false,
-                delOperationId: false,
                 wallets: [],
                 categories: []
             };
@@ -95,18 +76,23 @@
                     .get(url)
                     .then((response) => {
                         this.transactions = response.data['transactions'];
-                        if (this.transactions) {
-                            let date = false;
-                            let x = false;
-                            for(x in this.transactions) {
-                                if (this.transactions[x].date && this.transactions[x].date!=date) {
-                                    this.transactions[x].unique_date = true;
-                                    date = this.transactions[x].date;
-                                }
-                            }
-                        }
-                        this.data = false;
                     })
+            },
+            /**
+             *  Проверяем нужно ли показывать дату
+             */
+            showOperationDate: function (operation) {
+                let prevDate = false;
+                for (let op of this.transactions) {
+                    if (op.ext_id==operation.ext_id) {
+                        if (prevDate!=op.date) {
+                            return true;
+                        }
+                        return false;
+                    }
+                    prevDate=op.date;
+                }
+                return false;
             },
             /**
              * open the edit form
@@ -140,22 +126,12 @@
                     })
             },
             /**
-             *  open the delete dialog
-             */
-            delDialog: function (id) {
-                this.delOperationId = id;
-                $('#deleteModalBlock').modal('show');
-            },
-            /**
              *  execute the delete action
              */
-            del: function () {
-                $('#deleteModalBlock').modal('hide');
-                if (!this.delOperationId) return false;
-                
+            del: function (id) {
                 let x = false;
                 for(x in this.transactions) {
-                    if (this.transactions[x].ext_id==this.delOperationId) {
+                    if (this.transactions[x].ext_id==id) {
                         this.transactions.splice(x, 1);
                         break;
                     }
