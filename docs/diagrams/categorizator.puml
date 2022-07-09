@@ -1,0 +1,19 @@
+@startuml
+
+title Categorizator Domain - Class Diagram
+
+folder Entities {
+  class CategoryEntity
+  class OperationEntity
+}
+
+folder Repositories {
+  class CategoryRepository
+}
+
+folder Services {
+  class getCategoryByOperation
+  class processCategorySelectionService
+}
+
+@enduml

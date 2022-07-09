@@ -1,0 +1,19 @@
+@startuml
+
+title Integration Domain - Class Diagram
+
+folder Entities {
+  class CategoryEntity
+  class WalletEntity
+}
+
+folder Repositories {
+  class ReportsRepository
+}
+
+folder Services {
+  class getWalletsReportService
+  class getCategoriesReportService
+}
+
+@enduml

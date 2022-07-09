@@ -1,0 +1,21 @@
+@startuml
+
+title Plans Domain - Class Diagram
+
+folder Entities {
+  class PlanEntity
+}
+
+folder Repositories {
+  class PlanRepository
+}
+
+folder Services {
+  class getPlansService
+  class getPlanService
+  class setPlanService
+  class delPlanService
+  class addPlanService
+}
+
+@enduml

@@ -1,0 +1,19 @@
+@startuml
+
+title Dashboard Domain - Class Diagram
+
+folder Entities {
+  class CategoryEntity
+  class WalletEntity
+}
+
+folder Repositories {
+  class DashboardRepository
+}
+
+folder Services {
+  class getWalletsBoardService
+  class getCategoriesBoardService
+}
+
+@enduml
