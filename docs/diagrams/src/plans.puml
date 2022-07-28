@@ -1,0 +1,24 @@
+@startuml
+
+title Plans SubDomain - Class Diagram
+
+folder Entities {
+  entity PlanEntity
+}
+
+folder Repositories {
+  class PlansRepository
+}
+
+folder Services {
+  class PlanService {
+    getById()
+    getByFilter()
+    getMonthPlan()
+    update()
+    delete()
+    add()
+  }
+}
+
+@enduml

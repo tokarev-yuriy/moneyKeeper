@@ -2,30 +2,25 @@
 
 title Money Keeper Component Diagram
 
-database PostgreSQL as da
+database MySQL as da
 component SPA as spa
 component MobileApp as mapp
 
 package "Application" {
-  folder Domains as domains {
-    component Account as account
+  folder SubDomains as domains {
+    component Accounting as accounting
     component Plans as plans
-    component Operations as ops
-    component Dashboard as dashboard
     component Reports as report
     component Categorizator as catr
     component Integration as int
     interface IImporter as ii
-    ops --> account : use
-    plans --> account : use
-    catr --> account : use
-    dashboard --> plans : use
-    dashboard --> ops : use
-    report --> ops : use
-    report --> plans : use
+    plans --> accounting : use
+    catr --> accounting : use
+    report -> accounting : use
+    report -> plans : use
     catr <-- int
-    ii <-- int
-    ops -- ii
+    ii <- int
+    accounting - ii
   }
   interface REST as rest
   component Laravel as laravel
@@ -34,9 +29,9 @@ package "Application" {
   domains -- laravel
 }
 
-laravel ---> da : use
+laravel --> da : use
 spa --> rest : use
-mapp --> rest : use
+mapp -> rest : use
 
 
 @enduml
