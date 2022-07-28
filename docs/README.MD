@@ -40,13 +40,13 @@ This subdomain has a categorization service, it tries to predict a category by t
 
 ### Integrations
 
-This subdomain has infrastructure for diffrenet integrations.
+This subdomain has infrastructure for differenet integrations.
 
 ![Integrations subdomain](diagrams/out/integrations.png)
 
 ### Reports
 
-This subdomain has a reports and dashboard services.
+This subdomain has reports and dashboard services.
 
 
 ![Reports subdomain](diagrams/out/reports.png)
