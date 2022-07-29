@@ -16,7 +16,16 @@ folder Entities {
 }
 
 folder Repositories {
-  class AccountsRepository
+  interface IAccountsRepository {
+    getAccounts();
+    getAccountById();
+    deleteAccount();
+    saveAccount();
+    getAccountGroups();
+    getAccountGroupById();
+    deleteAccountGroup();
+    saveAccountGroup();
+  }
   class CategoriesRepository
   class TransactionsRepository
 }
@@ -25,8 +34,7 @@ folder Services {
   class AccountsService {
     getById()
     getAll()
-    getAllByType()
-    getByGroup()
+    getAllByGroup()
     update()
     add()
     delete()
