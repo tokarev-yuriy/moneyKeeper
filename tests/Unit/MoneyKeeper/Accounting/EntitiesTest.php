@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\MoneyKeeper\Account;
+namespace Tests\Unit\MoneyKeeper\Accounting;
 
 use Exception;
 use Tests\TestCase;

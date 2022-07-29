@@ -82,4 +82,18 @@ class TransactionTypeValue {
     {
         return $this->value;
     }
+
+    /**
+     * Check if type is transfer
+     *
+     * @return boolean
+     */
+    public function isTransfer(): bool
+    {
+        if ($this->value == self::TRANSFER) {
+            return true;
+        }
+
+        return false;
+    }
 }

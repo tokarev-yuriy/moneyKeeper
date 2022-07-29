@@ -8,16 +8,11 @@ folder Entities {
     spend,
     transfer
   }
-  enum TransactionEntryType {
-    debit,
-    credit
-  }
   entity UserEntity
   entity CategoryEntity
   entity AccountEntity
   entity AccountGroupEntity
   entity TransactionEntity
-  entity TransactionEntryEntity
 }
 
 folder Repositories {
