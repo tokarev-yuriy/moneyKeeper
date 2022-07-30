@@ -66,5 +66,36 @@ class AccountGroupEntity extends ItemEntity {
     {
         $this->name =  $name;
     }
+
+    /**
+     * Get Sort
+     *
+     * @return int
+     */
+    public function getSort(): int
+    {
+        return $this->sort;
+    }
+
+    /**
+     * Set sort
+     *
+     * @param int $sort
+     * @return void
+     */
+    public function setSort(int $sort)
+    {
+        $this->sort =  $sort;
+    }
+
+    /**
+     * Deactivate group
+     *
+     * @return void
+     */
+    public function deactivate()
+    {
+        $this->active =  false;
+    }
     
 }

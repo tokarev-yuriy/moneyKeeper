@@ -11,9 +11,9 @@ class UserEntity {
     /**
      * Id of a User
      *
-     * @var int|bool
+     * @var int|null
      */
-    private $id = false;
+    private $id = null;
     
     /**
      * Email of a User
@@ -54,5 +54,35 @@ class UserEntity {
         $this->id = $id;
         $this->email = $email;
         $this->name = $name;
+    }
+
+    /**
+     * Returns id
+     *
+     * @return integer|null
+     */
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    /**
+     * Returns name
+     *
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    /**
+     * Returns email
+     *
+     * @return string
+     */
+    public function getEmail(): string
+    {
+        return $this->email;
     }
 }

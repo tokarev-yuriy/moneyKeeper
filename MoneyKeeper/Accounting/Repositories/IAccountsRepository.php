@@ -1,10 +1,10 @@
 <?php
 namespace MoneyKeeper\Accounting\Repositories;
 
+use Illuminate\Support\Collection;
 use MoneyKeeper\Accounting\Entities\AccountEntity;
 use MoneyKeeper\Accounting\Entities\AccountGroupEntity;
 use MoneyKeeper\Accounting\Entities\UserEntity;
-use MoneyKeeper\Support\ICollection;
 
 /**
  * Interface of account repository
@@ -21,9 +21,9 @@ Interface IAccountsRepository {
      * Returns a collection of user's accounts filtered by group
      *
      * @param AccountGroupEntity|null $group
-     * @return ICollection of AccountEntity
+     * @return Collection of AccountEntity
      */
-    public function getAccounts(?AccountGroupEntity $group = null): ICollection;
+    public function getAccounts(?AccountGroupEntity $group = null): Collection;
 
     /**
      * Returns an account entity
@@ -52,9 +52,9 @@ Interface IAccountsRepository {
    /**
      * Returns a collection of user's account groups
      *
-     * @return ICollection of AccountGroupEntity
+     * @return Collection of AccountGroupEntity
      */
-    public function getAccountGroups(): ICollection;
+    public function getAccountGroups(): Collection;
 
     /**
      * Returns an account group entity
