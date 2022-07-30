@@ -1,6 +1,6 @@
 # Money Keeper
 
-Money Keeper is a web based project written in Laravel 4.2 which will help you to control your spends and incomes.
+Money Keeper is a web based project written in Laravel 5.6 which will help you to control your spends and incomes.
 
 ## Documentation
 
@@ -8,8 +8,8 @@ Money Keeper is a web based project written in Laravel 4.2 which will help you t
 
 ## Requirements and Environment
 
-* PHP 5.4+
-* Laravel 4.2+
+* PHP 7.4+
+* Laravel 5.6
 
 ## Contributing To Money Keeper
 
