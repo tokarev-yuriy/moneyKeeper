@@ -1,7 +1,8 @@
 <?php
 namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
-use Validator, Input, Redirect, Auth, Request;
+use App\User;
+use Validator, Input, Redirect, Auth, Request, Hash;
 use MoneyKeeper\Models;
 
 /**
