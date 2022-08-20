@@ -2,7 +2,7 @@
   "name": "Money",
   "short_name": "Money",
   "lang": "ru-RU",
-  "start_url": "https://newmoney.simbirmag.ru/app.html",
+  "start_url": "https://%domain%/app.html",
     "icons": [
       {
      "src": "favicon-32x32.png",
