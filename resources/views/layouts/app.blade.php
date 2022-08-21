@@ -55,7 +55,9 @@
         continue.</strong
       >
     </noscript>
-    <div id="app" class="g-sidenav-show"></div>
+    <div id="app" class="g-sidenav-show">
+    @yield('content')
+    </div>
     <!-- built files will be auto injected -->
     <script src="{{ mix('/js/main.js') }}"></script>
     <script type="text/javascript">
