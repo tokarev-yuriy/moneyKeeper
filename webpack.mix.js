@@ -11,4 +11,4 @@ let mix = require('laravel-mix');
  |
  */
 
-mix.js('resources/assets/js/materialDashboard/main.js', 'public/js').vue();
+mix.js('resources/assets/js/md2/main.js', 'public/js').vue().version();
