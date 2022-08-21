@@ -8,7 +8,7 @@
           >
             <div class="card card-plain">
               <div class="pb-0 card-header bg-transparent mb-4">
-                <h4 class="font-weight-bolder">Sign In</h4>
+                <h4 class="font-weight-bolder">Log in</h4>
                 <p class="mb-0">
                   Enter your email and password to register
                 </p>
@@ -20,7 +20,7 @@
                       id="name"
                       type="text"
                       label="Name"
-                      name="name"
+                      v-model="name"
                       size="lg"
                     />
                   </div>
@@ -29,7 +29,7 @@
                       id="email"
                       type="email"
                       label="Email"
-                      name="email"
+                      v-model="email"
                       size="lg"
                     />
                   </div>
@@ -38,13 +38,14 @@
                       id="password"
                       type="password"
                       label="Password"
-                      name="password"
+                      v-model="password"
                       size="lg"
                     />
                   </div>
                   <material-checkbox
                     id="flexCheckDefault"
                     class="font-weight-light"
+                    v-model="agree"
                     checked
                   >
                     I agree the
@@ -61,7 +62,7 @@
                       color="success"
                       fullWidth
                       size="lg"
-                      >Sign Up</material-button
+                      >Register</material-button
                     >
                   </div>
                 </form>
@@ -70,9 +71,9 @@
                 <p class="mx-auto mb-4 text-sm">
                   Don't have an account?
                   <router-link
-                    :to="{ name: 'SignIn' }"
+                    :to="{ name: 'Login' }"
                     class="text-success text-gradient font-weight-bold"
-                    >Sign In</router-link
+                    >Log In</router-link
                   >
                 </p>
               </div>
@@ -92,7 +93,15 @@ const body = document.getElementsByTagName("body")[0];
 import { mapMutations } from "vuex";
 
 export default {
-  name: "sign-up",
+  name: "register",
+  data() {
+    return {
+      name: '',
+      email: '',
+      password: '',
+      agreee: true
+    };
+  },
   components: {
     MaterialInput,
     MaterialCheckbox,

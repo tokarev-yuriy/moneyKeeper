@@ -12,7 +12,7 @@
                 class="bg-gradient-success shadow-success border-radius-lg py-3 pe-1"
               >
                 <h4 class="text-white font-weight-bolder text-center mt-2 mb-0">
-                  Sign in
+                  Log in
                 </h4>
               </div>
             </div>
@@ -43,15 +43,15 @@
                     variant="gradient"
                     color="success"
                     fullWidth
-                    >Sign in</material-button
+                    >Log in</material-button
                   >
                 </div>
                 <p class="mt-4 text-sm text-center">
                   Don't have an account?
                   <router-link
-                    :to="{ name: 'SignUp' }"
+                    :to="{ name: 'Register' }"
                     class="text-success text-gradient font-weight-bold"
-                    >Sign up</router-link
+                    >Register</router-link
                   >
                 </p>
               </form>
@@ -70,7 +70,7 @@ import MaterialButton from "../components/MaterialButton.vue";
 import { mapMutations } from "vuex";
 
 export default {
-  name: "sign-in",
+  name: "log-in",
   components: {
     MaterialInput,
     MaterialSwitch,
