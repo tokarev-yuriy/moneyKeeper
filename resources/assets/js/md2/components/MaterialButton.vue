@@ -2,6 +2,7 @@
   <button
     class="btn mb-0"
     :class="getClasses(variant, color, size, fullWidth, active)"
+    type="button"
   >
     <slot />
   </button>
