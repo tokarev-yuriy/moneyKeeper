@@ -23,7 +23,7 @@
                     id="email"
                     type="email"
                     label="Email"
-                    name="email"
+                    v-model="email"
                   />
                 </div>
                 <div class="mb-3">
@@ -31,17 +31,18 @@
                     id="password"
                     type="password"
                     label="Password"
-                    name="password"
+                    v-model="password"
                   />
                 </div>
-                <material-switch id="rememberMe" name="rememberMe"
-                  >Remember me</material-switch
-                >
+                <div v-if="errors">
+                  <material-alert color="danger"><span v-html="error"></span></material-alert>
+                </div>
                 <div class="text-center">
                   <material-button
                     class="my-4 mb-2"
                     variant="gradient"
                     color="success"
+                    @click="login"
                     fullWidth
                     >Log in</material-button
                   >
@@ -64,10 +65,12 @@
 </template>
 
 <script>
-import MaterialInput from "../components/MaterialInput.vue";
-import MaterialSwitch from "../components/MaterialSwitch.vue";
-import MaterialButton from "../components/MaterialButton.vue";
+import MaterialInput from "../md2/components/MaterialInput.vue";
+import MaterialSwitch from "../md2/components/MaterialSwitch.vue";
+import MaterialButton from "../md2/components/MaterialButton.vue";
+import MaterialAlert from "../md2/components/MaterialAlert.vue";
 import { mapMutations } from "vuex";
+import { loginService } from "../api/auth.js";
 
 export default {
   name: "log-in",
@@ -75,17 +78,45 @@ export default {
     MaterialInput,
     MaterialSwitch,
     MaterialButton,
+    MaterialAlert,
+  },
+  data() {
+    return {
+      email: '',
+      password: '',
+      errors: false
+    }
+  },
+  computed: {
+    error: function() {
+      let errors = [];
+      for (let code in this.errors) {
+        errors.push(this.errors[code]);
+      }
+
+      return errors.join('<br>');
+    }
   },
   beforeMount() {
     this.toggleEveryDisplay();
-    this.toggleHideConfig();
   },
   beforeUnmount() {
     this.toggleEveryDisplay();
-    this.toggleHideConfig();
   },
   methods: {
-    ...mapMutations(["toggleEveryDisplay", "toggleHideConfig"]),
+    ...mapMutations(["toggleEveryDisplay"]),
+    async login() {
+      this.errors = false;
+      try {
+        await loginService({
+          email: this.email,
+          password: this.password
+        });
+        this.$router.push({path: '/'});
+      } catch(error) {
+        this.errors = error.errors;
+      }
+    },
   },
 };
 </script>
