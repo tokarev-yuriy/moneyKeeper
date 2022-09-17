@@ -29,7 +29,7 @@ Coded by www.creative-tim.com
 import Sidenav from "./layout/Sidenav";
 import AppFooter from "./layout/Footer.vue";
 import { mapMutations, mapState } from "vuex";
-import { activateDarkMode } from "./assets/js/dark-mode";
+import { activateDarkMode } from "./md2/assets/js/dark-mode";
 
 export default {
   name: "App",

@@ -8,7 +8,7 @@
           >
             <div class="card card-plain">
               <div class="pb-0 card-header bg-transparent mb-4">
-                <h4 class="font-weight-bolder">Log in</h4>
+                <h4 class="font-weight-bolder">Register</h4>
                 <p class="mb-0">
                   Enter your email and password to register
                 </p>
@@ -55,6 +55,9 @@
                       >Terms and Conditions</a
                     >
                   </material-checkbox>
+                  <div v-if="errors">
+                    <material-alert color="danger"><span v-html="error"></span></material-alert>
+                  </div>
                   <div class="text-center">
                     <material-button
                       class="mt-4"
@@ -62,6 +65,7 @@
                       color="success"
                       fullWidth
                       size="lg"
+                      @click="register"
                       >Register</material-button
                     >
                   </div>
@@ -69,7 +73,7 @@
               </div>
               <div class="px-1 pt-0 text-center card-footer px-lg-2">
                 <p class="mx-auto mb-4 text-sm">
-                  Don't have an account?
+                  Do you have an account?
                   <router-link
                     :to="{ name: 'Login' }"
                     class="text-success text-gradient font-weight-bold"
@@ -86,11 +90,13 @@
 </template>
 
 <script>
-import MaterialInput from "../components/MaterialInput.vue";
-import MaterialCheckbox from "../components/MaterialCheckbox.vue";
-import MaterialButton from "../components/MaterialButton.vue";
+import MaterialInput from "../md2/components/MaterialInput.vue";
+import MaterialCheckbox from "../md2/components/MaterialCheckbox.vue";
+import MaterialButton from "../md2/components/MaterialButton.vue";
+import MaterialAlert from "../md2/components/MaterialAlert.vue";
 const body = document.getElementsByTagName("body")[0];
 import { mapMutations } from "vuex";
+import { registerService, loginService } from "../api/auth.js";
 
 export default {
   name: "register",
@@ -99,26 +105,54 @@ export default {
       name: '',
       email: '',
       password: '',
-      agreee: true
+      agree: true,
+      errors: false
     };
+  },
+  computed: {
+    error: function() {
+      let errors = [];
+      for (let code in this.errors) {
+        errors.push(this.errors[code]);
+      }
+
+      return errors.join('<br>');
+    }
   },
   components: {
     MaterialInput,
     MaterialCheckbox,
     MaterialButton,
+    MaterialAlert
   },
   beforeMount() {
     this.toggleEveryDisplay();
-    this.toggleHideConfig();
     body.classList.remove("bg-gray-100");
   },
   beforeUnmount() {
     this.toggleEveryDisplay();
-    this.toggleHideConfig();
     body.classList.add("bg-gray-100");
   },
   methods: {
-    ...mapMutations(["toggleEveryDisplay", "toggleHideConfig"]),
+    ...mapMutations(["toggleEveryDisplay"]),
+    async register() {
+      this.errors = false;
+      try {
+        await registerService({
+          name: this.name,
+          email: this.email,
+          password: this.password,
+          agree: this.agree
+        });
+        await loginService({
+          email: this.email,
+          password: this.password
+        });
+        this.$router.push({path: '/'});
+      } catch(error) {
+        this.errors = error.errors;
+      }
+    },
   },
 };
 </script>
