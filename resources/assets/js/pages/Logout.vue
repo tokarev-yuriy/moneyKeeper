@@ -18,6 +18,7 @@ export default {
       this.errors = false;
       try {
         await logoutService();
+        await this.$store.dispatch('auth/init');
         this.$router.push({path: '/auth/login'});
       } catch(error) {
         this.errors = error.errors;

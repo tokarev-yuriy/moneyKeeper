@@ -117,6 +117,9 @@ export default {
       }
 
       return errors.join('<br>');
+    },
+    isLoggedIn: function() {
+      return this.$store.getters['auth/isLoggedIn'];
     }
   },
   components: {
@@ -128,6 +131,9 @@ export default {
   beforeMount() {
     this.toggleEveryDisplay();
     body.classList.remove("bg-gray-100");
+    if (this.isLoggedIn) {
+      this.$router.push({path: '/'});
+    }
   },
   beforeUnmount() {
     this.toggleEveryDisplay();
@@ -148,6 +154,7 @@ export default {
           email: this.email,
           password: this.password
         });
+        await this.$store.dispatch('auth/init');
         this.$router.push({path: '/'});
       } catch(error) {
         this.errors = error.errors;

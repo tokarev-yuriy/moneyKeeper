@@ -42,17 +42,14 @@ export default {
       "color",
     ])
   },
-  beforeMount() {
-    this.$store.state.isTransparent = "bg-transparent";
-
+  async beforeMount() {
+    await this.$store.dispatch('init');
     const sidenav = document.getElementsByClassName("g-sidenav-show")[0];
 
     if (window.innerWidth > 1200) {
       sidenav.classList.add("g-sidenav-pinned");
     }
-    this.$store.state.isDarkMode = true;
-    this.$store.state.color = "primary";
     activateDarkMode();
-  }
+  },
 };
 </script>
