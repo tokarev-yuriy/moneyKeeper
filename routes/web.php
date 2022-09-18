@@ -11,14 +11,19 @@
 |
 */
 
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\SpaController;
+use Illuminate\Support\Facades\Route;
+
 Route::any('/', 'DashboardController@anyIndex');
 Route::get('/wallet/{walletId}', 'DashboardController@anyIndex');
 Route::post('/wallet/{walletId}', 'DashboardController@anyIndex');
 
-Route::get('/auth/login', 'SpaController@index')->name('login');
-Route::post('/auth/login', 'AuthController@login');
-Route::get('/auth/logout', 'AuthController@logout')->name('logout');
-Route::post('/auth/register', 'AuthController@register');
+Route::get('/auth/login', [SpaController::class, 'index'])->name('login');
+Route::post('/auth/login', [AuthController::class, 'login']);
+Route::get('/auth/logout', [AuthController::class, 'logout'])->name('logout');
+Route::post('/auth/register', [AuthController::class, 'register']);
+Route::get('/auth/state', [AuthController::class, 'getState']);
 
 Route::get('/account/wallets/groups', 'WalletGroupController@getIndex');
 Route::get('/account/wallets/groups/delete/{id}', 'WalletGroupController@getDelete');

@@ -1,6 +1,7 @@
 <?php
 namespace App\Services;
 
+use App\Exceptions\AlreadyLoggedInException;
 use App\Exceptions\ValidationException;
 use App\User;
 use Illuminate\Support\Facades\Hash;
@@ -38,6 +39,9 @@ class AuthService {
      */
     public function register(array $arFields): bool
     {
+        if (Auth::check()) {
+            throw new AlreadyLoggedInException("You are already logged in");
+        }
         $validator = Validator::make($arFields,
             array(
               'name'=>'required|max:255',
@@ -68,9 +72,13 @@ class AuthService {
      * @param array $arFields
      * @return boolean
      * @throws ValidationException
+     * @throws AlreadyLoggedInException
      */
     public function login(array $arFields): bool
     {
+        if (Auth::check()) {
+            throw new AlreadyLoggedInException("You are already logged in");
+        }
         $validator = Validator::make($arFields, [
             'email'=>'required|email|max:255',
             'password'=>'required|min:8'
@@ -107,5 +115,29 @@ class AuthService {
         }
 
         return true;
+    }
+
+    /**
+     * get Auth State
+     * 
+     * @todo replace array to the DTO
+     *
+     * @return array
+     */
+    public function getState(): array
+    {
+        if (Auth::check()) {
+            return [
+                'isLoggedIn' => true,
+                'user' => [
+                    'id' => Auth::id()
+                ]
+            ];
+        }
+        
+        return [
+            'isLoggedIn' => false,
+            'user' => []
+        ];
     }
 }
