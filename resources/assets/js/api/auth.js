@@ -11,7 +11,7 @@ export const loginService = async (request) => {
         if (response.data.success == true) {
             return true;
         }
-        throw parseError(response);
+        throw {response: response};
     } catch(error) {
         throw parseError(error.response);
     }
@@ -26,7 +26,7 @@ export const loginService = async (request) => {
         if (response.data.success == true) {
             return true;
         }
-        throw parseError(response);
+        throw {response: response};
     } catch(error) {
         throw parseError(error.response);
     }
@@ -41,7 +41,22 @@ export const loginService = async (request) => {
         if (response.data.success == true) {
             return true;
         }
-        throw parseError(response);
+        throw {response: response};
+    } catch(error) {
+        throw parseError(error.response);
+    }
+}
+
+/**
+ * Get state
+ */
+export const stateService = async () => {
+    try {
+        let response = await $api.get(endpoints.auth.state);
+        if (response.data.success == true) {
+            return response.data;
+        }
+        throw {response: response};
     } catch(error) {
         throw parseError(error.response);
     }

@@ -1,6 +1,10 @@
 import { createStore } from "vuex";
+import authStore from "./auth";
 
 export default createStore({
+  modules: {
+    auth: authStore
+  },
   state: {
     hideConfigButton: false,
     isPinned: true,
@@ -57,6 +61,12 @@ export default createStore({
   actions: {
     setColor({ commit }, payload) {
       commit("color", payload);
+    },
+    async init({ state, dispatch }) {
+      state.isTransparent = "bg-transparent";
+      state.isDarkMode = true;
+      state.color = "primary";
+      await dispatch('auth/init', {}, {root: true});
     },
   },
   getters: {},
