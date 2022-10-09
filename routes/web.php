@@ -11,15 +11,19 @@
 |
 */
 
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\SpaController;
+use Illuminate\Support\Facades\Route;
+
 Route::any('/', 'DashboardController@anyIndex');
 Route::get('/wallet/{walletId}', 'DashboardController@anyIndex');
 Route::post('/wallet/{walletId}', 'DashboardController@anyIndex');
 
-Route::get('/account/login', 'AccountController@getLogin')->name('login');
-Route::post('/account/login', 'AccountController@postLogin');
-Route::get('/account/logout', 'AccountController@getLogout')->name('logout');
-Route::get('/account/register', 'AccountController@getRegister');
-Route::post('/account/register', 'AccountController@postRegister');
+Route::get('/auth/login', [SpaController::class, 'index'])->name('login');
+Route::post('/auth/login', [AuthController::class, 'login']);
+Route::get('/auth/logout', [AuthController::class, 'logout'])->name('logout');
+Route::post('/auth/register', [AuthController::class, 'register']);
+Route::get('/auth/state', [AuthController::class, 'getState']);
 
 Route::get('/account/wallets/groups', 'WalletGroupController@getIndex');
 Route::get('/account/wallets/groups/delete/{id}', 'WalletGroupController@getDelete');
@@ -101,3 +105,10 @@ Route::get('/account/import/integration/update/{id}', 'IntegrationController@get
 Route::post('/account/import/integration/update/{id}', 'IntegrationController@postUpdate');
 Route::get('/account/import/integration/sync/{id}', 'IntegrationController@getSync');
 Route::post('/account/import/integration/sync/{id}', 'IntegrationController@postSync');
+
+
+/**
+ *  Vue router
+ *  Proccess other requests with Vue router
+ */
+Route::get('/{any}', 'SpaController@index')->where('any', '^(?!api).*$')->name('spa');

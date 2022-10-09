@@ -6,9 +6,9 @@ use App\Http\Controllers\BaseController;
 use App\MoneyKeeper\Models\Operation;
 use App\MoneyKeeper\Models\Category;
 use App\MoneyKeeper\Models\Wallet;
-use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Config;
+use Input;
 
 /**
  *  Dashboard controller
