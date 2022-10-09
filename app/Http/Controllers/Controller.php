@@ -9,6 +9,8 @@ use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
+use MoneyKeeper\Accounting\Entities\UserEntity;
 use Throwable;
 
 class Controller extends BaseController
@@ -40,5 +42,19 @@ class Controller extends BaseController
             ],
             $status 
         );
+    }
+
+    /**
+     * Get current user entity
+     *
+     * @return UserEntity|null
+     */
+    protected function getUser(): ?UserEntity
+    {
+        if (Auth::check()) {
+            $user = Auth::user();
+            return $user->toEntity();
+        }
+        return null;
     }
 }
