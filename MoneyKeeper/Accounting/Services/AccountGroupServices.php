@@ -10,7 +10,7 @@ use MoneyKeeper\Accounting\Repositories\IAccountsRepository;
 /**
  * Account group services class
  */
-class AccountGroupService {
+class AccountGroupServices implements ICrudServices {
 
     /**
      * @var UserEntity
@@ -30,6 +30,9 @@ class AccountGroupService {
     public function __construct(UserEntity $user, IAccountsRepository $repository)
     {
         $this->user = $user;
+        if (!$this->user->getId()) {
+            throw new Exception('User not found');
+        }
         $this->repository = $repository;
     }
 
@@ -42,10 +45,10 @@ class AccountGroupService {
      */
     public function getById(int $id): AccountGroupEntity
     {
-        if (!$this->user->getId()) {
-            throw new Exception('User not founded');
-        }
         $group = $this->repository->getAccountGroupById($id);
+        if ($group->getId()!=$id) {
+            throw new Exception('Account Group not found');
+        }
         return $group;
     }
 
@@ -57,9 +60,6 @@ class AccountGroupService {
      */
     public function getAll(): Collection
     {
-        if (!$this->user->getId()) {
-            throw new Exception('User not founded');
-        }
         $groups = $this->repository->getAccountGroups();
         return $groups;
     }
@@ -74,10 +74,10 @@ class AccountGroupService {
      */
     public function update(int $id, array $fields): AccountGroupEntity
     {
-        if (!$this->user->getId()) {
-            throw new Exception('User not founded');
-        }
         $group = $this->repository->getAccountGroupById($id);
+        if ($group->getId()!=$id) {
+            throw new Exception('Account Group not found');
+        }
 
         if (isset($fields['name'])) {
             $group->setName($fields['name']);
@@ -99,9 +99,6 @@ class AccountGroupService {
      */
     public function add(array $fields): AccountGroupEntity
     {
-        if (!$this->user->getId()) {
-            throw new Exception('User not founded');
-        }
         $group = new AccountGroupEntity(null, $fields['name'], $fields['sort'], true);
         $group = $this->repository->saveAccountGroup($group);
         return $group;
@@ -116,12 +113,9 @@ class AccountGroupService {
      */
     public function delete(int $id): bool
     {
-        if (!$this->user->getId()) {
-            throw new Exception('User not founded');
-        }
         $group = $this->repository->getAccountGroupById($id);
         if ($group->getId()!=$id) {
-            throw new Exception('Account Group not founded');
+            throw new Exception('Account Group not found');
         }
         $this->repository->deleteAccountGroup($id);
         return true;

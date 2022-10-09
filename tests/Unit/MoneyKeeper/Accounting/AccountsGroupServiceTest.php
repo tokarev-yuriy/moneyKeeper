@@ -8,9 +8,8 @@ use Illuminate\Support\Collection;
 use MoneyKeeper\Accounting\Entities\AccountGroupEntity;
 use MoneyKeeper\Accounting\Entities\UserEntity;
 use Tests\TestCase;
-use MoneyKeeper\Accounting\Services\AccountsGroupService;
+use MoneyKeeper\Accounting\Services\AccountGroupServices;
 use MoneyKeeper\Accounting\Repositories\IAccountsRepository;
-use MoneyKeeper\Accounting\Services\AccountGroupService;
 
 class AccountsGroupServiceTest extends TestCase
 {
@@ -23,7 +22,7 @@ class AccountsGroupServiceTest extends TestCase
     public function testAccountGroupServiceGetByIdException()
     {
         $this->expectException(Exception::class);
-        $service = new AccountGroupService($this->getNewUser(), $this->getEmptyRepository());
+        $service = new AccountGroupServices($this->getNewUser(), $this->getEmptyRepository());
         $group = $service->getById(1);
     }
 
@@ -35,7 +34,7 @@ class AccountsGroupServiceTest extends TestCase
      */
     public function testAccountGroupServiceGetById()
     {
-        $service = new AccountGroupService($this->getExistUser(), $this->getRepository());
+        $service = new AccountGroupServices($this->getExistUser(), $this->getRepository());
         $group = $service->getById(1);
         $this->assertEquals($group->getId(), 1);
         $this->assertEquals($group->getName(), 'test');
@@ -51,7 +50,7 @@ class AccountsGroupServiceTest extends TestCase
     public function testAccountGroupServiceGetAllException()
     {
         $this->expectException(Exception::class);
-        $service = new AccountGroupService($this->getNewUser(), $this->getEmptyRepository());
+        $service = new AccountGroupServices($this->getNewUser(), $this->getEmptyRepository());
         $group = $service->getAll();
     }
 
@@ -63,7 +62,7 @@ class AccountsGroupServiceTest extends TestCase
      */
     public function testAccountGroupServiceGetAll()
     {
-        $service = new AccountGroupService($this->getExistUser(), $this->getRepository());
+        $service = new AccountGroupServices($this->getExistUser(), $this->getRepository());
         $groups = $service->getAll();
         $this->assertEquals(count($groups), 2);
         $this->assertEquals($groups[0]->getId(), 1);
@@ -83,7 +82,7 @@ class AccountsGroupServiceTest extends TestCase
     public function testAccountGroupServiceUpdateException()
     {
         $this->expectException(Exception::class);
-        $service = new AccountGroupService($this->getNewUser(), $this->getEmptyRepository());
+        $service = new AccountGroupServices($this->getNewUser(), $this->getEmptyRepository());
         $group = $service->update(1, ['name' => 'test2']);
     }
 
@@ -95,7 +94,7 @@ class AccountsGroupServiceTest extends TestCase
      */
     public function testAccountGroupServiceUpdate()
     {
-        $service = new AccountGroupService($this->getExistUser(), $this->getRepository());
+        $service = new AccountGroupServices($this->getExistUser(), $this->getRepository());
         $group = $service->update(1, ['name' => 'test2']);
         $this->assertEquals($group->getId(), 1);
         $this->assertEquals($group->getName(), 'test2');
@@ -111,7 +110,7 @@ class AccountsGroupServiceTest extends TestCase
     public function testAccountGroupServiceAddException()
     {
         $this->expectException(Exception::class);
-        $service = new AccountGroupService($this->getNewUser(), $this->getEmptyRepository());
+        $service = new AccountGroupServices($this->getNewUser(), $this->getEmptyRepository());
         $group = $service->add(['name' => 'test2']);
     }
 
@@ -124,7 +123,7 @@ class AccountsGroupServiceTest extends TestCase
     public function testAccountGroupServiceAddInvalidException()
     {
         $this->expectException(Exception::class);
-        $service = new AccountGroupService($this->getExistUser(), $this->getRepository());
+        $service = new AccountGroupServices($this->getExistUser(), $this->getRepository());
         $group = $service->add(['sort' => 10]);
     }
 
@@ -136,7 +135,7 @@ class AccountsGroupServiceTest extends TestCase
      */
     public function testAccountGroupServiceAdd()
     {
-        $service = new AccountGroupService($this->getExistUser(), $this->getRepository());
+        $service = new AccountGroupServices($this->getExistUser(), $this->getRepository());
         $group = $service->add(['name' => 'test2', 'sort' => 11]);
         $this->assertEquals($group->getId(), null);
         $this->assertEquals($group->getName(), 'test2');
@@ -152,7 +151,7 @@ class AccountsGroupServiceTest extends TestCase
     public function testAccountGroupServiceDeleteException()
     {
         $this->expectException(Exception::class);
-        $service = new AccountGroupService($this->getNewUser(), $this->getEmptyRepository());
+        $service = new AccountGroupServices($this->getNewUser(), $this->getEmptyRepository());
         $group = $service->delete(1);
     }
 
@@ -164,7 +163,7 @@ class AccountsGroupServiceTest extends TestCase
      */
     public function testAccountGroupServiceDelete()
     {
-        $service = new AccountGroupService($this->getExistUser(), $this->getRepository());
+        $service = new AccountGroupServices($this->getExistUser(), $this->getRepository());
         $this->assertTrue($service->delete(1));
     }
 
