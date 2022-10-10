@@ -103,4 +103,72 @@ class AccountGroupTest extends TestCase
         ]);
         $this->assertTrue($response['item']['id'] > 0);
     }
+
+    /**
+     * test for AccountGroupController::add
+     *
+     * @return void
+     * @covers AccountGroupController::add
+     */
+    public function testAccountGroupUpdate()
+    {
+        $response = $this->put('/app/account/groups/1');
+
+        $response->assertStatus(401);
+        $this->assertFalse($response['success']);
+
+        $user = User::find(2);
+        $response = $this->actingAs($user)->put('/app/account/groups/1',
+            [
+            'name' => 'test add',
+            ]
+        );
+        $response->assertStatus(403);
+        $this->assertFalse($response['success']);
+
+        $user = User::find(1);
+        $response = $this->actingAs($user)->put('/app/account/groups/1',
+            [
+                'name' => "",
+                'sort' => 20
+            ]
+        );
+        $response->assertStatus(400);
+        $this->assertFalse($response['success']);
+        $this->assertEquals(array_keys($response['errors']), ['name']);
+
+        $user = User::find(1);
+        $response = $this->actingAs($user)->put('/app/account/groups/1',
+            [
+                'name' => 'test add',
+            ]
+        );
+
+        $response->assertStatus(200);
+        $this->assertTrue($response['success']);
+        $this->assertEquals($response['item']['name'], 'test add');
+        $this->assertTrue($response['item']['id'] > 0);
+        $this->assertDatabaseHas('wallets_groups', [
+            'name' => 'test add',
+            'user_id' => 1
+        ]);
+
+        $user = User::find(1);
+        $response = $this->actingAs($user)->put('/app/account/groups/2',
+            [
+                'name' => 'test add 2',
+                'sort' => 10,
+            ]
+        );
+
+        $response->assertStatus(200);
+        $this->assertTrue($response['success']);
+        $this->assertEquals($response['item']['name'], 'test add 2');
+        $this->assertEquals($response['item']['sort'], 10);
+        $this->assertDatabaseHas('wallets_groups', [
+            'name' => 'test add 2',
+            'user_id' => 1
+        ]);
+        $this->assertTrue($response['item']['id'] > 0);
+    }
 }

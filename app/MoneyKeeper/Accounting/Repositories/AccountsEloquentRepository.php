@@ -10,6 +10,7 @@ use MoneyKeeper\Accounting\Entities\UserEntity;
 use MoneyKeeper\Accounting\Repositories\IAccountsRepository;
 use MoneyKeeper\Accounting\ValueObjects\AccountDescriptionValue;
 use MoneyKeeper\Exceptions\ForbiddenException;
+use MoneyKeeper\Exceptions\NotFoundException;
 
 /**
  * Eloquent realisation of account repository
@@ -101,7 +102,13 @@ final class AccountsEloquentRepository implements IAccountsRepository {
    */
   public function getAccountGroupById(int $id): AccountGroupEntity
   {
-    return new AccountGroupEntity(null, '', 0);
+    $model = AccountGroup::find($id);
+    if (!$model) {
+      throw new NotFoundException('Account group not found');
+    } elseif ($model->user_id != $this->user->getId()) {
+      throw new ForbiddenException("Account group is forbidden");
+    }
+    return $model->toEntity();
   }
 
   /**

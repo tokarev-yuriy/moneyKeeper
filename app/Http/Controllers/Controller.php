@@ -8,9 +8,10 @@ use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use MoneyKeeper\Accounting\Entities\UserEntity;
+use MoneyKeeper\Exceptions\ForbiddenException;
+use MoneyKeeper\Exceptions\NotFoundException;
 use MoneyKeeper\Exceptions\ValidationException as MoneyKeeperValidationException;
 use Throwable;
 
@@ -37,6 +38,18 @@ class Controller extends BaseController
              */
             $validationException = $e;
             $errors = $validationException->getErrors();
+        }
+
+        if (
+            get_class($e) == ForbiddenException::class
+        ) {
+            $status = 403;
+        }
+
+        if (
+            get_class($e) == NotFoundException::class
+        ) {
+            $status = 404;
         }
 
         return response()->json(

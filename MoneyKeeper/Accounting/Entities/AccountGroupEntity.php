@@ -38,7 +38,7 @@ class AccountGroupEntity extends ItemEntity {
     )
     {
         $errors = [];
-        if (strlen($name) == 0) {
+        if (strlen(trim($name)) == 0) {
             $errors['name'] = 'Name is required';
         }
         $this->id = $id;
@@ -49,7 +49,6 @@ class AccountGroupEntity extends ItemEntity {
             throw new ValidationException($errors);
         }
     }
-
 
     /**
      * Get name
@@ -69,6 +68,9 @@ class AccountGroupEntity extends ItemEntity {
      */
     public function setName(string $name)
     {
+        if (strlen(trim($name)) == 0) {
+            throw new ValidationException(['name' => 'Name is required']);
+        }
         $this->name =  $name;
     }
 

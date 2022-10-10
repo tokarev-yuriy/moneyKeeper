@@ -24,6 +24,7 @@ Route::middleware(['auth'])->group(function () {
         Route::controller(AccountGroupController::class)->group(function(){
             Route::get("account/groups", "list");
             Route::post("account/groups", "add");
+            Route::put("account/groups/{id}", "update");
         });
     });
 });

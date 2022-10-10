@@ -6,6 +6,7 @@ use Illuminate\Support\Collection;
 use MoneyKeeper\Accounting\Entities\AccountGroupEntity;
 use MoneyKeeper\Accounting\Entities\UserEntity;
 use MoneyKeeper\Accounting\Repositories\IAccountsRepository;
+use MoneyKeeper\Exceptions\NotFoundException;
 
 /**
  * Account group services class
@@ -70,18 +71,15 @@ class AccountGroupServices implements ICrudServices {
      * @param int $id
      * @param array $fields
      * @return AccountGroupEntity
-     * @throws Exception
+     * @throws NotFoundException
      */
     public function update(int $id, array $fields): AccountGroupEntity
     {
         $group = $this->repository->getAccountGroupById($id);
         if ($group->getId()!=$id) {
-            throw new Exception('Account Group not found');
+            throw new NotFoundException('Account Group not found');
         }
-
-        if (isset($fields['name'])) {
-            $group->setName($fields['name']);
-        }
+        $group->setName($fields['name'] ?? '');
         if (isset($fields['sort'])) {
             $group->setSort($fields['sort']);
         }
