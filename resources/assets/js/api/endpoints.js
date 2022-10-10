@@ -5,4 +5,8 @@ export default {
       register: `/auth/register`,
       state: `/auth/state`,
     },
+    accountGroup: {
+      index: `/app/account/groups`,
+      detail: `/app/account/groups/{id}`,
+    }
   }
