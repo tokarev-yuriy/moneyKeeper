@@ -201,4 +201,33 @@ class AccountGroupTest extends TestCase
         $response->assertStatus(404);
         $this->assertFalse($response['success']);
     }
+
+    /**
+     * test for AccountGroupController::get
+     *
+     * @return void
+     * @covers AccountGroupController::get
+     */
+    public function testAccountGroupGet()
+    {
+        $response = $this->get('/app/account/groups/1');
+
+        $response->assertStatus(401);
+        $this->assertFalse($response['success']);
+
+        $user = User::find(2);
+        $response = $this->actingAs($user)->get('/app/account/groups/1');
+        $response->assertStatus(403);
+        $this->assertFalse($response['success']);
+
+        $user = User::find(1);
+        $response = $this->actingAs($user)->get('/app/account/groups/1');
+        $response->assertStatus(200);
+        $this->assertTrue($response['success']);
+
+        $user = User::find(1);
+        $response = $this->actingAs($user)->get('/app/account/groups/11111');
+        $response->assertStatus(404);
+        $this->assertFalse($response['success']);
+    }
 }

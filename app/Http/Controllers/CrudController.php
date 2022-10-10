@@ -38,6 +38,23 @@ abstract class CrudController extends Controller {
             return $this->processExceptions($e);
         }
     }
+    /**
+     * Get item
+     * 
+     * @return JsonResponse
+     */    
+    public function get(Request $request, int $id): JsonResponse
+    {
+        try {
+            $item = $this->service->getById($id);
+            return response()->json([
+                'success' => true,
+                'item' => $item->toArray()
+            ]);
+        } catch (Throwable $e) {
+            return $this->processExceptions($e);
+        }
+    }
 
     /**
      * Add item
