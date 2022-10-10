@@ -9,7 +9,6 @@
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-    <link rel="manifest" href="/manifest.json">
     <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -29,22 +28,6 @@
     <!-- Font Awesome Icons -->
     <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" />
-    
-    
-    <script>
-    if ('serviceWorker' in navigator) {
-     window.addEventListener('load', function() {  
-       navigator.serviceWorker.register('/sw.js').then(
-         function(registration) {
-           // Registration was successful
-           console.log('ServiceWorker registration successful with scope: ', registration.scope); },
-         function(err) {
-           // registration failed :(
-           console.log('ServiceWorker registration failed: ', err);
-         });
-     });
-    }
-    </script>
 
 </head>
 <body class="bg-gray-200">
