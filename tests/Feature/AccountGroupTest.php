@@ -22,7 +22,7 @@ class AccountGroupTest extends TestCase
     {
         $response = $this->get('/app/account/groups');
 
-        $response->assertStatus(302);
+        $response->assertStatus(401);
 
         $user = User::find(1);
         $response = $this->actingAs($user)->get('/app/account/groups');
