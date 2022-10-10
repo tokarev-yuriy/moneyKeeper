@@ -9,6 +9,7 @@ use MoneyKeeper\Accounting\Entities\AccountGroupEntity;
 use MoneyKeeper\Accounting\Entities\UserEntity;
 use MoneyKeeper\Accounting\Repositories\IAccountsRepository;
 use MoneyKeeper\Accounting\ValueObjects\AccountDescriptionValue;
+use MoneyKeeper\Exceptions\ForbiddenException;
 
 /**
  * Eloquent realisation of account repository
@@ -119,9 +120,23 @@ final class AccountsEloquentRepository implements IAccountsRepository {
    *
    * @param AccountGroupEntity $group
    * @return AccountGroupEntity
+   * @throws ForbiddenException
    */
   public function saveAccountGroup(AccountGroupEntity $group): AccountGroupEntity
   {
-    return $group;
+    $model = new AccountGroup();
+    if ($group->getId() > 0) {
+      $model = AccountGroup::find($group->getId());
+      if (!$model || $model->user_id != $this->user->getId()) {
+        throw new ForbiddenException("Account group is forbidden");
+      }
+    }
+
+    $model->user_id = $this->user->getId();
+    $model->name = $group->getName();
+    $model->sort = $group->getSort();
+    $model->save();
+
+    return $model->toEntity();
   }
 }

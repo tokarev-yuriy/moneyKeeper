@@ -99,7 +99,7 @@ class AccountGroupServices implements ICrudServices {
      */
     public function add(array $fields): AccountGroupEntity
     {
-        $group = new AccountGroupEntity(null, $fields['name'], $fields['sort'], true);
+        $group = new AccountGroupEntity(null, $fields['name'] ?? '', $fields['sort'] ?? 10, true);
         $group = $this->repository->saveAccountGroup($group);
         return $group;
     }

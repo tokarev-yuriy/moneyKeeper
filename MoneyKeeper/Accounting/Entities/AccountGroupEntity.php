@@ -1,6 +1,6 @@
 <?php
 namespace MoneyKeeper\Accounting\Entities;
-use Exception;
+use MoneyKeeper\Exceptions\ValidationException;
 
 /**
  * Account Group Entity class
@@ -28,6 +28,7 @@ class AccountGroupEntity extends ItemEntity {
      * @param string $name
      * @param int $sort
      * @param boolean $active
+     * @throws ValidationException
      */
     public function __construct(
         ?int $id, 
@@ -36,13 +37,17 @@ class AccountGroupEntity extends ItemEntity {
         bool $active = true
     )
     {
+        $errors = [];
         if (strlen($name) == 0) {
-            throw new Exception('Name is required');
+            $errors['name'] = 'Name is required';
         }
         $this->id = $id;
         $this->name = $name;
         $this->sort = $sort;
         $this->active = $active;
+        if (count($errors) >0) {
+            throw new ValidationException($errors);
+        }
     }
 
 

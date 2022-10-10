@@ -78,4 +78,17 @@ class ItemEntity {
     {
         $this->active =  $active;
     }
+
+    /**
+     * Conver Entity to array
+     *
+     * @return array
+     */
+    public function toArray(): array
+    {
+        return [
+            'id' => $this->getId(),
+            'active' => $this->getActive()
+        ];
+    }
 }

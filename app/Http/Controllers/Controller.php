@@ -11,6 +11,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use MoneyKeeper\Accounting\Entities\UserEntity;
+use MoneyKeeper\Exceptions\ValidationException as MoneyKeeperValidationException;
 use Throwable;
 
 class Controller extends BaseController
@@ -27,7 +28,10 @@ class Controller extends BaseController
         $status = 400;
         $errors = [$e->getMessage()];
 
-        if (get_class($e) == ValidationException::class) {
+        if (
+            get_class($e) == ValidationException::class || 
+            get_class($e) == MoneyKeeperValidationException::class
+        ) {
             /**
              * @var ValidationException
              */
@@ -38,6 +42,7 @@ class Controller extends BaseController
         return response()->json(
             [
                 'success' => false,
+                'error' => $e->getMessage(),
                 'errors' => $errors
             ],
             $status 
