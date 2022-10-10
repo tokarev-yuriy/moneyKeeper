@@ -97,5 +97,20 @@ class AccountGroupEntity extends ItemEntity {
     {
         $this->active =  false;
     }
+
+    /**
+     * Return fields
+     *
+     * @return array
+     */
+    public function toArray(): array
+    {
+        return [
+            'id' => $this->getId(),
+            'active' => $this->getActive(),
+            'name' => $this->getName(),
+            'sort' => $this->getSort()
+        ];
+    }
     
 }

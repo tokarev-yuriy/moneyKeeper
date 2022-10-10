@@ -1,6 +1,7 @@
 <?php
 namespace App\MoneyKeeper\Accounting\Repositories;
 
+use App\MoneyKeeper\Models\AccountGroup;
 use Exception;
 use Illuminate\Support\Collection;
 use MoneyKeeper\Accounting\Entities\AccountEntity;
@@ -84,6 +85,10 @@ final class AccountsEloquentRepository implements IAccountsRepository {
   public function getAccountGroups(): Collection
   {
     $groups = new Collection();
+    $list = AccountGroup::where('user_id', '=', $this->user->getId())->get();
+    foreach($list as $model) {
+      $groups->add($model->toEntity());
+    }
     return $groups;
   }
 

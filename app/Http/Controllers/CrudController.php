@@ -32,7 +32,7 @@ abstract class CrudController extends Controller {
             $items = $this->service->getAll();
             return response()->json([
                 'success' => true,
-                'items' => $items
+                'items' => $items->getData()
             ]);
         } catch (Throwable $e) {
             return response()->json([
