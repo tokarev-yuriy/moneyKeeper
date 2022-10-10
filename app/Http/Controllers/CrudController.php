@@ -74,4 +74,21 @@ abstract class CrudController extends Controller {
             return $this->processExceptions($e);
         }
     }
+
+    /**
+     * delete item
+     * 
+     * @return JsonResponse
+     */    
+    public function delete(Request $request, int $id): JsonResponse
+    {
+        try {
+            $item = $this->service->delete($id);
+            return response()->json([
+                'success' => true
+            ]);
+        } catch (Throwable $e) {
+            return $this->processExceptions($e);
+        }
+    }
 }

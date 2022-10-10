@@ -105,10 +105,10 @@ class AccountGroupTest extends TestCase
     }
 
     /**
-     * test for AccountGroupController::add
+     * test for AccountGroupController::update
      *
      * @return void
-     * @covers AccountGroupController::add
+     * @covers AccountGroupController::update
      */
     public function testAccountGroupUpdate()
     {
@@ -170,5 +170,35 @@ class AccountGroupTest extends TestCase
             'user_id' => 1
         ]);
         $this->assertTrue($response['item']['id'] > 0);
+    }
+
+
+    /**
+     * test for AccountGroupController::delete
+     *
+     * @return void
+     * @covers AccountGroupController::delete
+     */
+    public function testAccountGroupDelete()
+    {
+        $response = $this->delete('/app/account/groups/1');
+
+        $response->assertStatus(401);
+        $this->assertFalse($response['success']);
+
+        $user = User::find(2);
+        $response = $this->actingAs($user)->delete('/app/account/groups/1');
+        $response->assertStatus(403);
+        $this->assertFalse($response['success']);
+
+        $user = User::find(1);
+        $response = $this->actingAs($user)->delete('/app/account/groups/1');
+        $response->assertStatus(200);
+        $this->assertTrue($response['success']);
+
+        $user = User::find(1);
+        $response = $this->actingAs($user)->delete('/app/account/groups/11111');
+        $response->assertStatus(404);
+        $this->assertFalse($response['success']);
     }
 }

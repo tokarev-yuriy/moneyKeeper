@@ -119,7 +119,10 @@ final class AccountsEloquentRepository implements IAccountsRepository {
    */
   public function deleteAccountGroup(int $id): bool
   {
-    return false;
+    $group = $this->getAccountGroupById($id);
+    $model = AccountGroup::find($group->getId());
+    $model->delete();
+    return true;
   }
 
   /**

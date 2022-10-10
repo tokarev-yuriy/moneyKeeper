@@ -113,7 +113,7 @@ class AccountGroupServices implements ICrudServices {
     {
         $group = $this->repository->getAccountGroupById($id);
         if ($group->getId()!=$id) {
-            throw new Exception('Account Group not found');
+            throw new NotFoundException('Account Group not found');
         }
         $this->repository->deleteAccountGroup($id);
         return true;

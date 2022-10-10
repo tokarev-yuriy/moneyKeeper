@@ -25,6 +25,7 @@ Route::middleware(['auth'])->group(function () {
             Route::get("account/groups", "list");
             Route::post("account/groups", "add");
             Route::put("account/groups/{id}", "update");
+            Route::delete("account/groups/{id}", "delete");
         });
     });
 });
