@@ -31,14 +31,15 @@
 <script>
 import { accountGroupListService } from "../../api/accountGroup.js";
 import ItemsTable from '../../components/ItemsTable.vue';
-import LoadingMixin from "../../mixins/LoadingMixin.vue"
+import LoadingMixin from "../../mixins/LoadingMixin.vue";
+import ErrorsMixin from "../../mixins/ErrorsMixin.vue"
 
 export default {
   name: "AccountGroupIndex",
   components: {
     ItemsTable,
   },
-  mixins: [LoadingMixin],
+  mixins: [LoadingMixin, ErrorsMixin],
   data() {
     return {
       items: []
@@ -77,7 +78,7 @@ export default {
         let data = await accountGroupListService();
         this.items = data.items;
       } catch (e) {
-        alert(e);
+        this.parseException(e);
       }
     },
     deleteItem(item) {

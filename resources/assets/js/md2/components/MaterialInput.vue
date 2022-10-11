@@ -1,14 +1,14 @@
 <template>
   <div
     class="input-group"
-    :class="`input-group-${variant} ${getStatus(error, success)}`"
+    :class="`input-group-${variant} ${getStatus(error, success, modelValue)}`"
   >
     <label :class="variant === 'static' ? '' : 'form-label'">{{ label }}</label>
     <input
       :id="id"
       :type="type"
       class="form-control"
-      :class="getClasses(size)"
+      :class="getClasses(size, modelValue)"
       :name="name"
       :value="modelValue"
       :placeholder="placeholder"
@@ -58,7 +58,7 @@ export default {
       required: true,
     },
     modelValue: {
-      type: String,
+      type: [Number, String],
       default: "",
     },
     placeholder: {
@@ -78,14 +78,18 @@ export default {
     setMaterialInput();
   },
   methods: {
-    getClasses: (size) => {
+    getClasses: (size, value) => {
       let sizeValue;
 
       sizeValue = size ? `form-control-${size}` : null;
 
-      return sizeValue;
+      let modelValue;
+
+      modelValue = value ? `is-filled` : null;
+
+      return [sizeValue, modelValue].join(' ');
     },
-    getStatus: (error, success) => {
+    getStatus: (error, success, value) => {
       let isValidValue;
 
       if (success) {
@@ -96,7 +100,11 @@ export default {
         isValidValue = null;
       }
 
-      return isValidValue;
+      let modelValue;
+
+      modelValue = value ? `is-filled` : null;
+
+      return [isValidValue, modelValue].join(' ');;
     },
   },
 };

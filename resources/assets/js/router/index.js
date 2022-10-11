@@ -3,7 +3,8 @@ import Login from "../pages/Login.vue";
 import Logout from "../pages/Logout.vue";
 import Register from "../pages/Register.vue";
 import Dashboard from "../pages/Dashboard.vue";
-import AccountGroupIndex from "../pages/AccountGroup/index.vue";
+import AccountGroupIndex from "../pages/AccountGroup/Index.vue";
+import AccountGroupEdit from "../pages/AccountGroup/Edit.vue";
 
 
 const routes = [
@@ -31,6 +32,11 @@ const routes = [
     path: "/account/groups",
     name: "AccountGroupIndex",
     component: AccountGroupIndex
+  },
+  {
+    path: "/account/groups/:id",
+    name: "AccountGroupEdit",
+    component: AccountGroupEdit
   }
 ];
 
