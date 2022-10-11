@@ -5,6 +5,7 @@ import Register from "../pages/Register.vue";
 import Dashboard from "../pages/Dashboard.vue";
 import AccountGroupIndex from "../pages/AccountGroup/Index.vue";
 import AccountGroupEdit from "../pages/AccountGroup/Edit.vue";
+import AccountGroupDelete from "../pages/AccountGroup/Delete.vue";
 
 
 const routes = [
@@ -32,6 +33,11 @@ const routes = [
     path: "/account/groups",
     name: "AccountGroupIndex",
     component: AccountGroupIndex
+  },
+  {
+    path: "/account/groups/:id/delete",
+    name: "AccountGroupDelete",
+    component: AccountGroupDelete
   },
   {
     path: "/account/groups/:id",

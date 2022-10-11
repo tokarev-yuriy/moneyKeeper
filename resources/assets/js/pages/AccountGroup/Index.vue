@@ -25,6 +25,18 @@
         </div>
       </div>
     </div>
+    <div class="position-fixed top-2 end-2 z-index-2" v-if="messages">
+      <material-snackbar
+        v-for="message in messages"
+        :key="message.message"
+        :title="message.message"
+        date=""
+        description=""
+        :icon="{ component: 'done', color: 'white' }"
+        :color="message.type"
+        :closeHandler="closeMessage"
+      />
+    </div>
   </div>
 </template>
 
@@ -42,7 +54,7 @@ export default {
   mixins: [LoadingMixin, ErrorsMixin],
   data() {
     return {
-      items: []
+      items: [],
     }
   },
   computed: {
@@ -71,6 +83,7 @@ export default {
   },
   mounted() {
     this.getData();
+    this.readMessages();
   },
   methods: {
     async getData() {
@@ -82,7 +95,7 @@ export default {
       }
     },
     deleteItem(item) {
-      this.$router.push({path: '/account/groups/' + item.id});
+      this.$router.push({path: '/account/groups/' + item.id + '/delete'});
     },
     editItem(item) {
       this.$router.push({path: '/account/groups/' + item.id});

@@ -1,9 +1,11 @@
 import { createStore } from "vuex";
 import authStore from "./auth";
+import messagesStore from "./messages";
 
 export default createStore({
   modules: {
-    auth: authStore
+    auth: authStore,
+    messages: messagesStore,
   },
   state: {
     hideConfigButton: false,

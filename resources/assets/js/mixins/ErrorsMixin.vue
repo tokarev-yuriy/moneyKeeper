@@ -1,13 +1,19 @@
 <template></template>
 
 <script>
+import MaterialSnackbar from "../md2/components/MaterialSnackbar.vue";
+
 export default {
   name: "LoadingMixin",
+  components: {
+    MaterialSnackbar,
+  },
   data() {
     return {
       errors: {},
       error: '',
       success: '',
+      messages: [],
     }
   },
   methods: {
@@ -44,6 +50,17 @@ export default {
     },
     closeSuccess() {
       this.success = '';
+    },
+    readMessages() {
+      let messages = this.$store.getters['messages/get'];
+      this.messages = [...messages];
+      this.$store.dispatch('messages/clean');
+      setTimeout(() => {
+        this.closeMessage();
+      }, 2000)
+    },
+    closeMessage() {
+      this.messages = [];
     }
   },
 };

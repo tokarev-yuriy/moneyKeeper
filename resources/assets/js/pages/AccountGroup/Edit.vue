@@ -107,10 +107,18 @@ export default {
         let data;
         if (this.id == 'new') {
           data = await accountGroupAddService(this.item);
-          this.showSuccess('Account group has been added');
+          this.$store.dispatch('messages/add', {
+            type: 'info',
+            message: 'Account group has been added'
+          });
+          this.$router.push({path: '/account/groups'});
         } else {
           data = await accountGroupUpdateService(this.id, this.item);
-          this.showSuccess('Account group has been updated');
+          this.$store.dispatch('messages/add', {
+            type: 'info',
+            message: 'Account group has been updated'
+          });
+          this.$router.push({path: '/account/groups'});
         }
         this.item = data.item;
       } catch (e) {
