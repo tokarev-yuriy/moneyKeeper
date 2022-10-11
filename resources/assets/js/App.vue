@@ -49,7 +49,7 @@ export default {
     if (window.innerWidth > 1200) {
       sidenav.classList.add("g-sidenav-pinned");
     }
-    activateDarkMode();
+    //activateDarkMode();
   },
 };
 </script>

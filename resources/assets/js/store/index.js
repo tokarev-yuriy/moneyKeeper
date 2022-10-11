@@ -64,7 +64,7 @@ export default createStore({
     },
     async init({ state, dispatch }) {
       state.isTransparent = "bg-transparent";
-      state.isDarkMode = true;
+      state.isDarkMode = false;
       state.color = "primary";
       await dispatch('auth/init', {}, {root: true});
     },
