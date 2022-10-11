@@ -19,17 +19,23 @@
           <td class="align-middle w-10">
             <a 
               v-if="item['actions'] && item['actions']['edit']"
-              class="btn btn-link text-white px-3 mb-0 py-0" 
-              href="javascript:;" @click="editItem(item)">
-              <i class="fas fa-pencil-alt text-white me-2" aria-hidden="true"></i>Edit 
+              @click="editItem(item)"
+              rel="tooltip" 
+              class="btn btn-success btn-link" 
+              href="javascript: void(0);"
+            >
+              <i class="material-icons">edit</i>
+              <div class="ripple-container"></div>
             </a>
-            <br>
-            <a
+            <button 
               v-if="item['actions'] && item['actions']['delete']" 
-              class="btn btn-link text-danger text-gradient px-3 mb-0 py-0" 
-              href="javascript:;" @click="deleteItem(item)">
-              <i class="far fa-trash-alt me-2" aria-hidden="true"></i>Delete 
-            </a>
+              type="button" 
+              class="btn btn-danger btn-link ms-1"
+              @click="deleteItem(item)"
+            >
+              <i class="material-icons">close</i>
+              <div class="ripple-container"></div>
+            </button>
           </td>
         </tr>
       </tbody>

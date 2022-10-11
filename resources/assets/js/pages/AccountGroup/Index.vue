@@ -8,6 +8,13 @@
               <div class="bg-gradient-success shadow-success border-radius-lg pt-4 pb-3">
                 <h6 class="text-white text-capitalize ps-3">Account Groups</h6>
               </div>
+              <div class="row mt-3">
+                <div class="col-12 text-end">
+                  <button class="btn mb-0 bg-gradient-dark btn-md" @click="addItem">
+                    <i class="fas fa-plus me-2" aria-hidden="true"></i> Add New Account Group
+                  </button>
+                </div>
+              </div>
             </div>
             <div class="card-body px-0 pb-2" v-if="items">
               <div class="table-responsive p-0">
@@ -15,13 +22,6 @@
               </div>
             </div>
           </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-12 text-end">
-          <button class="btn mb-0 bg-gradient-success btn-md btn-success" @click="addItem">
-            <i class="fas fa-plus me-2" aria-hidden="true"></i> Add New Account Group
-          </button>
         </div>
       </div>
     </div>
