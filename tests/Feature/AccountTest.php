@@ -112,13 +112,13 @@ class AccountTest extends TestCase
      */
     public function testAccountUpdate()
     {
-        $response = $this->put('/app/accounts');
+        $response = $this->put('/app/accounts/1');
 
         $response->assertStatus(401);
         $this->assertFalse($response['success']);
 
         $user = User::find(2);
-        $response = $this->actingAs($user)->put('/app/accounts',
+        $response = $this->actingAs($user)->put('/app/accounts/1',
             [
             'name' => 'test add',
             ]

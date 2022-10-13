@@ -1,6 +1,7 @@
 <?php
 namespace MoneyKeeper\Accounting\ValueObjects;
 use Exception;
+use MoneyKeeper\Exceptions\ValidationException;
 
 /**
  * Account Description Value class
@@ -21,17 +22,21 @@ class AccountDescriptionValue extends ItemDescriptionValue {
      * @param string $icon
      * @param string $color
      * @param integer $sort
-     * @throws Exception
+     * @throws ValidationException
      */
     public function __construct(string $name, string $icon, string $color, int $sort)
     {
+        $errors = [];
         if (strlen($name)==0) {
-            throw new Exception('Account name is required');
+            $errors['name'] = 'Account name is required';
         }
         $this->name = $name;
         $this->icon = $icon;
         $this->color = $color;
         $this->sort = $sort;
+        if (count($errors) > 0) {
+            throw new ValidationException($errors);
+        }
     }
 
     /**

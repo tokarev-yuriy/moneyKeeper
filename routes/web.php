@@ -20,13 +20,22 @@ Route::any('/', 'DashboardController@anyIndex');
 
 Route::middleware(['auth'])->group(function () {
     Route::prefix('app')->group(function(){
-        // Accounht group
+        // Account group
         Route::controller(AccountGroupController::class)->group(function(){
             Route::get("account/groups", "list");
             Route::get("account/groups/{id}", "get");
             Route::post("account/groups", "add");
             Route::put("account/groups/{id}", "update");
             Route::delete("account/groups/{id}", "delete");
+        });
+
+        // Account
+        Route::controller(AccountController::class)->group(function(){
+            Route::get("accounts", "list");
+            Route::get("accounts/{id}", "get");
+            Route::post("accounts", "add");
+            Route::put("accounts/{id}", "update");
+            Route::delete("accounts/{id}", "delete");
         });
     });
 });
