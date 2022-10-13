@@ -11,6 +11,7 @@ final class RegistryController extends Controller {
     public function registry(): JsonResponse
     {
         return response()->json([
+            'success' => true,
             'icons' => [
                 'coins',
                 'wallet',   
