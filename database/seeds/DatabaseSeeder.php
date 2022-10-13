@@ -1,6 +1,7 @@
 <?php
 
 use Database\Seeders\AccountGrpoupsSeeder;
+use Database\Seeders\AccountsSeeder;
 use Database\Seeders\UserSeeder;
 use Illuminate\Database\Seeder;
 
@@ -15,7 +16,8 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             UserSeeder::class,
-            AccountGrpoupsSeeder::class
+            AccountGrpoupsSeeder::class,
+            AccountsSeeder::class,
         ]);
     }
 }
