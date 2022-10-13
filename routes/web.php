@@ -37,6 +37,11 @@ Route::middleware(['auth'])->group(function () {
             Route::put("accounts/{id}", "update");
             Route::delete("accounts/{id}", "delete");
         });
+
+        // Registry for acounts
+        Route::controller(RegistryController::class)->group(function(){
+            Route::get("registry", "registry");
+        });
     });
 });
 
