@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use MoneyKeeper\Accounting\Entities\UserEntity;
 
 class User extends Authenticatable
 {
@@ -26,4 +27,9 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function toEntity(): UserEntity
+    {
+        return new UserEntity($this->id, $this->email, $this->name);
+    }
 }

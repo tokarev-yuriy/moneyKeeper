@@ -16,6 +16,36 @@ use App\Http\Controllers\SpaController;
 use Illuminate\Support\Facades\Route;
 
 Route::any('/', 'DashboardController@anyIndex');
+
+
+Route::middleware(['auth'])->group(function () {
+    Route::prefix('app')->group(function(){
+        // Account group
+        Route::controller(AccountGroupController::class)->group(function(){
+            Route::get("account/groups", "list");
+            Route::get("account/groups/{id}", "get");
+            Route::post("account/groups", "add");
+            Route::put("account/groups/{id}", "update");
+            Route::delete("account/groups/{id}", "delete");
+        });
+
+        // Account
+        Route::controller(AccountController::class)->group(function(){
+            Route::get("accounts", "list");
+            Route::get("accounts/{id}", "get");
+            Route::post("accounts", "add");
+            Route::put("accounts/{id}", "update");
+            Route::delete("accounts/{id}", "delete");
+        });
+
+        // Registry for acounts
+        Route::controller(RegistryController::class)->group(function(){
+            Route::get("registry", "registry");
+        });
+    });
+});
+
+
 Route::get('/wallet/{walletId}', 'DashboardController@anyIndex');
 Route::post('/wallet/{walletId}', 'DashboardController@anyIndex');
 

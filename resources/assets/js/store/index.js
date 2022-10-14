@@ -1,9 +1,13 @@
 import { createStore } from "vuex";
 import authStore from "./auth";
+import messagesStore from "./messages";
+import registryStore from "./registry";
 
 export default createStore({
   modules: {
-    auth: authStore
+    auth: authStore,
+    messages: messagesStore,
+    registry: registryStore,
   },
   state: {
     hideConfigButton: false,
@@ -64,9 +68,10 @@ export default createStore({
     },
     async init({ state, dispatch }) {
       state.isTransparent = "bg-transparent";
-      state.isDarkMode = true;
+      state.isDarkMode = false;
       state.color = "primary";
       await dispatch('auth/init', {}, {root: true});
+      await dispatch('registry/init', {}, {root: true});
     },
   },
   getters: {},

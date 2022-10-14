@@ -4,10 +4,10 @@
       <div class="container my-auto">
         <div class="row">
           <div
-            class="col-lg-4 col-md-8 col-12 mx-auto"
+            class="col-lg-6 col-md-12 col-12 mx-auto"
           >
-            <div class="card card-plain">
-              <div class="pb-0 card-header bg-transparent mb-4">
+            <div class="card card-body mt-3">
+              <div class="pb-0 card-header bg-wgite mb-4">
                 <h4 class="font-weight-bolder">Register</h4>
                 <p class="mb-0">
                   Enter your email and password to register
@@ -155,6 +155,7 @@ export default {
           password: this.password
         });
         await this.$store.dispatch('auth/init');
+        await this.$store.dispatch('registry/init');
         this.$router.push({path: '/'});
       } catch(error) {
         this.errors = error.errors;

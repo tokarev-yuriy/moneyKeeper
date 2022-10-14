@@ -2,7 +2,7 @@
   <div
     class="page-header align-items-start min-vh-100"
   >
-    <span class="mask bg-gradient-dark opacity-6"></span>
+    <span class="mask bg-gradient-white opacity-6"></span>
     <div class="container my-auto">
       <div class="row">
         <div class="col-lg-4 col-md-8 col-12 mx-auto">
@@ -119,6 +119,7 @@ export default {
           password: this.password
         });
         await this.$store.dispatch('auth/init');
+        await this.$store.dispatch('registry/init');
         this.$router.push({path: '/'});
       } catch(error) {
         this.errors = error.errors;
