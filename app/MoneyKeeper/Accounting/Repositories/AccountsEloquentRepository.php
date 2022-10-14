@@ -1,14 +1,13 @@
 <?php
 namespace App\MoneyKeeper\Accounting\Repositories;
 
+use App\MoneyKeeper\Models\Account;
 use App\MoneyKeeper\Models\AccountGroup;
-use Exception;
 use Illuminate\Support\Collection;
 use MoneyKeeper\Accounting\Entities\AccountEntity;
 use MoneyKeeper\Accounting\Entities\AccountGroupEntity;
 use MoneyKeeper\Accounting\Entities\UserEntity;
 use MoneyKeeper\Accounting\Repositories\IAccountsRepository;
-use MoneyKeeper\Accounting\ValueObjects\AccountDescriptionValue;
 use MoneyKeeper\Exceptions\ForbiddenException;
 use MoneyKeeper\Exceptions\NotFoundException;
 
@@ -41,8 +40,12 @@ final class AccountsEloquentRepository implements IAccountsRepository {
    */
   public function getAccounts(?AccountGroupEntity $group = null): Collection
   {
-    $accounts = new Collection();
-    return $accounts;
+    $items = new Collection();
+    $list = Account::where('user_id', '=', $this->user->getId())->get();
+    foreach($list as $model) {
+      $items->add($model->toEntity());
+    }
+    return $items;
   }
 
   /**
@@ -53,8 +56,13 @@ final class AccountsEloquentRepository implements IAccountsRepository {
    */
   public function getAccountById(int $id): AccountEntity
   {
-    throw new Exception('Account not found');
-    return new AccountEntity(null, new AccountDescriptionValue('', '', '', 0));
+    $model = Account::find($id);
+    if (!$model) {
+      throw new NotFoundException('Account not found');
+    } elseif ($model->user_id != $this->user->getId()) {
+      throw new ForbiddenException("Account is forbidden");
+    }
+    return $model->toEntity();
   }
 
   /**
@@ -65,7 +73,10 @@ final class AccountsEloquentRepository implements IAccountsRepository {
    */
   public function deleteAccount(int $id): bool
   {
-    return false;
+    $group = $this->getAccountById($id);
+    $model = Account::find($group->getId());
+    $model->delete();
+    return true;
   }
 
   /**
@@ -76,7 +87,21 @@ final class AccountsEloquentRepository implements IAccountsRepository {
    */
   public function saveAccount(AccountEntity $account): AccountEntity
   {
-    return $account;
+    $model = new Account();
+    if ($account->getId() > 0) {
+      $model = Account::find($account->getId());
+      if (!$model || $model->user_id != $this->user->getId()) {
+        throw new ForbiddenException("Account is forbidden");
+      }
+    }
+
+    $model->user_id = $this->user->getId();
+    $model->name = $account->getDescription()->getName();
+    $model->sort = $account->getDescription()->getSort();
+    $model->icon = $account->getDescription()->getIcon();
+    $model->save();
+
+    return $model->toEntity();
   }
 
   /**

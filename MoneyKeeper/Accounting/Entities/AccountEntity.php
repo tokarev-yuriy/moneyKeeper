@@ -53,5 +53,21 @@ class AccountEntity extends ItemEntity {
     {
         $this->description =  $description;
     }
+
+    /**
+     * Return fields
+     *
+     * @return array
+     */
+    public function toArray(): array
+    {
+        return [
+            'id' => $this->getId(),
+            'active' => $this->getActive(),
+            'name' => $this->getDescription()->getName(),
+            'sort' => $this->getDescription()->getSort(),
+            'icon' => $this->getDescription()->getIcon(),
+        ];
+    }
     
 }
