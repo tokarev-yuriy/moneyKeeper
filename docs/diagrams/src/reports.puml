@@ -1,0 +1,29 @@
+@startuml
+
+title Reports SubDomain - Class Diagram
+
+folder Entities {
+  entity CategoryEntity
+  entity AccountEntity
+  enum TransactionType
+}
+
+folder Repositories {
+  class ReportsRepository
+}
+
+folder Services {
+  class ReportsService {
+    reportByAccount()
+    reportByCategories()
+    reportByTypes()
+  }
+  class DashboardService {
+    getByAccounts()
+    getByCategories()
+    getByTypes()
+    getPlan()
+  }
+}
+
+@enduml

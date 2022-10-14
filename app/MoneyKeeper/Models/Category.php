@@ -62,14 +62,37 @@ class Category extends UserRelative {
      * @return <type>
      */    
     public static function getCategoryIcons () {
-        $arIcons = array();
-        $files = scandir(public_path().'/img/categories/');
-        foreach ($files as $filename) {
-           $arInfo = pathinfo(public_path().'/img/categories/'.$filename); 
-           if ($arInfo['extension']=='svg') {
-               $arIcons[$arInfo['filename']] = '/img/categories/'.$filename;
-           }
-        }
+        $arIcons = [];
+        $arIcons['car'] = 'fas fa-car';
+        $arIcons['tv'] = 'fas fa-tv';
+        $arIcons['shopping-basket'] = 'fas fa-shopping-basket';
+        $arIcons['child'] = 'fas fa-child';
+        $arIcons['phone'] = 'fas fa-phone';
+        $arIcons['plane'] = 'fas fa-plane';
+        $arIcons['gift'] = 'fas fa-gift';
+        $arIcons['utensils'] = 'fas fa-utensils';
+        $arIcons['pump-soap'] = 'fas fa-pump-soap';
+        $arIcons['tshirt'] = 'fas fa-tshirt';
+        $arIcons['glass-cheers'] = 'fas fa-glass-cheers';
+        $arIcons['hand-holding-medical'] = 'fas fa-hand-holding-medical';
+        $arIcons['laptop-house'] = 'fas fa-laptop-house';
+        $arIcons['couch'] = 'fas fa-couch';
+        $arIcons['user-tie'] = 'fas fa-user-tie';
+        $arIcons['tools'] = 'fas fa-tools';
+        $arIcons['swimmer'] = 'fas fa-swimmer';
+        $arIcons['cocktail'] = 'fas fa-cocktail';
+        $arIcons['globe'] = 'fas fa-globe';
+        $arIcons['code'] = 'fas fa-code';
+        $arIcons['laptop-code'] = 'fas fa-laptop-code';
+        $arIcons['diagnoses'] = 'fas fa-diagnoses';
+        $arIcons['hands'] = 'fas fa-hands';
+        $arIcons['wrench'] = 'fas fa-wrench';
+        $arIcons['weight-hanging'] = 'fas fa-weight-hanging';
+        $arIcons['certificate'] = 'fas certificate';
+        $arIcons['magic'] = 'fas magic';
+        $arIcons['female'] = 'fas female';
+        $arIcons['taxi'] = 'fas taxi';
+        $arIcons['apple'] = 'fas apple';
         return $arIcons;
     }
 

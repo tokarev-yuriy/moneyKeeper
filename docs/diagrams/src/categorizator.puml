@@ -1,0 +1,21 @@
+@startuml
+
+title Categorizator SubDomain - Class Diagram
+
+folder Entities {
+  entity CategoryEntity
+  entity TransactionEntity
+}
+
+folder Repositories {
+  class CategoriesRepository
+}
+
+folder Services {
+  class CategorizatorService {
+    predictCategory()
+    confirmCategory()
+  }
+}
+
+@enduml

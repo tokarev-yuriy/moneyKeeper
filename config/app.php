@@ -177,6 +177,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
+        App\Providers\TranslationServiceProvider::class,
 
     ],
 
@@ -230,6 +231,7 @@ return [
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
         'Number' => App\MoneyKeeper\Helpers\Number::class,
+        'Input' => Illuminate\Support\Facades\Request::class,
     ],
 
 ];

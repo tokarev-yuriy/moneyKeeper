@@ -1,0 +1,72 @@
+@startuml
+
+title Accounting SubDomain - Class Diagram
+
+folder Entities {
+  enum TransactionType {
+    income,
+    spend,
+    transfer
+  }
+  entity UserEntity
+  entity CategoryEntity
+  entity AccountEntity
+  entity AccountGroupEntity
+  entity TransactionEntity
+}
+
+folder Repositories {
+  interface IAccountsRepository {
+    getAccounts();
+    getAccountById();
+    deleteAccount();
+    saveAccount();
+    getAccountGroups();
+    getAccountGroupById();
+    deleteAccountGroup();
+    saveAccountGroup();
+  }
+  class CategoriesRepository
+  class TransactionsRepository
+}
+
+folder Services {
+  class AccountsService {
+    getById()
+    getAll()
+    getAllByGroup()
+    update()
+    add()
+    delete()
+  }
+
+  class AccountsGroupService {
+    getById()
+    getAll()
+    update()
+    add()
+    delete()
+  }
+
+  class CategoriesService {
+    getById()
+    getAll()
+    getAllByType()
+    update()
+    add()
+    delete()
+  }
+
+  class TransactionsService {
+    getById()
+    getByFilter()
+    update()
+    add()
+    delete()
+    import()
+  }
+
+  interface IImport
+}
+
+@enduml

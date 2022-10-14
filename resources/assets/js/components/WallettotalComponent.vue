@@ -1,6 +1,6 @@
 <template>
     <div class="container-fluid" id="wallets-sum">
-    <slick ref="slick" :options="slickOptions">
+    <slick ref="slick" :options="slickOptions" @setPosition="setPosition">
         <div class="card" v-for="group in groups">
             <h3 class="group-title text-nowrap">
                 {{group.name}} 
@@ -8,7 +8,7 @@
             </h3>
             <div class="wallet" v-for="item in group.items" @click="editItem(item.id)">
               <div class="wallet-img" v-if="item.icon">
-                  <i :class="item.icon" :alt="item.name"></i>
+                  <i :class="item.icon" :alt="item.name" :style="'color: #'+item.color"></i>
               </div>
               <span class="wallet-title text-nowrap">{{item.name}}</span>
               <span class="wallet-summ" :class="{'text-info': (item.value==0), 'text-success': (item.value>0), 'text-danger': (item.value<0)}">{{item.value | numberf}}</span>
@@ -32,31 +32,44 @@
                   arrows: false,
                   infinite: false,
                   slidesToShow: 1,
-                  variableWidth: true
+                  variableWidth: true,
+                  
                 },
+                period: false,
                 groups:[]
             };
         },
         mounted() {
-            this.load()
+            var self = this;
+            this.load();
+            this.$root.$on('operation.changed', data => {this.load();});
+            this.$root.$on('wallet.changed', data => {this.load();});
+            this.$root.$on('period.changed', data => {
+                let lastDay = new Date(data.getFullYear(), data.getMonth()+1, 0);
+                self.period = lastDay.getFullYear()+'-'+(lastDay.getMonth()<9?'0':'')+(lastDay.getMonth()+1)+'-'+lastDay.getDate();
+                self.load();
+            });
         },
         methods: {
             /**
              *  Загрузка зон
              */
             load: function () {
-            
-                if (this.$refs.slick) {
-                    this.$refs.slick.destroy();
+                let url = '/account/stat/wallets';
+                if (this.period) {
+                    url = url+'/'+this.period;
                 }
-            
                 axios
-                    .get('/account/stat/wallets')
+                    .get(url)
                     .then((response) => {
+                        if (this.$refs.slick) {
+                            this.$refs.slick.destroy();
+                        }
                         this.groups = response.data['groups'];
                         this.$nextTick(function () {
                             if (this.$refs.slick) {
                                 this.$refs.slick.create(this.slickOptions);
+                                this.$refs.slick
                             }
                         });
                     })
@@ -65,7 +78,21 @@
              *  Редактирование записи
              */
             editItem: function (id) {
-                document.location='/wallet/'+id;
+                
+            },
+            /**
+             *  SetPosition handle
+             */
+            setPosition: function(event, slick) {
+                var slickTrack = $(slick.$slideTrack);
+                var slickTrackHeight = 0;
+                $(slickTrack).find('.slick-slide .card').each(function(){
+                    if ($(this).height()>slickTrackHeight) {
+                        slickTrackHeight = $(this).height();
+                    }
+                });
+                
+                $(slickTrack).find('.slick-slide .card').css('height', slickTrackHeight + 'px');
             }
         }
     }

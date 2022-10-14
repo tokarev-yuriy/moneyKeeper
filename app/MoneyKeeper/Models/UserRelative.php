@@ -26,5 +26,34 @@ class UserRelative extends Model {
     {
         return $query->where('user_id', '=', Auth::id());
     }
+    
+    /**
+     * Заготовка по фильтрации по активности даты
+     * 
+     * @param <type> $query 
+     * @param <type> $periodFrom 
+     * @param <type> $periodTo 
+     * 
+     * @return <type>
+     */    
+    public function scopeActiveDate($query, $periodFrom, $periodTo = false)
+    {
+        return $query->where(function($query) use ($periodFrom, $periodTo) {
+            $query
+                ->where(function($query) use ($periodFrom, $periodTo) {
+                    if ($periodTo) {
+                        $query->whereNull('active_from')
+                            ->orWhere('active_from','<=',$periodTo);
+                    } else {
+                        $query->whereNull('active_from')
+                            ->orWhere('active_from','<=',$periodFrom);
+                    }
+                })
+                ->where(function($query) use ($periodFrom, $periodTo) {
+                    $query->whereNull('active_to')
+                          ->orWhere('active_to','>=',$periodFrom);
+                });
+        });
+    }
 
 }

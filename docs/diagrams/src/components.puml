@@ -1,0 +1,37 @@
+@startuml
+
+title Money Keeper Component Diagram
+
+database MySQL as da
+component SPA as spa
+component MobileApp as mapp
+
+package "Application" {
+  folder SubDomains as domains {
+    component Accounting as accounting
+    component Plans as plans
+    component Reports as report
+    component Categorizator as catr
+    component Integration as int
+    interface IImporter as ii
+    plans --> accounting : use
+    catr --> accounting : use
+    report -> accounting : use
+    report -> plans : use
+    catr <-- int
+    ii <- int
+    accounting - ii
+  }
+  interface REST as rest
+  component Laravel as laravel
+  
+  rest - laravel
+  domains -- laravel
+}
+
+laravel --> da : use
+spa --> rest : use
+mapp -> rest : use
+
+
+@enduml

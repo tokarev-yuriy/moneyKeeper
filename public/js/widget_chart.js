@@ -10,9 +10,13 @@ WidgetChart = function (id, url) {
     this.chart = false;
     this.container = $('#'+this.id);
     this.chartType = $(this.container).attr('data-chart-type');
+    this.lazyLoad = false;
     
     if ($('.filter form').length>0) {
         this.url += '?'+$('.filter form').serialize();
+    }
+    if ($(this.container).attr('data-lazy-load')) {
+        this.lazyLoad = true;
     }
     
     this.init();
@@ -20,7 +24,7 @@ WidgetChart = function (id, url) {
 
 WidgetChart.prototype = {
     
-    init: function() {
+    load: function() {
         var self = this;
         
         if (self.chartType=='area') {
@@ -226,7 +230,7 @@ WidgetChart.prototype = {
         } );
     },
     
-    load: function() {
+    init: function() {
         var self = this;    
     },
     

@@ -40,23 +40,46 @@ class Wallet extends UserRelative {
             $arIcons['pound-sign'] = 'fas fa-pound-sign';
             $arIcons['euro-sign'] = 'fas fa-euro-sign';
             $arIcons['dollar-sign'] = 'fas fa-dollar-sign';
+            $arIcons['briefcase'] = 'fas fa-briefcase';
+            $arIcons['gem'] = 'fas fa-gem';
+            $arIcons['home'] = 'fas fa-home';
+            $arIcons['landmark'] = 'fas fa-landmark';
+            $arIcons['money-bill'] = 'fas fa-money-bill';
+            $arIcons['money-check'] = 'fas fa-money-check';
+            $arIcons['store-alt'] = 'fas fa-store-alt';
             return $arIcons;
-	}
-	
-	/**
-	 * Returns possible wallet colors
-	 * 
-	 * 
-	 * @return <type>
-	 */    
-	public static function getColorList () {
-		return array(
-			'fff' => '&nbsp;',
-			'f1ece9' => '&nbsp;',
-			'f9e3be' => '&nbsp;',
-			'b8ccc6' => '&nbsp;',
-		);
-	}
+    }
+
+    /**
+     * Returns possible wallet colors
+     * 
+     * 
+     * @return <type>
+     */    
+    public static function getColorList () {
+        return array(
+            'fff' => '&nbsp;', // white
+            'b71c1c' => '&nbsp;', // red
+            '880e4f' => '&nbsp;', // pink
+            '4a148c' => '&nbsp;', // purple
+            '311b92' => '&nbsp;', // deeppurple
+            '1a237e' => '&nbsp;', // indigo
+            '0d47a1' => '&nbsp;', // blue
+            '01579b' => '&nbsp;', // lightBlue
+            '006064' => '&nbsp;', // cyan
+            '004d40' => '&nbsp;', // teal
+            '1b5e20' => '&nbsp;', // green
+            '33691e' => '&nbsp;', // lightGreen
+            '827717' => '&nbsp;', // lime
+            'f57f17' => '&nbsp;', // yellow
+            'e65100' => '&nbsp;', // orange
+            '3e2723' => '&nbsp;', // brown
+            '212121' => '&nbsp;', // grey
+            '263238' => '&nbsp;', // blueGrey
+            '607d8b' => '&nbsp;', // blueGrey2
+            '111111' => '&nbsp;', // black
+        );
+    }
     
     /**
      * Returns available user's Wallet groups

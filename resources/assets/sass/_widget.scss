@@ -33,27 +33,29 @@
 }
 
 .category-icon {
-    width: 60px;
-    height: 60px;
+    width: 4rem;
+    height: 4rem;
     display: inline-block;
     margin: auto;
     float: left;
-    margin-right: 10px;
+    margin-right: 0.4rem;
+    text-align: center;
 
-    img {
-        filter: invert(100%);
-        -webkit-filter: invert(100%);
-        width: 70%;
-        height: 100%;
-        margin-left: 15%;
+    i {
+        font-size: 1.5rem;
+        line-height: 4rem;
     }
 }
 
 @media (max-width: 576px) {
     .category-icon {
-        width: 45px;
-        height: 45px;
-        margin-right: 5px;
+        width: 3rem;
+        height: 3rem;
+        margin-right: 0.2rem;
+        i {
+            font-size: 1.5rem;
+            line-height: 3rem;
+        }
     }
     
     #operationsList {
@@ -65,13 +67,13 @@
 }
 .wallet {
     position: relative;
-    padding-left: 50px;
-    line-height: 40px;
+    padding-left: 3rem;
+    line-height: 2rem;
     .wallet-img {
-        width: 40px;
+        width: 3rem;
         position: absolute;
-        left: 5px;
-        font-size: 25px;
+        left: 0.2rem;
+        font-size: 1.3rem;
         text-align: center;
     }
 }
@@ -93,8 +95,10 @@
     padding-right: 0px;
     .card {
         margin-top: 0px;
-        padding-right: 10px;
-        min-width: 250px;
+        padding-right: 1rem;
+        min-width: 15rem;
+        border-radius: 0!important;
+        margin-bottom: 1rem;
     }
     .slick-slide {
         margin-right: 10px;
@@ -104,32 +108,54 @@
 #categories-plan {
     margin-top: 20px;
 }
-.categories-widget.card {
-    position: relative;
-    width: auto;
-    text-align: left;
-    margin-right: 10px;
-    padding: 10px;
-    margin-top: 0px;
-    cursor: pointer;
-    min-width: 155px;
-}
 .categories-widget {
+    &.card {
+        position: relative;
+        width: auto;
+        text-align: left;
+        margin-right: 1rem;
+        padding: 0.5rem 1rem 1rem;
+        margin-top: 0;
+        cursor: pointer;
+        min-width: 10rem;
+        margin-bottom: 1rem;
+        border-radius:0!important;
+    }
     .categories-icon {
-        width: 40px;
+        width: 3rem;
         position: absolute;
-        left: 5px;
-        img {
-            width: 100%;
+        left: 0;
+        text-align: center;
+        i {
+            font-size: 1.5rem!important;
+            line-height: 3rem;
         }
     }
-    .progress .progress-bar {
+    .progress {
+        height: 0.2rem;
+        position: absolute;
+        bottom: 0;
         width: 100%;
+        left: 0;
+        .progress-bar {
+            width: 100%;
+        }
     }
     .categories-info {
       font-weight: bold;
       white-space: nowrap;
-      margin-left: 50px;
+      margin-left: 2rem;
+    }
+}
+
+@media (max-width: 412px) {
+    .categories-widget {
+        &.card {
+            margin-right: 0.5rem;
+            &:nth-child(even) {
+                margin-right: 0rem;
+            }
+        }
     }
 }
 

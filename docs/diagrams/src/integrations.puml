@@ -1,0 +1,18 @@
+@startuml
+
+title Integration SubDomain - Class Diagram
+
+folder Entities {
+  entity TransactionEntity
+  entity AccountEntity
+}
+
+folder Repositories {
+  class IntegrationsRepository
+}
+
+folder Services {
+  class IntegrationFabricService
+}
+
+@enduml

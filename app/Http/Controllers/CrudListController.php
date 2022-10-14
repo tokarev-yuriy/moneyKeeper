@@ -149,10 +149,10 @@ class CrudListController extends Controller {
      * @return <type>
      */    
     protected function __processItem($obItem) {
-        $validator = Validator::make(Input::all(), $this->__getValidators());		
+        $validator = Validator::make(Input::all(), $this->__getValidators());
         if(!$validator->fails())
         {
-            $obItem = $this->__populateItem($obItem);            
+            $obItem = $this->__populateItem($obItem);
             $obItem->save();
             if (Request::ajax()) {
                 return '';
@@ -162,6 +162,9 @@ class CrudListController extends Controller {
         
         $messages = $validator->messages();
         
+         if (Request::wantsJson()) {
+             return ['errors' => $messages];
+         }
          if (Request::ajax()) {
             return view($this->__getView('form'), array(
                 'errors' => $messages,

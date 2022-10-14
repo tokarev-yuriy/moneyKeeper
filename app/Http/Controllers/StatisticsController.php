@@ -7,7 +7,7 @@ use App\MoneyKeeper\Models\Wallet;
 use App\MoneyKeeper\Models\WalletGroup;
 use App\MoneyKeeper\Models\Operation;
 use App\MoneyKeeper\Models\Plan;
-use View, Input, Session, Config, Request, Auth, Validator, Redirect, DB;
+use View, Input, Config, Request, Auth, Validator, Redirect, DB;
 
 /**
  *  Statistics controller
@@ -33,15 +33,26 @@ class StatisticsController extends Controller {
      * 
      * @return <type>
      */	
-	public function getWallets()
+	public function getWallets($period = false)
 	{
         
-        $arWallets = Wallet::user()->orderBy('sort','asc')->get();
+        if ($period) {
+			$period = strtotime($period);
+		} else {
+			$period = time();
+		}
+        
+        $arWallets = Wallet::user()->where('active', 1)->orderBy('sort','asc')->get();
        
         $arDbIncomes = Operation::select(DB::raw('sum(value) as sum, wallet_to_id'))->
                 user()->
-                groupBy('wallet_to_id')->
-                get();
+                where('year','<',date('Y', $period))->
+                orWhere(function($query) use ($period) {
+                    $query->where('year', date('Y', $period))
+                          ->where('month', '<=', date('m', $period));
+                })->
+                groupBy('wallet_to_id')
+                ->get();
         $arIncomes = array();        
         foreach ($arDbIncomes as $obIncome) {
             $arIncomes[$obIncome->wallet_to_id] = $obIncome->sum;
@@ -49,8 +60,13 @@ class StatisticsController extends Controller {
                 
         $arDbSpends = Operation::select(DB::raw('sum(value) as sum, wallet_from_id'))->
                 user()->
-                groupBy('wallet_from_id')->
-                get();
+                where('year','<',date('Y', $period))->
+                orWhere(function($query) use ($period) {
+                    $query->where('year', date('Y', $period))
+                          ->where('month', '<=', date('m', $period));
+                })->
+                groupBy('wallet_from_id')
+                ->get();
         $arSpends = array();
         foreach ($arDbSpends as $obSpend) {
             $arSpends[$obSpend->wallet_from_id] = $obSpend->sum;
@@ -99,6 +115,11 @@ class StatisticsController extends Controller {
             if (!$obWallet->group_id) {
                 $arWalletGroups['others']['items'][] = $obWallet;
                 $arWalletGroups['others']['summ'] += $obWallet->value;
+            }
+        }
+        foreach($arWalletGroups as $k=>$arGroup) {
+            if (count($arGroup['items'])==0) {
+                unset($arWalletGroups[$k]);
             }
         }
         
@@ -371,6 +392,19 @@ class StatisticsController extends Controller {
             $arCategories[$fieldName] = $fieldName;
         }
         
+        
+        if ($field=='type') {
+            $balance = 0;
+            $arWallets = Wallet::user()->orderBy('sort','asc')->get();
+            foreach($arWallets as $obWallet) {
+                $balance += $obWallet->start;
+            }            
+            foreach ($arOperationsSum as $date=>$arGroups) {
+                if (isset($arOperationsSum[$date]['type_income'])) $balance += $arOperationsSum[$date]['type_income'];
+                if (isset($arOperationsSum[$date]['type_spend'])) $balance -= $arOperationsSum[$date]['type_spend'];
+                $arOperationsSum[$date]['type_balance'] = $balance;
+            }
+        }
 
         foreach ($arOperationsSum as $date=>$arGroups) {
             foreach ($arCategories as $fieldName) {
@@ -449,7 +483,7 @@ class StatisticsController extends Controller {
 		} else {
 			$period = time();
 		}
-		$arPlan = Plan::select(DB::raw('sum(value) as sum'))->user()->get();
+		$arPlan = Plan::select(DB::raw('sum(value) as sum'))->user()->activeDate(date("Y-m-d", $period))->get();
 		$totals = ['plan'=>$arPlan[0]['sum']];
 		
 		$dbOperations = Operation::select(DB::raw('sum(value) as sum, type'))->user()
@@ -487,44 +521,9 @@ class StatisticsController extends Controller {
         return response()->json(['categories'=>$this->_getPlanStatistics($type, $period)]);
     }
     
-    public function getMonthplan ($period = false)
+    public function getPlan ($type = false, $period = false)
     {
-        if (!$period) {
-            $period = date('Y-m-01');
-        }
-        $period = date('Y-m-01', strtotime($period));
-        
-        $prevMonth = date('n', strtotime($period)) - 1;
-        $prevYear = date('Y', strtotime($period));
-        if ($prevMonth<1) {
-            $prevMonth = 12;
-            $prevYear -= 1;
-        }
-        $prevPeriod = date('Y-m-01', mktime(0,0,0,$prevMonth, 1, $prevYear));
-        
-        $nextMonth = date('n', strtotime($period)) + 1;
-        $nextYear = date('Y', strtotime($period));
-        if ($nextMonth>12) {
-            $nextMonth = 1;
-            $nextYear += 1;
-        }
-        $nextPeriod = date('Y-m-01', mktime(0,0,0,$nextMonth, 1, $nextYear));
-        
-        return view('account.stats.monthplan', array('prevPeriod'=>$prevPeriod, 'nextPeriod'=> $nextPeriod, 'period'=>$period));
-    }
-    
-    public function getYearplan ($period = false)
-    {
-        if (!$period) {
-            $period = date('Y-01-01');
-        }
-        $period = date('Y-01-01', strtotime($period));
-        
-        $prevPeriod = date('Y-01-01', mktime(0,0,0,1, 1, date("Y", strtotime($period)) - 1));
-        
-        $nextPeriod = date('Y-01-01', mktime(0,0,0,1, 1, date("Y", strtotime($period)) + 1));
-        
-        return view('account.stats.yearplan', array('prevPeriod'=>$prevPeriod, 'nextPeriod'=> $nextPeriod, 'period'=>$period));
+        return view('account.stats.plan', array());
     }
 	
     /**
@@ -550,7 +549,7 @@ class StatisticsController extends Controller {
             $periodTo = date('Y-12-31', strtotime($period));
         }
         
-        $arCategories = Category::user()->whereIn('type', array('any', 'spend'))->orderBy('sort','asc')->get();
+        $arCategories = Category::user()->whereIn('type', array('any', 'spend'))->where('active', 1)->orderBy('sort','asc')->get();
         $dbOperations = Operation::select(DB::raw('sum(value) as sum, category_id'))->
                 user();
                 
@@ -564,18 +563,18 @@ class StatisticsController extends Controller {
         
         $arCategoriesSum = array();        
         foreach ($arOperations as $obOperation) {
-            $arCategoriesSum[$obOperation->category_id] = array('sum'=>$obOperation->sum, 'plan'=>0);
+            $arCategoriesSum[$obOperation->category_id] = array('sum'=>$obOperation->sum, 'plan'=>0, 'id'=>$obOperation->category_id);
         }
         
         $dbPlans = Plan::select(DB::raw('sum(value) as sum, category_id'))->
-                user();
+                user()->activeDate($periodFrom, $periodTo);
         $arPlans = $dbPlans->
                 groupBy('category_id')->
                 get();
                 
         foreach ($arPlans as $obPlan) {
             if (!isset($arCategoriesSum[$obPlan->category_id])) {
-                $arCategoriesSum[$obPlan->category_id] = array('sum'=>0);
+                $arCategoriesSum[$obPlan->category_id] = array('sum'=>0, 'id'=>$obPlan->category_id);
             }
             $arCategoriesSum[$obPlan->category_id]['plan'] = $obPlan->sum;
             if ($type=='year') {
@@ -586,13 +585,10 @@ class StatisticsController extends Controller {
         $arIcons = Category::getCategoryIcons();
         foreach ($arCategories as $k=>$obCategory) {
             if (!isset($arCategoriesSum[$obCategory->id])) {
-                $arCategoriesSum[$obCategory->id] = array('sum'=>0, 'plan'=>0);
+                $arCategoriesSum[$obCategory->id] = array('sum'=>0, 'plan'=>0, 'id'=>$obCategory->id);
             }
             $arCategoriesSum[$obCategory->id]['name'] = $obCategory->name;
-            $arCategoriesSum[$obCategory->id]['icon'] = false;
-            if ($obCategory->icon && isset($arIcons[$obCategory->icon])) {
-                $arCategoriesSum[$obCategory->id]['icon'] = $arIcons[$obCategory->icon];
-            }
+            $arCategoriesSum[$obCategory->id]['icon'] = $obCategory->icon;
             $arCategoriesSum[$obCategory->id]['progress'] = 100;
             if ($arCategoriesSum[$obCategory->id]['plan']>0) {
                 $arCategoriesSum[$obCategory->id]['progress'] = 100*$arCategoriesSum[$obCategory->id]['sum'] / $arCategoriesSum[$obCategory->id]['plan'];

@@ -20,6 +20,66 @@ class CategoryController extends CrudListController {
         'by' => 'sort',
         'order' => 'asc'
     );
+    
+    /**
+     * List of items
+     * 
+     * @return <type>
+     */    
+    public function getIndex()
+    {
+        if(Request::wantsJson()){
+            $dbItems = Category::user();
+            $arItems = $dbItems->
+                    orderBy($this->sort['by'],$this->sort['order'])->
+                    orderBy('id','desc')->
+                    get();
+
+            return [
+                'categories' => $arItems,
+                'types' => Category::getTypeList()
+            ];
+        }
+
+        return view($this->__getView('index'), []);
+    }
+    
+    /**
+     * Edit item
+     * 
+     * @param int $id 
+     * 
+     * @return <type>
+     */    
+    public function getEdit($id)
+    {
+        $model = $this->modelName;
+        $obItem = $model::user()->find($id);
+        
+        if (!$obItem) {
+            $obItem = ['sort'=>10, 'active' => true];
+        }
+        $obItem['active'] = $obItem['active']?true:false;
+        
+        $arTypes = [];
+        foreach(Category::getTypeList() as $type=>$typeTitle) {
+            $arTypes[] = [
+                'id' => $type,
+                'name' => $typeTitle,
+            ];
+        }
+        
+        $arIcons = [];
+        foreach(Category::getCategoryIcons() as $icon=>$iconTitle) {
+            $arIcons[] = [
+                'id' => $icon,
+                'icon' => $icon,
+                'name' => '',
+            ];
+        }
+        
+        return ['category'=>$obItem, 'types'=>$arTypes, 'icons'=>$arIcons];
+    }
 
 
     /**
@@ -97,7 +157,7 @@ class CategoryController extends CrudListController {
               'sort'=>'required|numeric',
               'icon'=>'in:'.implode(',',array_keys(Category::getCategoryIcons())),
             );
-    } 
+    }
     
     /**
      * Populate object with user's input

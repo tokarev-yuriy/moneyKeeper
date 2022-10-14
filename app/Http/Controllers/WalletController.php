@@ -98,8 +98,69 @@ class WalletController extends CrudListController {
               'color'=>'required|in:'.implode(',',array_keys(Wallet::getColorList())),
               'icon'=>'in:'.implode(',',array_keys(Wallet::getWalletIcons())),
               'group_id'=>'in:'.implode(',',array_keys(Wallet::getWalletGroups())),
+              'active'=>'bool',
             );
-    } 
+    }
+    
+    /**
+     * List of items
+     * 
+     * @return <type>
+     */    
+    public function getIndex()
+    {
+        if(Request::wantsJson()){
+            $dbItems = Wallet::user();
+            $arItems = $dbItems->
+                    orderBy($this->sort['by'],$this->sort['order'])->
+                    orderBy('id','desc')->
+                    get();
+
+            return [
+                'wallets' => $arItems,
+                'groups' => Wallet::getWalletGroups()
+            ];
+        }
+
+        return view($this->__getView('index'), []);
+    }
+    
+    /**
+     * Edit item
+     * 
+     * @param int $id 
+     * 
+     * @return <type>
+     */    
+    public function getEdit($id)
+    {
+        $model = $this->modelName;
+        $obItem = $model::user()->find($id);
+        
+        if (!$obItem) {
+            $obItem = ['sort'=>10, 'start'=>0, 'active' => true];
+        }
+        $obItem['active'] = $obItem['active']?true:false;
+        
+        $arIcons = [];
+        foreach(Wallet::getWalletIcons() as $icon=>$iconTitle) {
+            $arIcons[] = [
+                'id' => $icon,
+                'icon' => $icon,
+                'name' => '',
+            ];
+        }
+        $arColors = [];
+        foreach(Wallet::getColorList() as $color=>$colorTitle) {
+            $arColors[] = [
+                'id' => $color,
+                'color' => $color,
+                'name' => '',
+            ];
+        }
+        
+        return ['wallet'=>$obItem, 'groups'=>\App\MoneyKeeper\Models\WalletGroup::user()->orderBy('sort','asc')->get(), 'icons'=>$arIcons, 'colors'=>$arColors];
+    }
     
     /**
      * Populate object with user's input
@@ -114,6 +175,7 @@ class WalletController extends CrudListController {
         $obItem->icon = Input::get('icon');
         $obItem->color = Input::get('color');
         $obItem->group_id = intval(Input::get('group_id'));
+        $obItem->active = Input::get('active')?1:0;
         
         $obItem->user_id = Auth::id();
         
