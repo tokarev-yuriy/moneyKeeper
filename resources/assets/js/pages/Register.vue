@@ -155,6 +155,7 @@ export default {
           password: this.password
         });
         await this.$store.dispatch('auth/init');
+        await this.$store.dispatch('registry/init');
         this.$router.push({path: '/'});
       } catch(error) {
         this.errors = error.errors;
