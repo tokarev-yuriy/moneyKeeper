@@ -87,6 +87,8 @@ class AccountServices implements ICrudServices {
             $fields['sort'] ?? 0
         );
         $account->setDescription($description);
+        $account->setGroupId($fields['groupId'] ?? null);
+        $account->setStartBalance($fields['startBalance'] ?? 0);
 
         $account = $this->repository->saveAccount($account);
         return $account;
@@ -107,7 +109,7 @@ class AccountServices implements ICrudServices {
             $fields['color'] ?? '',
             $fields['sort'] ?? 0
         );
-        $account = new AccountEntity(null, $description, true);
+        $account = new AccountEntity(null, $description, $fields['startBalance'] ?? 0, $fields['groupId'] ?? null, true);
         $account = $this->repository->saveAccount($account);
         return $account;
     }

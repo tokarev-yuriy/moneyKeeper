@@ -20,18 +20,24 @@ class AccountsSeeder extends Seeder
                 'user_id' => 1,
                 'name' => 'Test 1',
                 'sort' => '10',
+                'start' => 10,
+                'group_id' => 1
             ],
             [
                 'id' => 2,
                 'user_id' => 1,
                 'name' => 'Test 3',
                 'sort' => '30',
+                'start' => 30,
+                'group_id' => 1
             ],
             [
                 'id' => 3,
                 'user_id' => 1,
                 'name' => 'Test 2',
                 'sort' => '20',
+                'start' => 20,
+                'group_id' => 2
             ]
         ]);
 

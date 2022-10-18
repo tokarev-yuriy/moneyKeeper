@@ -40,6 +40,18 @@ class AccountServicesTest extends TestCase
         $this->assertEquals($item->getId(), 1);
         $this->assertEquals($item->getDescription()->getName(), 'test');
         $this->assertEquals($item->getDescription()->getSort(), 10);
+        $this->assertEquals($item->getStartBalance(), 100);
+
+        $this->assertEquals($item->toArray(), [
+            'id' => 1,
+            'name' => 'test',
+            'sort' => 10,
+            'startBalance' => (float)100,
+            'color' => 'red',
+            'icon' => 'test',
+            'groupId' => 1,
+            'active' => true
+        ]);
     }
 
     /**
@@ -96,10 +108,21 @@ class AccountServicesTest extends TestCase
     public function testAccountServiceUpdate()
     {
         $service = new AccountServices($this->getExistUser(), $this->getRepository());
-        $item = $service->update(1, ['name' => 'test2', 'sort'=>10]);
+        $item = $service->update(1, [
+            'name' => 'test2',
+            'sort'=>10,
+            'icon' => 'testIcon',
+            'groupId' => 10,
+            'color'=>'blue',
+            'startBalance' => 110
+        ]);
         $this->assertEquals($item->getId(), 1);
         $this->assertEquals($item->getDescription()->getName(), 'test2');
         $this->assertEquals($item->getDescription()->getSort(), 10);
+        $this->assertEquals($item->getDescription()->getIcon(), 'testIcon');
+        $this->assertEquals($item->getDescription()->getColor(), 'blue');
+        $this->assertEquals($item->getGroupId(), 10);
+        $this->assertEquals($item->getStartBalance(), 110);
     }
 
     /**
@@ -137,10 +160,21 @@ class AccountServicesTest extends TestCase
     public function testAccountServiceAdd()
     {
         $service = new AccountServices($this->getExistUser(), $this->getRepository());
-        $item = $service->add(['name' => 'test2', 'sort' => 11]);
+        $item = $service->add([
+            'name' => 'test2',
+            'sort' => 11,
+            'icon' => 'testIcon',
+            'groupId' => 10,
+            'color'=>'blue',
+            'startBalance' => 110
+        ]);
         $this->assertEquals($item->getId(), null);
         $this->assertEquals($item->getDescription()->getName(), 'test2');
         $this->assertEquals($item->getDescription()->getSort(), 11);
+        $this->assertEquals($item->getDescription()->getIcon(), 'testIcon');
+        $this->assertEquals($item->getDescription()->getColor(), 'blue');
+        $this->assertEquals($item->getGroupId(), 10);
+        $this->assertEquals($item->getStartBalance(), 110);
     }
 
     /**
@@ -211,8 +245,8 @@ class AccountServicesTest extends TestCase
                         ->getMock();
         $repository->method("getAccountById")->willReturn($this->getAccount());
         $repository->method("getAccounts")->willReturn(new Collection([
-            new AccountEntity(1, new AccountDescriptionValue('test', 'test', 'red', 10)), 
-            new AccountEntity(2, new AccountDescriptionValue('test2', 'test2', 'red', 20))
+            new AccountEntity(1, new AccountDescriptionValue('test', 'test', 'red', 10), 100, 1), 
+            new AccountEntity(2, new AccountDescriptionValue('test2', 'test2', 'red', 20), 200, 2)
         ]));
         $repository->method("saveAccount")->will($this->returnArgument(0));
         $repository->method("deleteAccount")->willReturn(true);
@@ -226,6 +260,6 @@ class AccountServicesTest extends TestCase
      */
     private function getAccount(): AccountEntity
     {
-        return new AccountEntity(1, new AccountDescriptionValue('test', 'test', 'red', 10));
+        return new AccountEntity(1, new AccountDescriptionValue('test', 'test', 'red', 10), 100, 1);
     }
 }

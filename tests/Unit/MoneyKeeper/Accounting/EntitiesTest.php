@@ -78,6 +78,7 @@ class EntitiesTest extends TestCase
         $category = new AccountEntity(
             null,
             new AccountDescriptionValue('test', '', '', 10),
+            100
         );
         $this->assertTrue(true);
     }

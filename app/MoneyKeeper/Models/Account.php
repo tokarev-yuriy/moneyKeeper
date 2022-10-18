@@ -39,7 +39,10 @@ class Account extends UserRelative {
 				$this->icon ?? '',
 				$this->color ?? '',
 				$this->sort
-			)
+			),
+			$this->start ?? 0,
+			$this->group_id ?? null,
+			$this->active ? true : false
 		);
 	}
 

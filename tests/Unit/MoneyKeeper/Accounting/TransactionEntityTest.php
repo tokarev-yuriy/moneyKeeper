@@ -76,7 +76,7 @@ class TransactionEntityTest extends TestCase
      */
     private function getNewAccount(): AccountEntity
     {
-        return new AccountEntity(null, new AccountDescriptionValue('test', 'test', '', 10));
+        return new AccountEntity(null, new AccountDescriptionValue('test', 'test', '', 10), 0);
     }
 
     /**
@@ -86,6 +86,6 @@ class TransactionEntityTest extends TestCase
      */
     private function getExistAccount(): AccountEntity
     {
-        return new AccountEntity(1, new AccountDescriptionValue('test', 'test', '', 10));
+        return new AccountEntity(1, new AccountDescriptionValue('test', 'test', '', 10), 0);
     }
 }
