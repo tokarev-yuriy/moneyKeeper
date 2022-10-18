@@ -79,4 +79,18 @@ Interface IAccountsRepository {
      * @return AccountGroupEntity
      */
     public function saveAccountGroup(AccountGroupEntity $group): AccountGroupEntity;
+
+    /**
+     * returns avail icons
+     *
+     * @return Collection
+     */
+    public function getAvailIcons(): Collection;
+
+    /**
+     * returns avail colors
+     *
+     * @return Collection
+     */
+    public function getAvailColors(): Collection;
 }
