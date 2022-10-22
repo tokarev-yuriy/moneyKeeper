@@ -8,5 +8,10 @@ export default {
     accountGroup: {
       index: `/app/account/groups`,
       detail: `/app/account/groups/{id}`,
-    }
+    },
+    account: {
+      index: `/app/accounts`,
+      detail: `/app/accounts/{id}`,
+    },
+    registry: `/app/registry`,
   }

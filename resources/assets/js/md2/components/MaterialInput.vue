@@ -85,7 +85,7 @@ export default {
 
       let modelValue;
 
-      modelValue = value ? `is-filled` : null;
+      modelValue = value !== '' ? `is-filled` : null;
 
       return [sizeValue, modelValue].join(' ');
     },
@@ -102,7 +102,7 @@ export default {
 
       let modelValue;
 
-      modelValue = value ? `is-filled` : null;
+      modelValue = value !== '' ? `is-filled` : null;
 
       return [isValidValue, modelValue].join(' ');;
     },

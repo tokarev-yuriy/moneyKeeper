@@ -14,7 +14,7 @@
       <tbody>
         <tr v-for="item in items" :key="item.id">
           <td class="align-middle" v-for="th in head" :key="item.id + '|' + th.key">
-            <h6 class="text-sm ps-3">{{item[th.key]}}</h6>
+            <h6 class="text-sm ps-3" v-html="item[th.key]"></h6>
           </td>
           <td class="align-middle w-10">
             <a 
