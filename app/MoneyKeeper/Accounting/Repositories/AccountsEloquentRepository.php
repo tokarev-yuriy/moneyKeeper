@@ -99,6 +99,9 @@ final class AccountsEloquentRepository implements IAccountsRepository {
     $model->name = $account->getDescription()->getName();
     $model->sort = $account->getDescription()->getSort();
     $model->icon = $account->getDescription()->getIcon();
+    $model->color = $account->getDescription()->getColor();
+    $model->start = $account->getStartBalance();
+    $model->group_id = $account->getGroupId();
     $model->save();
 
     return $model->toEntity();
@@ -183,12 +186,11 @@ final class AccountsEloquentRepository implements IAccountsRepository {
   public function getAvailIcons(): Collection
   {
     return new Collection([
-      'coins',
       'wallet',   
       'credit_card',
       'currency_pound',
       'euro',
-      'currency_dollar',
+      'attach_money',
       'account_balance_wallet',
       'business_center',
       'diamond',
@@ -207,10 +209,9 @@ final class AccountsEloquentRepository implements IAccountsRepository {
   public function getAvailColors(): Collection
   {
     return new Collection([
-        'fff', // white
+        '111111', // black
         'b71c1c', // red
         '880e4f', // pink
-        '4a148c', // purple
         '311b92', // deeppurple
         '1a237e', // indigo
         '0d47a1', // blue
@@ -226,7 +227,6 @@ final class AccountsEloquentRepository implements IAccountsRepository {
         '212121', // grey
         '263238', // blueGrey
         '607d8b', // blueGrey2
-        '111111', // black
     ]);
   }
 }
