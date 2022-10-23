@@ -2,6 +2,7 @@
 namespace MoneyKeeper\Accounting\ValueObjects;
 
 use Exception;
+use MoneyKeeper\Exceptions\ValidationException;
 
 /**
  * Item Description Value class
@@ -39,12 +40,16 @@ class ItemDescriptionValue {
      */
     public function __construct(string $name, string $icon, int $sort)
     {
+        $errors = [];
         if (strlen($name)==0) {
-            throw new Exception('Item name is required');
+            $errors['name'] = 'Account name is required';
         }
         $this->name = $name;
         $this->icon = $icon;
         $this->sort = $sort;
+        if (count($errors) > 0) {
+            throw new ValidationException($errors);
+        }
     }
 
     /**

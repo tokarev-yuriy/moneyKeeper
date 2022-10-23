@@ -2,6 +2,7 @@
 namespace MoneyKeeper\Accounting\ValueObjects;
 
 use Exception;
+use MoneyKeeper\Exceptions\NotFoundException;
 
 /**
  * Transaction Type Value class
@@ -32,12 +33,12 @@ class TransactionTypeValue {
      * Create Transaction type
      *
      * @param string $type
-     * @throws Exception
+     * @throws NotFoundException
      */
     public function __construct(string $type)
     {
         if (!in_array($type, [self::INCOME, self::SPEND, self::TRANSFER])) {
-            throw new Exception('Unknown Transaction type ' . $type);
+            throw new NotFoundException('Unknown Transaction type ' . $type);
         }
         $this->value = $type;
     }

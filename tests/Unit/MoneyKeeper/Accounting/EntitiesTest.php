@@ -49,9 +49,25 @@ class EntitiesTest extends TestCase
         $category = new CategoryEntity(
             null,
             new CategoryDescriptionValue('test', '', 10),
-            TransactionTypeValue::income()
+            [TransactionTypeValue::income()]
         );
         $this->assertTrue(true);
+    }
+
+    /**
+     * Test CategoryEntity
+     *
+     * @return void
+     * @covers CategoryEntity
+     */
+    public function testCategoryException()
+    {
+        $this->expectException(Exception::class);
+        $category = new CategoryEntity(
+            null,
+            new CategoryDescriptionValue('test', '', 10),
+            []
+        );
     }
 
 

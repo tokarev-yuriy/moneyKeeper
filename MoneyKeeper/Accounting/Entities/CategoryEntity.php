@@ -2,6 +2,7 @@
 namespace MoneyKeeper\Accounting\Entities;
 use MoneyKeeper\Accounting\ValueObjects\TransactionTypeValue;
 use MoneyKeeper\Accounting\ValueObjects\CategoryDescriptionValue;
+use MoneyKeeper\Exceptions\ValidationException;
 
 /**
  * Category Entity class
@@ -18,51 +19,54 @@ class CategoryEntity extends ItemEntity {
     /**
      * Type of a Category
      *
-     * @var TransactionTypeValue
+     * @var array of TransactionTypeValue
      */
-    private $type;
+    private $types;
 
     /**
      * Create category
      *
      * @param integer|null $id
      * @param CategoryDescriptionValue $description
-     * @param TransactionTypeValue $type
+     * @param array $types
      * @param boolean $active
      */
     public function __construct(
         ?int $id,
         CategoryDescriptionValue $description,
-        TransactionTypeValue $type,
+        array $types,
         bool $active = true
     )
     {
         $this->id = $id;
         $this->description = $description;
-        $this->type = $type;
+        $this->setTypes($types);
         $this->active = $active;
     }
 
 
     /**
-     * Get type
+     * Get types
      *
-     * @return TransactionTypeValue
+     * @return array of TransactionTypeValue
      */
-    public function getType(): TransactionTypeValue
+    public function getTypes(): array
     {
-        return $this->type;
+        return $this->types;
     }
 
     /**
-     * Set type
+     * Set types
      *
-     * @param TransactionTypeValue $type
+     * @param array $type
      * @return void
      */
-    public function setType(TransactionTypeValue $type)
+    public function setTypes(array $types)
     {
-        $this->type =  $type;
+        if (count($types) == 0) {
+            throw new ValidationException(['types' => 'Types are required']);
+        }
+        $this->types =  $types;
     }
 
     /**
@@ -84,5 +88,29 @@ class CategoryEntity extends ItemEntity {
     public function setDescription(CategoryDescriptionValue $description)
     {
         $this->description =  $description;
+    }
+
+    /**
+     * Return fields
+     *
+     * @return array
+     */
+    public function toArray(): array
+    {
+        $types = [];
+        foreach($this->types as $type) {
+            /**
+             * @var TransactionTypeValue $type
+             */
+            $types[] = $type->getValue();
+        }
+        return [
+            'id' => $this->getId(),
+            'active' => $this->getActive(),
+            'name' => $this->getDescription()->getName(),
+            'sort' => $this->getDescription()->getSort(),
+            'icon' => $this->getDescription()->getIcon(),
+            'types' => $types
+        ];
     }
 }
