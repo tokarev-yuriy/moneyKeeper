@@ -38,9 +38,18 @@ Route::middleware(['auth'])->group(function () {
             Route::delete("accounts/{id}", "delete");
         });
 
-        // Registry for acounts
+        // Registry for accounts
         Route::controller(RegistryController::class)->group(function(){
             Route::get("registry", "registry");
+        });
+
+        // Categories
+        Route::controller(CategoryController::class)->group(function(){
+            Route::get("categories", "list");
+            Route::get("categories/{id}", "get");
+            Route::post("categories", "add");
+            Route::put("categories/{id}", "update");
+            Route::delete("categories/{id}", "delete");
         });
     });
 });

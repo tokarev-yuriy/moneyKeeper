@@ -91,7 +91,7 @@ class CategoryServices implements ICrudServices {
         $this->validateDescription($description);
         $item->setDescription($description);
         $types = [];
-        if(is_array($fields['types'])) {
+        if(isset($fields['types']) && is_array($fields['types'])) {
             foreach($fields['types'] as $type) {
                 $types[] = new TransactionTypeValue($type);
             }
@@ -118,7 +118,7 @@ class CategoryServices implements ICrudServices {
         );
         $this->validateDescription($description);
         $types = [];
-        if(is_array($fields['types'])) {
+        if(isset($fields['types']) && is_array($fields['types'])) {
             foreach($fields['types'] as $type) {
                 $types[] = new TransactionTypeValue($type);
             }

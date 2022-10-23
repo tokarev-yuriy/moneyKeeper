@@ -56,9 +56,26 @@ class CategoryEntity extends ItemEntity {
     }
 
     /**
+     * Get types
+     *
+     * @return array of string
+     */
+    public function getTypesArray(): array
+    {
+        $types = [];
+        foreach($this->types as $type) {
+            /**
+             * @var TransactionTypeValue $type
+             */
+            $types[] = $type->getValue();
+        }
+        return $types;
+    }
+
+    /**
      * Set types
      *
-     * @param array $type
+     * @param array $types
      * @return void
      */
     public function setTypes(array $types)
@@ -97,20 +114,13 @@ class CategoryEntity extends ItemEntity {
      */
     public function toArray(): array
     {
-        $types = [];
-        foreach($this->types as $type) {
-            /**
-             * @var TransactionTypeValue $type
-             */
-            $types[] = $type->getValue();
-        }
         return [
             'id' => $this->getId(),
             'active' => $this->getActive(),
             'name' => $this->getDescription()->getName(),
             'sort' => $this->getDescription()->getSort(),
             'icon' => $this->getDescription()->getIcon(),
-            'types' => $types
+            'types' => $this->getTypesArray(),
         ];
     }
 }

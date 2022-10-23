@@ -10,6 +10,7 @@ use View, Input, Session, Config, Request, Auth, Validator, Redirect;
  *  CRUD controller for wallet groups view and edit
  *
  *  @author   Yuriy Tokarev <yuriytok@gmail.com>
+ * @deprecated
  */
 class WalletGroupController extends CrudListController {
 

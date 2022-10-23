@@ -41,5 +41,16 @@ class CategoriesSeeder extends Seeder
                 'types' => json_encode(['transfer']),
             ]
         ]);
+
+        DB::table('categories')->insert([
+            [
+                'id' => 4,
+                'user_id' => 2,
+                'name' => 'TestCategory 1',
+                'sort' => '10',
+                'icon' => 'testIcon',
+                'types' => json_encode(['income']),
+            ],
+        ]);
     }
 }
