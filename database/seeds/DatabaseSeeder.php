@@ -2,6 +2,7 @@
 
 use Database\Seeders\AccountGrpoupsSeeder;
 use Database\Seeders\AccountsSeeder;
+use Database\Seeders\CategoriesSeeder;
 use Database\Seeders\UserSeeder;
 use Illuminate\Database\Seeder;
 
@@ -18,6 +19,7 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             AccountGrpoupsSeeder::class,
             AccountsSeeder::class,
+            CategoriesSeeder::class,
         ]);
     }
 }
